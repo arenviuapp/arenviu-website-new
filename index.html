@@ -44,11 +44,8 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
   img, svg { display: block; max-width: 100%; }
-
   .mono { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-fg); }
   .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
-
-  /* Lucide-style icon defaults */
   .lucide { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
   /* NAVBAR */
@@ -61,17 +58,57 @@
   }
   .nav.scrolled { border-bottom-color: var(--border); }
   .nav.hidden { transform: translateY(-100%); }
-  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 32px; }
-  .logo { display: flex; align-items: center; gap: 10px; }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
   .logo img { width: 32px; height: 32px; border-radius: 8px; }
   .logo-wm { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 17px; text-transform: uppercase; letter-spacing: 0.01em; }
-  .nav-links { display: flex; gap: 4px; margin-left: auto; align-items: center; }
+  .nav-links { display: flex; gap: 2px; margin-left: auto; align-items: center; }
   .nav-links a {
-    font-size: 13px; color: var(--muted-fg); padding: 8px 14px; border-radius: 10px;
+    font-size: 13px; color: var(--muted-fg); padding: 8px 11px; border-radius: 10px;
     transition: color .2s, background .2s;
   }
   .nav-links a:hover { color: var(--fg); background: hsl(0 0% 100% / .04); }
 
+  /* LANGUAGE SWITCHER */
+  .lang-switcher { position: relative; flex-shrink: 0; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-fg); padding: 8px 12px; border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    transition: color .2s, border-color .2s, background .2s;
+    cursor: pointer;
+  }
+  .lang-btn:hover { color: var(--fg); border-color: var(--border-strong); background: hsl(0 0% 100% / .04); }
+  .lang-btn svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform .2s; }
+  .lang-switcher.open .lang-btn svg { transform: rotate(180deg); }
+  .lang-flag { font-size: 14px; line-height: 1; }
+
+  .lang-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 12px; padding: 6px;
+    min-width: 160px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.6);
+    opacity: 0; pointer-events: none; transform: translateY(-8px);
+    transition: opacity .2s var(--ease-out), transform .2s var(--ease-out);
+    z-index: 200;
+  }
+  .lang-switcher.open .lang-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .lang-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 8px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted-fg); cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .lang-option:hover { background: hsl(0 0% 100% / .06); color: var(--fg); }
+  .lang-option.active { color: var(--primary); background: hsl(38 95% 55% / .08); }
+  .lang-option .flag { font-size: 16px; line-height: 1; }
+  .lang-option .name { flex: 1; }
+
+  /* BUTTONS */
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: var(--f-display); font-weight: 800; font-size: 13px;
@@ -93,7 +130,7 @@
     50%     { box-shadow: 0 0 48px hsl(38 95% 55% / .9); }
   }
 
-  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 10px; margin-left: auto; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 10px; margin-left: 8px; }
   .hamburger span { width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform .3s, opacity .3s; }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -152,7 +189,6 @@
   .hero-sub { margin: 28px 0 36px; color: var(--muted-fg); font-size: 22px; line-height: 1.5; max-width: 600px; }
   .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* Phone mock */
   .phone-mock {
     width: 380px; max-width: 100%; aspect-ratio: 9 / 19.5;
     background: hsl(0 0% 2%); border: 1px solid var(--border-strong);
@@ -172,7 +208,6 @@
   }
   .h-section .amber { color: var(--primary); }
   .section-sub { color: var(--muted-fg); font-size: 17px; line-height: 1.55; max-width: 520px; }
-
   .problem-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .p-card {
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
@@ -183,15 +218,10 @@
   .p-card .iconwrap {
     width: 48px; height: 48px; border-radius: 12px;
     background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
-    display: grid; place-items: center; color: var(--primary);
-    margin-bottom: 20px;
+    display: grid; place-items: center; color: var(--primary); margin-bottom: 20px;
   }
-  .p-card h3 {
-    font-family: var(--f-display); font-weight: 800; font-size: 22px;
-    margin: 0 0 10px; letter-spacing: -0.01em;
-  }
+  .p-card h3 { font-family: var(--f-display); font-weight: 800; font-size: 22px; margin: 0 0 10px; letter-spacing: -0.01em; }
   .p-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
-
   .stat-strip {
     margin-top: 56px; padding: 22px 28px;
     border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
@@ -214,7 +244,7 @@
   .feature h4 { font-family: var(--f-display); font-weight: 800; font-size: 19px; margin: 0 0 6px; letter-spacing: -0.01em; }
   .feature p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
 
-  /* ARENA / Gamification */
+  /* ARENA */
   .arena-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   .badge-showcase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .badge-showcase-item {
@@ -222,48 +252,26 @@
     padding: 16px 8px; display: grid; place-items: center; gap: 8px;
     transition: transform 200ms var(--ease-out), border-color 200ms, box-shadow 200ms;
   }
-  .badge-showcase-item:hover {
-    transform: translateY(-4px) scale(1.04);
-    border-color: var(--primary);
-    box-shadow: var(--shadow-glow-primary);
-  }
-  .badge-showcase-item img {
-    width: 64px; height: 64px;
-    animation: badgeFloat 3s ease-in-out infinite;
-    animation-delay: calc(var(--i, 0) * 0.4s);
-  }
-  .badge-showcase-item .bn {
-    font-family: var(--f-display); font-weight: 700; font-size: 11px;
-    color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.06em;
-    text-align: center;
-  }
-  @keyframes badgeFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-  }
+  .badge-showcase-item:hover { transform: translateY(-4px) scale(1.04); border-color: var(--primary); box-shadow: var(--shadow-glow-primary); }
+  .badge-showcase-item img { width: 64px; height: 64px; animation: badgeFloat 3s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.4s); }
+  .badge-showcase-item .bn { font-family: var(--f-display); font-weight: 700; font-size: 11px; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
+  @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
   /* EVIDENCE */
   .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 960px; }
   .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 32px; }
-  .stat-num {
-    font-family: var(--f-display); font-style: italic; font-weight: 900;
-    font-size: clamp(56px, 7vw, 96px); line-height: 1;
-    color: var(--primary); letter-spacing: -0.03em;
-  }
+  .stat-num { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: clamp(56px, 7vw, 96px); line-height: 1; color: var(--primary); letter-spacing: -0.03em; }
   .stat-lbl { margin-top: 12px; color: var(--muted-fg); font-size: 15px; line-height: 1.5; max-width: 360px; }
-
   .quote-card {
     margin-top: 48px; background: var(--card); border: 1px solid var(--border);
     border-left: 3px solid var(--primary); border-radius: 12px;
-    padding: 28px 32px;
-    font-family: var(--f-mono); font-size: 14px; line-height: 1.7; color: var(--fg);
+    padding: 28px 32px; font-family: var(--f-mono); font-size: 14px; line-height: 1.7; color: var(--fg);
     white-space: pre-line; max-width: 780px;
   }
   .matrix {
     margin-top: 40px; width: 100%; max-width: 780px;
     border-collapse: separate; border-spacing: 0;
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    overflow: hidden;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
   }
   .matrix th, .matrix td { padding: 14px 16px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border); }
   .matrix tr:last-child td { border-bottom: 0; }
@@ -280,58 +288,29 @@
   /* INFRASTRUCTURE */
   .inf-head { max-width: 720px; margin-bottom: 48px; }
   .inf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .inf-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 32px;
-    transition: transform .3s var(--ease-out), border-color .3s;
-  }
+  .inf-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: transform .3s var(--ease-out), border-color .3s; }
   .inf-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
-  .inf-card .iconwrap {
-    width: 48px; height: 48px; border-radius: 12px;
-    background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
-    display: grid; place-items: center; color: var(--primary);
-    margin-bottom: 20px;
-  }
+  .inf-card .iconwrap { width: 48px; height: 48px; border-radius: 12px; background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%); display: grid; place-items: center; color: var(--primary); margin-bottom: 20px; }
   .inf-card h4 { font-family: var(--f-display); font-weight: 800; font-size: 20px; margin: 0 0 10px; letter-spacing: -0.01em; }
   .inf-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
-
   .inf-strip {
     margin-top: 48px; padding: 20px 28px;
     border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     display: flex; justify-content: center; flex-wrap: wrap;
     font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--muted-fg); gap: 18px;
-    text-align: center;
+    text-transform: uppercase; color: var(--muted-fg); gap: 18px; text-align: center;
   }
   .inf-strip .sep { color: var(--primary); }
 
   /* PARTNERS */
   .partner-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  .partner {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    border-top: 3px solid var(--primary);
-    padding: 32px;
-    opacity: 0.6; position: relative;
-    transition: transform .3s var(--ease-out), opacity .3s;
-  }
+  .partner { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--primary); padding: 32px; opacity: 0.6; position: relative; transition: transform .3s var(--ease-out), opacity .3s; }
   .partner:hover { transform: translateY(-4px); opacity: 0.85; }
-  .partner .coming {
-    position: absolute; top: 14px; right: 18px;
-    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--primary); text-transform: uppercase;
-  }
-  .partner .logo-ph {
-    width: 60px; height: 60px; border-radius: 50%;
-    border: 1.5px dashed var(--primary); margin-bottom: 22px;
-    background: hsl(38 40% 10%);
-  }
+  .partner .coming { position: absolute; top: 14px; right: 18px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--primary); text-transform: uppercase; }
+  .partner .logo-ph { width: 60px; height: 60px; border-radius: 50%; border: 1.5px dashed var(--primary); margin-bottom: 22px; background: hsl(38 40% 10%); }
   .partner h4 { font-family: var(--f-display); font-weight: 800; font-size: 20px; margin: 0 0 8px; letter-spacing: -0.01em; }
   .partner .role { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted-fg); text-transform: uppercase; }
-
-  .partner-cta {
-    margin-top: 56px;
-    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
-    padding: 48px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
-  }
+  .partner-cta { margin-top: 56px; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
   .partner-cta h3 { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 36px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: -0.02em; }
   .partner-cta p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; max-width: 620px; }
 
@@ -339,41 +318,17 @@
   .team-head { max-width: 640px; margin-bottom: 48px; }
   .team-sub { color: var(--muted-fg); font-size: 17px; line-height: 1.55; margin-top: 20px; }
   .team-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .team {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 28px 24px; text-align: center; position: relative;
-  }
+  .team { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; text-align: center; position: relative; }
   .team.mascot { border-color: hsl(38 80% 38%); box-shadow: 0 0 20px hsl(38 95% 55% / .15); }
-  .avatar {
-    width: 108px; height: 108px; border-radius: 50%;
-    border: 2px solid var(--primary);
-    background: hsl(38 40% 14%);
-    display: grid; place-items: center;
-    font-family: var(--f-display); font-style: italic; font-weight: 900;
-    font-size: 30px; color: var(--primary);
-    margin: 0 auto 18px;
-    box-shadow: 0 0 16px hsl(38 95% 55% / .22);
-    overflow: hidden;
-  }
+  .avatar { width: 108px; height: 108px; border-radius: 50%; border: 2px solid var(--primary); background: hsl(38 40% 14%); display: grid; place-items: center; font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 30px; color: var(--primary); margin: 0 auto 18px; box-shadow: 0 0 16px hsl(38 95% 55% / .22); overflow: hidden; }
   .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .avatar .lucide { width: 34px; height: 34px; }
   .team h4 { font-family: var(--f-display); font-weight: 800; font-size: 18px; margin: 0 0 6px; }
   .team .role-nick { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--primary); text-transform: uppercase; margin-bottom: 14px; }
   .team .quote { font-style: italic; color: var(--muted-fg); font-size: 14px; line-height: 1.55; margin: 0; }
-  .team .mascot-badge {
-    position: absolute; top: 12px; right: 14px;
-    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
-    color: var(--primary); text-transform: uppercase;
-  }
+  .team .mascot-badge { position: absolute; top: 12px; right: 14px; font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--primary); text-transform: uppercase; }
 
   /* FINAL CTA */
-  #final {
-    text-align: center; min-height: 90vh;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 50%, hsl(38 95% 55% / .15), transparent 60%),
-      hsl(0 0% 4%);
-    border-top: 1px solid var(--border);
-  }
+  #final { text-align: center; min-height: 90vh; background: radial-gradient(ellipse 80% 60% at 50% 50%, hsl(38 95% 55% / .15), transparent 60%), hsl(0 0% 4%); border-top: 1px solid var(--border); }
   #final .mega { font-size: clamp(56px, 10vw, 144px); }
   #final p.sub { color: var(--muted-fg); font-size: 18px; max-width: 560px; margin: 28px auto 40px; line-height: 1.55; }
   #final .cta-mono { margin-top: 22px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-fg); }
@@ -387,15 +342,14 @@
   .foot-right { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--muted-fg); text-align: right; line-height: 1.8; }
   .foot-bottom { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted-fg); text-align: center; text-transform: uppercase; }
 
+  /* RESPONSIVE */
   @media (max-width: 980px) {
-    .nav-links a:not(.btn) { padding: 8px 10px; font-size: 12.5px; }
+    .nav-links a:not(.btn) { padding: 8px 8px; font-size: 12px; }
   }
   @media (max-width: 768px) {
     .container { padding: 0 20px; }
     .nav-inner { padding: 12px 20px; }
-    .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      flex-direction: column; padding: 16px 20px; gap: 0; }
+    .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--bg); border-bottom: 1px solid var(--border); flex-direction: column; padding: 16px 20px; gap: 0; z-index: 99; }
     .nav-links.open { display: flex; }
     .nav-links a { padding: 14px 12px; border-radius: 0; border-bottom: 1px solid var(--border); }
     .nav-links .btn { margin-top: 14px; align-self: flex-start; }
@@ -411,12 +365,12 @@
     .matrix { font-size: 12px; }
     .matrix th, .matrix td { padding: 10px 8px; }
     .partner-cta { padding: 32px 24px; grid-template-columns: 1fr; }
+    .lang-dropdown { right: -8px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Inline Lucide-style icons as <symbol> sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></symbol>
@@ -429,7 +383,7 @@
     <symbol id="i-map-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
     <symbol id="i-users-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></symbol>
     <symbol id="i-git-branch" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
-    <symbol id="i-cat" viewBox="0 0 24 24"><path d="M4 4l4 5v7a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4V9l4-5-2 6"/><path d="M8 9l-4-5 2 6"/><circle cx="10" cy="13" r=".8" fill="currentColor"/><circle cx="14" cy="13" r=".8" fill="currentColor"/><path d="M11 16c.3.4.7.6 1 .6s.7-.2 1-.6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
     <symbol id="i-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
   </defs>
@@ -443,15 +397,36 @@
       <span class="logo-wm">Arenviu</span>
     </a>
     <nav class="nav-links" id="nav-links">
-      <a href="#problem">Problem</a>
-      <a href="#solution">Solution</a>
-      <a href="#arena">Arena</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#infrastructure">Infrastructure</a>
-      <a href="#partners">Partners</a>
-      <a href="#team">Team</a>
-      <a href="https://app.arenviu.com" class="btn btn-primary" target="_blank" rel="noopener">Try now <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg></a>
+      <a href="#problem" data-i18n="nav_problem">Problem</a>
+      <a href="#solution" data-i18n="nav_solution">Solution</a>
+      <a href="#arena" data-i18n="nav_arena">Arena</a>
+      <a href="#evidence" data-i18n="nav_evidence">Evidence</a>
+      <a href="#infrastructure" data-i18n="nav_infra">Infrastructure</a>
+      <a href="#partners" data-i18n="nav_partners">Partners</a>
+      <a href="#team" data-i18n="nav_team">Team</a>
+      <a href="https://app.arenviu.com" class="btn btn-primary" target="_blank" rel="noopener">
+        <span data-i18n="nav_try">Try now</span>
+        <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg>
+      </a>
     </nav>
+
+    <!-- Language Switcher -->
+    <div class="lang-switcher" id="lang-switcher">
+      <button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-flag" id="lang-flag">🇬🇧</span>
+        <span id="lang-current">EN</span>
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown" role="listbox">
+        <div class="lang-option active" data-lang="en" role="option"><span class="flag">🇬🇧</span><span class="name">English</span></div>
+        <div class="lang-option" data-lang="es" role="option"><span class="flag">🇪🇸</span><span class="name">Español</span></div>
+        <div class="lang-option" data-lang="ca" role="option"><span class="flag">🏴</span><span class="name">Català</span></div>
+        <div class="lang-option" data-lang="pt" role="option"><span class="flag">🇵🇹</span><span class="name">Português</span></div>
+        <div class="lang-option" data-lang="it" role="option"><span class="flag">🇮🇹</span><span class="name">Italiano</span></div>
+        <div class="lang-option" data-lang="fr" role="option"><span class="flag">🇫🇷</span><span class="name">Français</span></div>
+      </div>
+    </div>
+
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -468,16 +443,20 @@
       <div class="hero-text">
         <div class="mono hero-tag reveal">
           <span class="dot-live"></span>
-          BCN · Live Radar · Beach Sports Intelligence
+          <span data-i18n="hero_tag">BCN · Live Radar · Beach Sports Intelligence</span>
         </div>
-        <h1 class="mega reveal">Stop Guessing,<br>Start <span class="amber">Playing.</span></h1>
-        <p class="hero-sub reveal">Real-time crowding intelligence for Barcelona's beach sports community. Know before you go — report, earn, play.</p>
+        <h1 class="mega reveal" data-i18n-html="hero_headline">Stop Guessing,<br>Start <span class="amber">Playing.</span></h1>
+        <p class="hero-sub reveal" data-i18n="hero_sub">Real-time crowding intelligence for Barcelona's beach sports community. Know before you go — report, earn, play.</p>
         <div class="hero-ctas reveal">
-          <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Try Arenviu — it's free</a>
-          <a href="#problem" class="btn btn-ghost btn-lg">How it works <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-down"/></svg></a>
+          <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+            <span data-i18n="hero_cta1">Try Arenviu — it's free</span>
+          </a>
+          <a href="#problem" class="btn btn-ghost btn-lg">
+            <span data-i18n="hero_cta2">How it works</span>
+            <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-down"/></svg>
+          </a>
         </div>
       </div>
-
       <div class="hero-visual reveal">
         <div class="phone-mock">
           <img class="screen-img" src="assets/screenshot-hero.jpeg" alt="Arenviu live radar screenshot">
@@ -492,32 +471,32 @@
   <div class="container">
     <div class="problem-head">
       <div class="reveal">
-        <div class="eyebrow"><b>01</b> · The problem</div>
-        <h2 class="h-section">You arrive.<br>The beach is <span class="amber">full.</span></h2>
+        <div class="eyebrow"><b data-i18n="prob_num">01</b> · <span data-i18n="prob_eyebrow">The problem</span></div>
+        <h2 class="h-section" data-i18n-html="prob_headline">You arrive.<br>The beach is <span class="amber">full.</span></h2>
       </div>
-      <p class="section-sub reveal">Barcelona's beaches host thousands of beach sports players — without a single piece of digital infrastructure to coordinate them.</p>
+      <p class="section-sub reveal" data-i18n="prob_sub">Barcelona's beaches host thousands of beach sports players — without a single piece of digital infrastructure to coordinate them.</p>
     </div>
     <div class="problem-cards stagger">
       <div class="p-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-ban"/></svg></div>
-        <h3>No Crowding Intel</h3>
-        <p>You have no idea if your zone is free until you're already there, bag in hand.</p>
+        <h3 data-i18n="prob1_title">No Crowding Intel</h3>
+        <p data-i18n="prob1_body">You have no idea if your zone is free until you're already there, bag in hand.</p>
       </div>
       <div class="p-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
-        <h3>No Dedicated Weather</h3>
-        <p>Generic weather apps don't tell you if it's a good beach volleyball day. Wind direction matters. UV matters. Timing matters.</p>
+        <h3 data-i18n="prob2_title">No Dedicated Weather</h3>
+        <p data-i18n="prob2_body">Generic weather apps don't tell you if it's a good beach volleyball day. Wind direction matters. UV matters. Timing matters.</p>
       </div>
       <div class="p-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
-        <h3>Community Geopardized</h3>
-        <p>Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.</p>
+        <h3 data-i18n="prob3_title">Community Geopardized</h3>
+        <p data-i18n="prob3_body">Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.</p>
       </div>
     </div>
     <div class="stat-strip reveal">
-      <span><b>8</b> URBAN BEACHES</span><span class="dot">·</span>
-      <span><b>100+</b> PLAY ZONES</span><span class="dot">·</span>
-      <span><b>0</b> REAL-TIME DATA</span>
+      <span><b>8</b> <span data-i18n="stat1">URBAN BEACHES</span></span><span class="dot">·</span>
+      <span><b>100+</b> <span data-i18n="stat2">PLAY ZONES</span></span><span class="dot">·</span>
+      <span><b>0</b> <span data-i18n="stat3">REAL-TIME DATA</span></span>
     </div>
   </div>
 </section>
@@ -527,76 +506,72 @@
   <div class="container">
     <div class="solution-grid">
       <div>
-        <div class="eyebrow reveal"><b>02</b> · The solution</div>
-        <h2 class="h-section reveal" style="margin-bottom: 48px">Live radar.<br>Community-<span class="amber">powered.</span></h2>
+        <div class="eyebrow reveal"><b data-i18n="sol_num">02</b> · <span data-i18n="sol_eyebrow">The solution</span></div>
+        <h2 class="h-section reveal" style="margin-bottom:48px" data-i18n-html="sol_headline">Live radar.<br>Community-<span class="amber">powered.</span></h2>
         <div class="features stagger">
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
-            <div><h4>Play Score</h4><p>Composite of weather, wind, UV, and crowding. 
-One number: go or don't go.</p></div>
+            <div><h4 data-i18n="sol1_title">Play Score</h4><p data-i18n="sol1_body">Composite of weather, wind, UV, and crowding. One number: go or don't go.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
-            <div><h4>Community reports</h4><p>Waze-style: users report crowding in one tap. Free / Busy / Full.</p></div>
+            <div><h4 data-i18n="sol2_title">Community reports</h4><p data-i18n="sol2_body">Waze-style: users report crowding in one tap. Free / Busy / Full.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
-            <div><h4>Arena Points</h4><p>Every report earns XP. Leaderboards, streaks, badges. 
-The game within the game.</p></div>
+            <div><h4 data-i18n="sol3_title">Arena Points</h4><p data-i18n="sol3_body">Every report earns XP. Leaderboards, streaks, badges. The game within the game.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
-            <div><h4>Zone map</h4><p>100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
+            <div><h4 data-i18n="sol4_title">Zone map</h4><p data-i18n="sol4_body">100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
           </div>
         </div>
       </div>
-
       <div class="reveal">
         <div class="phone-mock">
-          <img class="screen-img" src="assets/screenshot-solution.jpeg?v=2" alt="Arenviu Nova Icària beach score screenshot">
+          <img class="screen-img" src="assets/screenshot-solution.jpeg" alt="Arenviu beach score screenshot">
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ARENA / GAMIFICATION -->
+<!-- ARENA -->
 <section id="arena">
   <div class="container">
     <div class="arena-grid">
       <div>
-        <div class="eyebrow reveal"><b>03</b> · Arena</div>
-        <h2 class="h-section reveal" style="margin-bottom: 32px">Play<br>Report<br>Earn<br><span class="amber">Rewards.</span></h2>
-        <p class="section-sub reveal" style="margin-bottom: 40px; max-width: 560px">Every report you submit feeds the community — and feeds your rank. Arena Points, streaks, badges, leaderboards. The game within the game.</p>
+        <div class="eyebrow reveal"><b data-i18n="arena_num">03</b> · <span data-i18n="arena_eyebrow">Arena</span></div>
+        <h2 class="h-section reveal" style="margin-bottom:32px" data-i18n-html="arena_headline">Play<br>Report<br>Earn<br><span class="amber">Rewards.</span></h2>
+        <p class="section-sub reveal" style="margin-bottom:40px;max-width:560px" data-i18n="arena_sub">Every report you submit feeds the community — and feeds your rank. Arena Points, streaks, badges, leaderboards. The game within the game.</p>
         <div class="features stagger">
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
-            <div><h4>Arena Points</h4><p>Earn XP for every report. More reports, more weight in the community.</p></div>
+            <div><h4 data-i18n="arena1_title">Arena Points</h4><p data-i18n="arena1_body">Earn XP for every report. More reports, more weight in the community.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-flame"/></svg></div>
-            <div><h4>Report Streaks</h4><p>Consecutive days reporting unlock streak bonuses and badge progress.</p></div>
+            <div><h4 data-i18n="arena2_title">Report Streaks</h4><p data-i18n="arena2_body">Consecutive days reporting unlock streak bonuses and badge progress.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-shield"/></svg></div>
-            <div><h4>5 Badge Families</h4><p>Origin, Seasonal, Community, Contribution, Sport. Each with its own progression dial.</p></div>
+            <div><h4 data-i18n="arena3_title">5 Badge Families</h4><p data-i18n="arena3_body">Origin, Seasonal, Community, Contribution, Sport. Each with its own progression dial.</p></div>
           </div>
           <div class="feature">
             <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
-            <div><h4>Leaderboards</h4><p>Weekly and all-time rankings. Territory-based boards coming.</p></div>
+            <div><h4 data-i18n="arena4_title">Leaderboards</h4><p data-i18n="arena4_body">Weekly and all-time rankings. Territory-based boards coming.</p></div>
           </div>
         </div>
       </div>
-
       <div class="badge-showcase stagger">
-        <div class="badge-showcase-item" style="--i:0"><img src="assets/badges/early_reporter.svg" alt=""><span class="bn">Early Reporter</span></div>
-        <div class="badge-showcase-item" style="--i:1"><img src="assets/badges/pioneer.svg" alt=""><span class="bn">Pioneer</span></div>
-        <div class="badge-showcase-item" style="--i:2"><img src="assets/badges/discovery.svg" alt=""><span class="bn">Discovery</span></div>
-        <div class="badge-showcase-item" style="--i:3"><img src="assets/badges/first_light.svg" alt=""><span class="bn">First Light</span></div>
-        <div class="badge-showcase-item" style="--i:4"><img src="assets/badges/trailblazer.svg" alt=""><span class="bn">Trailblazer</span></div>
-        <div class="badge-showcase-item" style="--i:5"><img src="assets/badges/sentinel.svg" alt=""><span class="bn">Sentinel</span></div>
-        <div class="badge-showcase-item" style="--i:6"><img src="assets/badges/season_opener.svg" alt=""><span class="bn">Season Opener</span></div>
-        <div class="badge-showcase-item" style="--i:7"><img src="assets/badges/dawn_patrol.svg" alt=""><span class="bn">Dawn Patrol</span></div>
+        <div class="badge-showcase-item" style="--i:0"><img src="assets/badges/early_reporter.svg" alt=""><span class="bn" data-i18n="badge1">Early Reporter</span></div>
+        <div class="badge-showcase-item" style="--i:1"><img src="assets/badges/pioneer.svg" alt=""><span class="bn" data-i18n="badge2">Pioneer</span></div>
+        <div class="badge-showcase-item" style="--i:2"><img src="assets/badges/discovery.svg" alt=""><span class="bn" data-i18n="badge3">Discovery</span></div>
+        <div class="badge-showcase-item" style="--i:3"><img src="assets/badges/first_light.svg" alt=""><span class="bn" data-i18n="badge4">First Light</span></div>
+        <div class="badge-showcase-item" style="--i:4"><img src="assets/badges/trailblazer.svg" alt=""><span class="bn" data-i18n="badge5">Trailblazer</span></div>
+        <div class="badge-showcase-item" style="--i:5"><img src="assets/badges/sentinel.svg" alt=""><span class="bn" data-i18n="badge6">Sentinel</span></div>
+        <div class="badge-showcase-item" style="--i:6"><img src="assets/badges/season_opener.svg" alt=""><span class="bn" data-i18n="badge7">Season Opener</span></div>
+        <div class="badge-showcase-item" style="--i:7"><img src="assets/badges/dawn_patrol.svg" alt=""><span class="bn" data-i18n="badge8">Dawn Patrol</span></div>
       </div>
     </div>
   </div>
@@ -605,32 +580,29 @@ The game within the game.</p></div>
 <!-- EVIDENCE -->
 <section id="evidence">
   <div class="container">
-    <div class="eyebrow reveal"><b>04</b> · Market signal</div>
-    <h2 class="h-section reveal" style="margin-bottom: 48px">The market<br>is <span class="amber">already there.</span></h2>
-
+    <div class="eyebrow reveal"><b data-i18n="ev_num">04</b> · <span data-i18n="ev_eyebrow">Market signal</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:48px" data-i18n-html="ev_headline">The market<br>is <span class="amber">already there.</span></h2>
     <div class="stat-grid stagger">
       <div class="stat-card">
         <div class="stat-num" data-count="4.5" data-suffix="M">0</div>
-        <div class="stat-lbl">Annual beach visitors in Barcelona</div>
+        <div class="stat-lbl" data-i18n="ev_stat1_lbl">Annual beach visitors in Barcelona</div>
       </div>
       <div class="stat-card">
         <div class="stat-num" data-count="100" data-suffix="+">0</div>
-        <div class="stat-lbl">Mapped play zones across 8 beaches</div>
+        <div class="stat-lbl" data-i18n="ev_stat2_lbl">Mapped play zones across 8 beaches</div>
       </div>
       <div class="stat-card">
         <div class="stat-num" data-prefix="#" data-count="1">#0</div>
-        <div class="stat-lbl">No direct competitor combining crowding + gamification</div>
+        <div class="stat-lbl" data-i18n="ev_stat3_lbl">No direct competitor combining crowding + gamification</div>
       </div>
       <div class="stat-card">
         <div class="stat-num" data-count="0">0</div>
-        <div class="stat-lbl">Apps today with real-time beach sports crowding</div>
+        <div class="stat-lbl" data-i18n="ev_stat4_lbl">Apps today with real-time beach sports crowding</div>
       </div>
     </div>
-
-    <div class="quote-card reveal">"Strava had 1M users before its first funding round.
+    <div class="quote-card reveal" data-i18n="ev_quote">"Strava had 1M users before its first funding round.
 They built it for cyclists.
 We built it for beach players."</div>
-
     <table class="matrix reveal">
       <thead>
         <tr>
@@ -642,49 +614,47 @@ We built it for beach players."</div>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Crowding intel</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr>
-        <tr><td>Gamification</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr>
-        <tr><td>Sport-specific</td><td class="col-ours y">✓</td><td class="n">—</td><td class="y">✓</td><td class="half">partial</td></tr>
-        <tr><td>BCN-local</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
-        <tr><td>Free</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="half">freemium</td></tr>
+        <tr><td data-i18n="mx1">Crowding intel</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td data-i18n="mx2">Gamification</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr>
+        <tr><td data-i18n="mx3">Sport-specific</td><td class="col-ours y">✓</td><td class="n">—</td><td class="y">✓</td><td class="half">partial</td></tr>
+        <tr><td data-i18n="mx4">BCN-local</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td data-i18n="mx5">Free</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="half">freemium</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<!-- INFRASTRUCTURE / WHY WE'RE DIFFERENT -->
+<!-- INFRASTRUCTURE -->
 <section id="infrastructure">
   <div class="container">
     <div class="inf-head">
-      <div class="eyebrow reveal"><b>05</b> · Infrastructure, not an app</div>
-      <h2 class="h-section reveal">We don't organize games.<br>We make the beach <span class="amber">legible.</span></h2>
-      <p class="section-sub reveal" style="max-width: 640px; font-size: 18px; margin-top: 24px">Arenviu is not a booking platform. Not a tournament organizer. Not a club management tool. We are the data layer underneath — the shared intelligence that every beach sports player has always needed but never had.</p>
+      <div class="eyebrow reveal"><b data-i18n="inf_num">05</b> · <span data-i18n="inf_eyebrow">Infrastructure, not an app</span></div>
+      <h2 class="h-section reveal" data-i18n-html="inf_headline">We don't organize games.<br>We make the beach <span class="amber">legible.</span></h2>
+      <p class="section-sub reveal" style="max-width:640px;font-size:18px;margin-top:24px" data-i18n="inf_sub">Arenviu is not a booking platform. Not a tournament organizer. Not a club management tool. We are the data layer underneath — the shared intelligence that every beach sports player has always needed but never had.</p>
     </div>
-
     <div class="inf-grid stagger">
       <div class="inf-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
-        <h4>The Infrastructure</h4>
-        <p>Like Waze built the traffic layer no map had. Like Google built search no directory had. We're building the beach sports layer.</p>
+        <h4 data-i18n="inf1_title">The Infrastructure</h4>
+        <p data-i18n="inf1_body">Like Waze built the traffic layer no map had. Like Google built search no directory had. We're building the beach sports layer.</p>
       </div>
       <div class="inf-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-users-check"/></svg></div>
-        <h4>For All Players, By Players</h4>
-        <p>Every report you submit trains the system. The more players report, the smarter the radar gets. You benefit from others. Others benefit from you.</p>
+        <h4 data-i18n="inf2_title">For All Players, By Players</h4>
+        <p data-i18n="inf2_body">Every report you submit trains the system. The more players report, the smarter the radar gets. You benefit from others. Others benefit from you.</p>
       </div>
       <div class="inf-card">
         <div class="iconwrap"><svg class="lucide"><use href="#i-git-branch"/></svg></div>
-        <h4>Not Playtomic. Not Airbnb.</h4>
-        <p>We don't sell court time or organize matches. We give you the intelligence to decide where to go, when to go, and what to expect when you get there.</p>
+        <h4 data-i18n="inf3_title">Not Playtomic. Not Airbnb.</h4>
+        <p data-i18n="inf3_body">We don't sell court time or organize matches. We give you the intelligence to decide where to go, when to go, and what to expect when you get there.</p>
       </div>
     </div>
-
     <div class="inf-strip reveal">
-      <span>WAZE FOR CROWDS</span>
+      <span data-i18n="inf_strip1">WAZE FOR CROWDS</span>
       <span class="sep">·</span>
-      <span>DARK SKY FOR BEACH</span>
+      <span data-i18n="inf_strip2">DARK SKY FOR BEACH</span>
       <span class="sep">·</span>
-      <span>STRAVA FOR CULTURE</span>
+      <span data-i18n="inf_strip3">STRAVA FOR CULTURE</span>
     </div>
   </div>
 </section>
@@ -692,37 +662,38 @@ We built it for beach players."</div>
 <!-- PARTNERS -->
 <section id="partners">
   <div class="container">
-    <div class="eyebrow reveal"><b>06</b> · Partners</div>
-    <h2 class="h-section reveal" style="margin-bottom: 48px">Your brand,<br>where players <span class="amber">decide.</span></h2>
-    <p class="section-sub reveal" style="margin-bottom: 48px; max-width: 720px; font-size: 17px">We put your brand at the exact moment a beach sports player opens Arenviu to decide where to go. Whether you sell drinks, apparel, food, services, or experiences — if your audience plays outdoors, we're your channel.</p>
-
+    <div class="eyebrow reveal"><b data-i18n="par_num">06</b> · <span data-i18n="par_eyebrow">Partners</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:48px" data-i18n-html="par_headline">Your brand,<br>where players <span class="amber">decide.</span></h2>
+    <p class="section-sub reveal" style="margin-bottom:48px;max-width:720px;font-size:17px" data-i18n="par_sub">We put your brand at the exact moment a beach sports player opens Arenviu to decide where to go. Whether you sell drinks, apparel, food, services, or experiences — if your audience plays outdoors, we're your channel.</p>
     <div class="partner-cards stagger">
       <div class="partner">
-        <span class="coming">Coming soon</span>
+        <span class="coming" data-i18n="par_coming">Coming soon</span>
         <div class="logo-ph"></div>
-        <h4>Partner Name</h4>
-        <div class="role">Brand Partner</div>
+        <h4 data-i18n="par_name">Partner Name</h4>
+        <div class="role" data-i18n="par_role">Brand Partner</div>
       </div>
       <div class="partner">
-        <span class="coming">Coming soon</span>
+        <span class="coming" data-i18n="par_coming">Coming soon</span>
         <div class="logo-ph"></div>
-        <h4>Partner Name</h4>
-        <div class="role">Brand Partner</div>
+        <h4 data-i18n="par_name">Partner Name</h4>
+        <div class="role" data-i18n="par_role">Brand Partner</div>
       </div>
       <div class="partner">
-        <span class="coming">Coming soon</span>
+        <span class="coming" data-i18n="par_coming">Coming soon</span>
         <div class="logo-ph"></div>
-        <h4>Partner Name</h4>
-        <div class="role">Brand Partner</div>
+        <h4 data-i18n="par_name">Partner Name</h4>
+        <div class="role" data-i18n="par_role">Brand Partner</div>
       </div>
     </div>
-
     <div class="partner-cta reveal">
       <div>
-        <h3>Brand, product, service — <span style="color:var(--primary)">if your audience plays,</span> we're your channel.</h3>
-        <p style="width: 1000px">Get in touch to discuss partnership formats: in-app placements, community drops, Arena-wide promos.</p>
+        <h3 data-i18n-html="par_cta_headline">Brand, product, service — <span style="color:var(--primary)">if your audience plays,</span> we're your channel.</h3>
+        <p data-i18n="par_cta_body">Get in touch to discuss partnership formats: in-app placements, community drops, Arena-wide promos.</p>
       </div>
-      <a href="/cdn-cgi/l/email-protection#355d5059595a755447505b435c401b565a58" class="btn btn-ghost btn-lg">Partner with us <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg></a>
+      <a href="mailto:hello@arenviu.com" class="btn btn-ghost btn-lg">
+        <span data-i18n="par_cta_btn">Partner with us</span>
+        <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -731,37 +702,35 @@ We built it for beach players."</div>
 <section id="team">
   <div class="container">
     <div class="team-head">
-      <div class="eyebrow reveal"><b>07</b> · The team</div>
-      <h2 class="h-section reveal">The <span class="amber">team.</span></h2>
-      <p class="team-sub reveal">Small, focused, and genuinely obsessed with beach sports.</p>
+      <div class="eyebrow reveal"><b data-i18n="team_num">07</b> · <span data-i18n="team_eyebrow">The team</span></div>
+      <h2 class="h-section reveal" data-i18n-html="team_headline">The <span class="amber">team.</span></h2>
+      <p class="team-sub reveal" data-i18n="team_sub">Small, focused, and genuinely obsessed with beach sports.</p>
     </div>
-
     <div class="team-cards stagger">
       <div class="team">
         <div class="avatar"><img src="assets/team/federico.jpeg" alt="Federico"></div>
         <h4>Federico</h4>
-        <div class="role-nick">The Visioner</div>
-        <p class="quote">"Couldn't find a free space. 
-Built a radar."</p>
+        <div class="role-nick" data-i18n="team1_role">The Visioner</div>
+        <p class="quote" data-i18n="team1_quote">"Couldn't find a free space. Built a radar."</p>
       </div>
       <div class="team">
         <div class="avatar"><img src="assets/team/pietro.jpeg" alt="Pietro"></div>
         <h4>Pietro</h4>
-        <div class="role-nick">The Builder</div>
-        <p class="quote">"If it runs, Pietro wrote it."</p>
+        <div class="role-nick" data-i18n="team2_role">The Builder</div>
+        <p class="quote" data-i18n="team2_quote">"If it runs, Pietro wrote it."</p>
       </div>
       <div class="team">
         <div class="avatar"><img src="assets/team/giulia.jpeg" alt="Giulia"></div>
         <h4>Giulia</h4>
-        <div class="role-nick">The Amplifier</div>
-        <p class="quote">"Makes the community want to be part of this."</p>
+        <div class="role-nick" data-i18n="team3_role">The Amplifier</div>
+        <p class="quote" data-i18n="team3_quote">"Makes the community want to be part of this."</p>
       </div>
       <div class="team mascot">
-        <span class="mascot-badge">Official mascot</span>
+        <span class="mascot-badge" data-i18n="team4_badge">Official mascot</span>
         <div class="avatar"><img src="assets/team/alfredo.jpeg" alt="Alfredo"></div>
         <h4>Alfredo</h4>
-        <div class="role-nick">The Mascot</div>
-        <p class="quote">"Chief nap officer. Morale department."</p>
+        <div class="role-nick" data-i18n="team4_role">The Mascot</div>
+        <p class="quote" data-i18n="team4_quote">"Chief nap officer. Morale department."</p>
       </div>
     </div>
   </div>
@@ -770,13 +739,15 @@ Built a radar."</p>
 <!-- FINAL CTA -->
 <section id="final">
   <div class="container">
-    <h2 class="mega reveal">Know before<br>you <span class="amber">go.</span></h2>
-    <p class="sub reveal">Join the community building real-time beach intelligence for Barcelona.</p>
+    <h2 class="mega reveal" data-i18n-html="final_headline">Know before<br>you <span class="amber">go.</span></h2>
+    <p class="sub reveal" data-i18n="final_sub">Join the community building real-time beach intelligence for Barcelona.</p>
     <div class="reveal">
-      <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Try Arenviu — it's free</a>
+      <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">
+        <span data-i18n="final_cta">Try Arenviu — it's free</span>
+      </a>
     </div>
     <div class="cta-mono reveal">
-      <b>No account required</b> · Works on any device · BCN only for now
+      <b data-i18n="final_mono1">No account required</b> · <span data-i18n="final_mono2">Works on any device</span> · <span data-i18n="final_mono3">BCN only for now</span>
     </div>
   </div>
 </section>
@@ -790,83 +761,558 @@ Built a radar."</p>
         <span class="logo-wm">Arenviu</span>
       </div>
       <div class="foot-links">
-        <a href="#">Privacy</a>
-        <a href="/cdn-cgi/l/email-protection#38505d54545778594a5d564e514d165b5755">Contact</a>
+        <a href="#" data-i18n="foot_privacy">Privacy</a>
+        <a href="mailto:hello@arenviu.com" data-i18n="foot_contact">Contact</a>
         <a href="https://instagram.com/arenviuapp" target="_blank" rel="noopener">Instagram @arenviuapp</a>
       </div>
       <div class="foot-right">
-        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4ccc1c8c8cbe4c5d6c1cad2cdd18ac7cbc9">[email&#160;protected]</a><br>
-        
+        hello@arenviu.com<br>
+        Barcelona, 2026
       </div>
     </div>
-    <div class="foot-bottom">© 2026 Arenviu · Built on the beach.</div>
+    <div class="foot-bottom" data-i18n="foot_copy">© 2026 Arenviu · Built on the beach.</div>
   </div>
 </footer>
 
 </main>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const nav = document.getElementById('nav');
-  let lastY = 0, ticking = false;
-  function onScroll() {
-    const y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 20);
-    if (y > lastY && y > 120) nav.classList.add('hidden');
-    else nav.classList.remove('hidden');
-    lastY = y; ticking = false;
-  }
-  window.addEventListener('scroll', () => {
-    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
-  }, { passive: true });
+<script>
+/* ─── TRANSLATIONS ─────────────────────────────────────────────────── */
+const T = {
+  en: {
+    nav_problem:"Problem", nav_solution:"Solution", nav_arena:"Arena",
+    nav_evidence:"Evidence", nav_infra:"Infrastructure", nav_partners:"Partners",
+    nav_team:"Team", nav_try:"Try now",
+    hero_tag:"BCN · Live Radar · Beach Sports Intelligence",
+    hero_headline:'Stop Guessing,<br>Start <span class="amber">Playing.</span>',
+    hero_sub:"Real-time crowding intelligence for Barcelona's beach sports community. Know before you go — report, earn, play.",
+    hero_cta1:"Try Arenviu — it's free", hero_cta2:"How it works",
+    prob_num:"01", prob_eyebrow:"The problem",
+    prob_headline:'You arrive.<br>The beach is <span class="amber">full.</span>',
+    prob_sub:"Barcelona's beaches host thousands of beach sports players — without a single piece of digital infrastructure to coordinate them.",
+    prob1_title:"No Crowding Intel", prob1_body:"You have no idea if your zone is free until you're already there, bag in hand.",
+    prob2_title:"No Dedicated Weather", prob2_body:"Generic weather apps don't tell you if it's a good beach volleyball day. Wind direction matters. UV matters. Timing matters.",
+    prob3_title:"Community Geopardized", prob3_body:"Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.",
+    stat1:"URBAN BEACHES", stat2:"PLAY ZONES", stat3:"REAL-TIME DATA",
+    sol_num:"02", sol_eyebrow:"The solution",
+    sol_headline:'Live radar.<br>Community-<span class="amber">powered.</span>',
+    sol1_title:"Play Score", sol1_body:"Composite of weather, wind, UV, and crowding. One number: go or don't go.",
+    sol2_title:"Community reports", sol2_body:"Waze-style: users report crowding in one tap. Free / Busy / Full.",
+    sol3_title:"Arena Points", sol3_body:"Every report earns XP. Leaderboards, streaks, badges. The game within the game.",
+    sol4_title:"Zone map", sol4_body:"100+ play zones mapped: municipal nets, training zones, free courts.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Play<br>Report<br>Earn<br><span class="amber">Rewards.</span>',
+    arena_sub:"Every report you submit feeds the community — and feeds your rank. Arena Points, streaks, badges, leaderboards. The game within the game.",
+    arena1_title:"Arena Points", arena1_body:"Earn XP for every report. More reports, more weight in the community.",
+    arena2_title:"Report Streaks", arena2_body:"Consecutive days reporting unlock streak bonuses and badge progress.",
+    arena3_title:"5 Badge Families", arena3_body:"Origin, Seasonal, Community, Contribution, Sport. Each with its own progression dial.",
+    arena4_title:"Leaderboards", arena4_body:"Weekly and all-time rankings. Territory-based boards coming.",
+    badge1:"Early Reporter", badge2:"Pioneer", badge3:"Discovery", badge4:"First Light",
+    badge5:"Trailblazer", badge6:"Sentinel", badge7:"Season Opener", badge8:"Dawn Patrol",
+    ev_num:"04", ev_eyebrow:"Market signal",
+    ev_headline:'The market<br>is <span class="amber">already there.</span>',
+    ev_stat1_lbl:"Annual beach visitors in Barcelona", ev_stat2_lbl:"Mapped play zones across 8 beaches",
+    ev_stat3_lbl:"No direct competitor combining crowding + gamification", ev_stat4_lbl:"Apps today with real-time beach sports crowding",
+    ev_quote:'"Strava had 1M users before its first funding round.\nThey built it for cyclists.\nWe built it for beach players."',
+    mx1:"Crowding intel", mx2:"Gamification", mx3:"Sport-specific", mx4:"BCN-local", mx5:"Free",
+    inf_num:"05", inf_eyebrow:"Infrastructure, not an app",
+    inf_headline:'We don\'t organize games.<br>We make the beach <span class="amber">legible.</span>',
+    inf_sub:"Arenviu is not a booking platform. Not a tournament organizer. Not a club management tool. We are the data layer underneath — the shared intelligence that every beach sports player has always needed but never had.",
+    inf1_title:"The Infrastructure", inf1_body:"Like Waze built the traffic layer no map had. Like Google built search no directory had. We're building the beach sports layer.",
+    inf2_title:"For All Players, By Players", inf2_body:"Every report you submit trains the system. The more players report, the smarter the radar gets. You benefit from others. Others benefit from you.",
+    inf3_title:"Not Playtomic. Not Airbnb.", inf3_body:"We don't sell court time or organize matches. We give you the intelligence to decide where to go, when to go, and what to expect when you get there.",
+    inf_strip1:"WAZE FOR CROWDS", inf_strip2:"DARK SKY FOR BEACH", inf_strip3:"STRAVA FOR CULTURE",
+    par_num:"06", par_eyebrow:"Partners",
+    par_headline:'Your brand,<br>where players <span class="amber">decide.</span>',
+    par_sub:"We put your brand at the exact moment a beach sports player opens Arenviu to decide where to go. Whether you sell drinks, apparel, food, services, or experiences — if your audience plays outdoors, we're your channel.",
+    par_coming:"Coming soon", par_name:"Partner Name", par_role:"Brand Partner",
+    par_cta_headline:'Brand, product, service — <span style="color:var(--primary)">if your audience plays,</span> we\'re your channel.',
+    par_cta_body:"Get in touch to discuss partnership formats: in-app placements, community drops, Arena-wide promos.",
+    par_cta_btn:"Partner with us",
+    team_num:"07", team_eyebrow:"The team",
+    team_headline:'The <span class="amber">team.</span>',
+    team_sub:"Small, focused, and genuinely obsessed with beach sports.",
+    team1_role:"The Visioner", team1_quote:'"Couldn\'t find a free space. Built a radar."',
+    team2_role:"The Builder", team2_quote:'"If it runs, Pietro wrote it."',
+    team3_role:"The Amplifier", team3_quote:'"Makes the community want to be part of this."',
+    team4_badge:"Official mascot", team4_role:"The Mascot", team4_quote:'"Chief nap officer. Morale department."',
+    final_headline:'Know before<br>you <span class="amber">go.</span>',
+    final_sub:"Join the community building real-time beach intelligence for Barcelona.",
+    final_cta:"Try Arenviu — it's free",
+    final_mono1:"No account required", final_mono2:"Works on any device", final_mono3:"BCN only for now",
+    foot_privacy:"Privacy", foot_contact:"Contact", foot_copy:"© 2026 Arenviu · Built on the beach.",
+    lang_label:"EN", lang_flag:"🇬🇧"
+  },
 
-  const hb = document.getElementById('hamburger');
-  const navLinks = document.getElementById('nav-links');
-  hb.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    hb.classList.toggle('open', open);
-    hb.setAttribute('aria-expanded', open ? 'true' : 'false');
+  es: {
+    nav_problem:"Problema", nav_solution:"Solución", nav_arena:"Arena",
+    nav_evidence:"Evidencia", nav_infra:"Infraestructura", nav_partners:"Partners",
+    nav_team:"Equipo", nav_try:"Probar",
+    hero_tag:"BCN · Radar en Vivo · Inteligencia de Deportes de Playa",
+    hero_headline:'Deja de adivinar,<br>empieza a <span class="amber">jugar.</span>',
+    hero_sub:"Inteligencia de afluencia en tiempo real para la comunidad de deportes de playa de Barcelona. Sabe antes de ir — reporta, gana, juega.",
+    hero_cta1:"Prueba Arenviu — es gratis", hero_cta2:"Cómo funciona",
+    prob_num:"01", prob_eyebrow:"El problema",
+    prob_headline:'Llegas.<br>La playa está <span class="amber">llena.</span>',
+    prob_sub:"Las playas de Barcelona albergan miles de jugadores de deportes de playa — sin ninguna infraestructura digital para coordinarlos.",
+    prob1_title:"Sin datos de afluencia", prob1_body:"No sabes si tu zona está libre hasta que ya estás allí, con la bolsa en la mano.",
+    prob2_title:"Sin meteorología dedicada", prob2_body:"Las apps genéricas de tiempo no te dicen si es un buen día de vóley playa. La dirección del viento importa. El UV importa. El horario importa.",
+    prob3_title:"Comunidad fragmentada", prob3_body:"Miles de grupos de WhatsApp desconectados, hojas de Excel dispersas, algunas apps de nicho. Sin capa compartida. Sin inteligencia.",
+    stat1:"PLAYAS URBANAS", stat2:"ZONAS DE JUEGO", stat3:"DATOS EN TIEMPO REAL",
+    sol_num:"02", sol_eyebrow:"La solución",
+    sol_headline:'Radar en vivo.<br>Impulsado por la <span class="amber">comunidad.</span>',
+    sol1_title:"Play Score", sol1_body:"Combinación de tiempo, viento, UV y afluencia. Un número: ir o no ir.",
+    sol2_title:"Reportes comunitarios", sol2_body:"Estilo Waze: los usuarios reportan la afluencia en un toque. Libre / Ocupado / Lleno.",
+    sol3_title:"Arena Points", sol3_body:"Cada reporte gana XP. Rankings, rachas, insignias. El juego dentro del juego.",
+    sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de juego mapeadas: redes municipales, zonas de entrenamiento, pistas libres.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Juega<br>Reporta<br>Gana<br><span class="amber">Recompensas.</span>',
+    arena_sub:"Cada reporte que envías alimenta la comunidad — y alimenta tu rango. Arena Points, rachas, insignias, rankings. El juego dentro del juego.",
+    arena1_title:"Arena Points", arena1_body:"Gana XP por cada reporte. Más reportes, más peso en la comunidad.",
+    arena2_title:"Rachas de reportes", arena2_body:"Los días consecutivos reportando desbloquean bonificaciones y progreso de insignias.",
+    arena3_title:"5 Familias de insignias", arena3_body:"Origen, Estacional, Comunidad, Contribución, Deporte. Cada una con su dial de progresión.",
+    arena4_title:"Rankings", arena4_body:"Rankings semanales y de todos los tiempos. Rankings por territorio próximamente.",
+    badge1:"Reportero Precoz", badge2:"Pionero", badge3:"Descubrimiento", badge4:"Primera Luz",
+    badge5:"Explorador", badge6:"Centinela", badge7:"Apertura de Temporada", badge8:"Patrulla del Alba",
+    ev_num:"04", ev_eyebrow:"Señal de mercado",
+    ev_headline:'El mercado<br>ya <span class="amber">está ahí.</span>',
+    ev_stat1_lbl:"Visitantes anuales a las playas de Barcelona", ev_stat2_lbl:"Zonas de juego mapeadas en 8 playas",
+    ev_stat3_lbl:"Sin competidor directo combinando afluencia + gamificación", ev_stat4_lbl:"Apps hoy con afluencia en tiempo real de deportes de playa",
+    ev_quote:'"Strava tenía 1M de usuarios antes de su primera ronda de financiación.\nLo construyeron para ciclistas.\nNosotros lo construimos para jugadores de playa."',
+    mx1:"Datos de afluencia", mx2:"Gamificación", mx3:"Específico de deporte", mx4:"Local BCN", mx5:"Gratuito",
+    inf_num:"05", inf_eyebrow:"Infraestructura, no una app",
+    inf_headline:'No organizamos partidos.<br>Hacemos la playa <span class="amber">legible.</span>',
+    inf_sub:"Arenviu no es una plataforma de reservas. No es un organizador de torneos. No es una herramienta de gestión de clubes. Somos la capa de datos subyacente — la inteligencia compartida que todo jugador de playa siempre necesitó pero nunca tuvo.",
+    inf1_title:"La Infraestructura", inf1_body:"Como Waze construyó la capa de tráfico que ningún mapa tenía. Como Google construyó la búsqueda que ningún directorio tenía. Nosotros construimos la capa de deportes de playa.",
+    inf2_title:"Para todos los jugadores, por los jugadores", inf2_body:"Cada reporte que envías entrena el sistema. Cuantos más jugadores reporten, más inteligente se vuelve el radar. Tú te beneficias de otros. Otros se benefician de ti.",
+    inf3_title:"No Playtomic. No Airbnb.", inf3_body:"No vendemos tiempo de pista ni organizamos partidos. Te damos la inteligencia para decidir dónde ir, cuándo ir y qué esperar cuando llegues.",
+    inf_strip1:"WAZE PARA AFLUENCIA", inf_strip2:"DARK SKY PARA PLAYA", inf_strip3:"STRAVA PARA CULTURA",
+    par_num:"06", par_eyebrow:"Partners",
+    par_headline:'Tu marca,<br>donde los jugadores <span class="amber">deciden.</span>',
+    par_sub:"Ponemos tu marca en el momento exacto en que un jugador de deportes de playa abre Arenviu para decidir adónde ir. Ya vendas bebidas, ropa, comida, servicios o experiencias — si tu audiencia juega al aire libre, somos tu canal.",
+    par_coming:"Próximamente", par_name:"Nombre del Partner", par_role:"Partner de Marca",
+    par_cta_headline:'Marca, producto, servicio — <span style="color:var(--primary)">si tu audiencia juega,</span> somos tu canal.',
+    par_cta_body:"Contáctanos para hablar de formatos de partnership: espacios en la app, drops comunitarios, promos de Arena.",
+    par_cta_btn:"Colabora con nosotros",
+    team_num:"07", team_eyebrow:"El equipo",
+    team_headline:'El <span class="amber">equipo.</span>',
+    team_sub:"Pequeño, enfocado y genuinamente obsesionado con los deportes de playa.",
+    team1_role:"El Visionario", team1_quote:'"No encontraba una zona libre. Construyó un radar."',
+    team2_role:"El Constructor", team2_quote:'"Si funciona, Pietro lo escribió."',
+    team3_role:"La Amplificadora", team3_quote:'"Hace que la comunidad quiera ser parte de esto."',
+    team4_badge:"Mascota oficial", team4_role:"La Mascota", team4_quote:'"Jefe de siestas. Departamento de moral."',
+    final_headline:'Sabe antes<br>de <span class="amber">ir.</span>',
+    final_sub:"Únete a la comunidad construyendo inteligencia de playa en tiempo real para Barcelona.",
+    final_cta:"Prueba Arenviu — es gratis",
+    final_mono1:"Sin cuenta requerida", final_mono2:"Funciona en cualquier dispositivo", final_mono3:"Solo BCN por ahora",
+    foot_privacy:"Privacidad", foot_contact:"Contacto", foot_copy:"© 2026 Arenviu · Construido en la playa.",
+    lang_label:"ES", lang_flag:"🇪🇸"
+  },
+
+  ca: {
+    nav_problem:"Problema", nav_solution:"Solució", nav_arena:"Arena",
+    nav_evidence:"Evidència", nav_infra:"Infraestructura", nav_partners:"Partners",
+    nav_team:"Equip", nav_try:"Prova-ho",
+    hero_tag:"BCN · Radar en Viu · Intel·ligència d'Esports de Platja",
+    hero_headline:'Deixa d\'endevinar,<br>comença a <span class="amber">jugar.</span>',
+    hero_sub:"Intel·ligència d'afluència en temps real per a la comunitat d'esports de platja de Barcelona. Saps-ho abans d'anar — reporta, guanya, juga.",
+    hero_cta1:"Prova Arenviu — és gratuït", hero_cta2:"Com funciona",
+    prob_num:"01", prob_eyebrow:"El problema",
+    prob_headline:'Arribes.<br>La platja és <span class="amber">plena.</span>',
+    prob_sub:"Les platges de Barcelona acullen milers de jugadors d'esports de platja — sense cap infraestructura digital per coordinar-los.",
+    prob1_title:"Sense dades d'afluència", prob1_body:"No saps si la teva zona és lliure fins que ja ets allà, amb la bossa a la mà.",
+    prob2_title:"Sense meteorologia dedicada", prob2_body:"Les apps genèriques de temps no et diuen si és un bon dia de volei platja. La direcció del vent importa. L'UV importa. L'horari importa.",
+    prob3_title:"Comunitat fragmentada", prob3_body:"Milers de grups de WhatsApp desconnectats, fulls d'Excel dispersos, algunes apps de nínxol. Sense capa compartida. Sense intel·ligència.",
+    stat1:"PLATGES URBANES", stat2:"ZONES DE JOC", stat3:"DADES EN TEMPS REAL",
+    sol_num:"02", sol_eyebrow:"La solució",
+    sol_headline:'Radar en viu.<br>Impulsat per la <span class="amber">comunitat.</span>',
+    sol1_title:"Play Score", sol1_body:"Combinació de temps, vent, UV i afluència. Un número: anar o no anar.",
+    sol2_title:"Informes comunitaris", sol2_body:"Estil Waze: els usuaris informen l'afluència en un toc. Lliure / Ocupat / Ple.",
+    sol3_title:"Arena Points", sol3_body:"Cada informe guanya XP. Rànquings, ratxes, insígnies. El joc dins del joc.",
+    sol4_title:"Mapa de zones", sol4_body:"100+ zones de joc cartografiades: xarxes municipals, zones d'entrenament, pistes lliures.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Juga<br>Informa<br>Guanya<br><span class="amber">Recompenses.</span>',
+    arena_sub:"Cada informe que envies alimenta la comunitat — i alimenta el teu rang. Arena Points, ratxes, insígnies, rànquings. El joc dins del joc.",
+    arena1_title:"Arena Points", arena1_body:"Guanya XP per cada informe. Més informes, més pes a la comunitat.",
+    arena2_title:"Ratxes d'informes", arena2_body:"Els dies consecutius informant desbloquegen bonificacions i progrés d'insígnies.",
+    arena3_title:"5 Famílies d'insígnies", arena3_body:"Origen, Estacional, Comunitat, Contribució, Esport. Cadascuna amb el seu dial de progressió.",
+    arena4_title:"Rànquings", arena4_body:"Rànquings setmanals i de tots els temps. Rànquings per territori properament.",
+    badge1:"Informador Primerenc", badge2:"Pioner", badge3:"Descobriment", badge4:"Primera Llum",
+    badge5:"Explorador", badge6:"Sentinella", badge7:"Obertura de Temporada", badge8:"Patrulla de l'Alba",
+    ev_num:"04", ev_eyebrow:"Senyal de mercat",
+    ev_headline:'El mercat<br>ja <span class="amber">és aquí.</span>',
+    ev_stat1_lbl:"Visitants anuals a les platges de Barcelona", ev_stat2_lbl:"Zones de joc cartografiades en 8 platges",
+    ev_stat3_lbl:"Sense competidor directe combinant afluència + gamificació", ev_stat4_lbl:"Apps avui amb afluència en temps real d'esports de platja",
+    ev_quote:'"Strava tenia 1M d\'usuaris abans de la seva primera ronda de finançament.\nHo van construir per a ciclistes.\nNosaltres ho hem construït per a jugadors de platja."',
+    mx1:"Dades d'afluència", mx2:"Gamificació", mx3:"Específic d'esport", mx4:"Local BCN", mx5:"Gratuït",
+    inf_num:"05", inf_eyebrow:"Infraestructura, no una app",
+    inf_headline:'No organitzem partits.<br>Fem la platja <span class="amber">llegible.</span>',
+    inf_sub:"Arenviu no és una plataforma de reserves. No és un organitzador de torneigs. No és una eina de gestió de clubs. Som la capa de dades subjacent — la intel·ligència compartida que tot jugador de platja sempre ha necessitat però mai ha tingut.",
+    inf1_title:"La Infraestructura", inf1_body:"Com Waze va construir la capa de trànsit que cap mapa tenia. Com Google va construir la cerca que cap directori tenia. Nosaltres construïm la capa d'esports de platja.",
+    inf2_title:"Per a tots els jugadors, pels jugadors", inf2_body:"Cada informe que envies entrena el sistema. Com més jugadors informin, més intel·ligent es torna el radar. Tu et beneficies dels altres. Els altres es beneficien de tu.",
+    inf3_title:"No Playtomic. No Airbnb.", inf3_body:"No venem temps de pista ni organitzem partits. Et donem la intel·ligència per decidir on anar, quan anar i què esperar quan arribes.",
+    inf_strip1:"WAZE PER A L'AFLUÈNCIA", inf_strip2:"DARK SKY PER A LA PLATJA", inf_strip3:"STRAVA PER A LA CULTURA",
+    par_num:"06", par_eyebrow:"Partners",
+    par_headline:'La teva marca,<br>on els jugadors <span class="amber">decideixen.</span>',
+    par_sub:"Posem la teva marca en el moment exacte en què un jugador d'esports de platja obre Arenviu per decidir on anar. Tant si vens begudes, roba, menjar, serveis o experiències — si la teva audiència juga a l'aire lliure, som el teu canal.",
+    par_coming:"Properament", par_name:"Nom del Partner", par_role:"Partner de Marca",
+    par_cta_headline:'Marca, producte, servei — <span style="color:var(--primary)">si la teva audiència juga,</span> som el teu canal.',
+    par_cta_body:"Contacta'ns per parlar de formats de partnership: espais a l'app, drops comunitaris, promos d'Arena.",
+    par_cta_btn:"Col·labora amb nosaltres",
+    team_num:"07", team_eyebrow:"L'equip",
+    team_headline:'L\'<span class="amber">equip.</span>',
+    team_sub:"Petit, enfocat i genuïnament obsessionat amb els esports de platja.",
+    team1_role:"El Visionari", team1_quote:'"No trobava una zona lliure. Va construir un radar."',
+    team2_role:"El Constructor", team2_quote:'"Si funciona, en Pietro ho va escriure."',
+    team3_role:"L'Amplificadora", team3_quote:'"Fa que la comunitat vulgui formar-ne part."',
+    team4_badge:"Mascota oficial", team4_role:"La Mascota", team4_quote:'"Cap d\'migdiades. Departament de moral."',
+    final_headline:'Sap-ho abans<br>d\'<span class="amber">anar.</span>',
+    final_sub:"Uneix-te a la comunitat construint intel·ligència de platja en temps real per a Barcelona.",
+    final_cta:"Prova Arenviu — és gratuït",
+    final_mono1:"Sense compte requerit", final_mono2:"Funciona en qualsevol dispositiu", final_mono3:"Només BCN per ara",
+    foot_privacy:"Privacitat", foot_contact:"Contacte", foot_copy:"© 2026 Arenviu · Construït a la platja.",
+    lang_label:"CA", lang_flag:"🏴"
+  },
+
+  pt: {
+    nav_problem:"Problema", nav_solution:"Solução", nav_arena:"Arena",
+    nav_evidence:"Evidência", nav_infra:"Infraestrutura", nav_partners:"Partners",
+    nav_team:"Equipa", nav_try:"Experimentar",
+    hero_tag:"BCN · Radar ao Vivo · Inteligência de Desportos de Praia",
+    hero_headline:'Para de adivinhar,<br>começa a <span class="amber">jogar.</span>',
+    hero_sub:"Inteligência de afluência em tempo real para a comunidade de desportos de praia de Barcelona. Sabe antes de ir — reporta, ganha, joga.",
+    hero_cta1:"Experimenta Arenviu — é grátis", hero_cta2:"Como funciona",
+    prob_num:"01", prob_eyebrow:"O problema",
+    prob_headline:'Chegas.<br>A praia está <span class="amber">cheia.</span>',
+    prob_sub:"As praias de Barcelona acolhem milhares de jogadores de desportos de praia — sem qualquer infraestrutura digital para os coordenar.",
+    prob1_title:"Sem dados de afluência", prob1_body:"Não sabes se a tua zona está livre até já lá estares, com o saco na mão.",
+    prob2_title:"Sem meteorologia dedicada", prob2_body:"As apps genéricas de tempo não te dizem se é um bom dia de voleibol de praia. A direção do vento importa. O UV importa. O horário importa.",
+    prob3_title:"Comunidade fragmentada", prob3_body:"Milhares de grupos de WhatsApp desligados, folhas de Excel dispersas, algumas apps de nicho. Sem camada partilhada. Sem inteligência.",
+    stat1:"PRAIAS URBANAS", stat2:"ZONAS DE JOGO", stat3:"DADOS EM TEMPO REAL",
+    sol_num:"02", sol_eyebrow:"A solução",
+    sol_headline:'Radar ao vivo.<br>Impulsionado pela <span class="amber">comunidade.</span>',
+    sol1_title:"Play Score", sol1_body:"Combinação de tempo, vento, UV e afluência. Um número: ir ou não ir.",
+    sol2_title:"Relatórios comunitários", sol2_body:"Estilo Waze: os utilizadores reportam a afluência num toque. Livre / Ocupado / Cheio.",
+    sol3_title:"Arena Points", sol3_body:"Cada relatório ganha XP. Rankings, sequências, insígnias. O jogo dentro do jogo.",
+    sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de jogo mapeadas: redes municipais, zonas de treino, campos livres.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Joga<br>Reporta<br>Ganha<br><span class="amber">Recompensas.</span>',
+    arena_sub:"Cada relatório que envias alimenta a comunidade — e alimenta o teu ranking. Arena Points, sequências, insígnias, leaderboards. O jogo dentro do jogo.",
+    arena1_title:"Arena Points", arena1_body:"Ganha XP por cada relatório. Mais relatórios, mais peso na comunidade.",
+    arena2_title:"Sequências de relatórios", arena2_body:"Dias consecutivos a reportar desbloqueiam bónus e progresso de insígnias.",
+    arena3_title:"5 Famílias de insígnias", arena3_body:"Origem, Sazonal, Comunidade, Contribuição, Desporto. Cada uma com o seu próprio dial de progressão.",
+    arena4_title:"Leaderboards", arena4_body:"Rankings semanais e de todos os tempos. Rankings por território em breve.",
+    badge1:"Repórter Precoce", badge2:"Pioneiro", badge3:"Descoberta", badge4:"Primeira Luz",
+    badge5:"Explorador", badge6:"Sentinela", badge7:"Abertura de Temporada", badge8:"Patrulha da Madrugada",
+    ev_num:"04", ev_eyebrow:"Sinal de mercado",
+    ev_headline:'O mercado<br>já <span class="amber">está lá.</span>',
+    ev_stat1_lbl:"Visitantes anuais às praias de Barcelona", ev_stat2_lbl:"Zonas de jogo mapeadas em 8 praias",
+    ev_stat3_lbl:"Sem concorrente direto combinando afluência + gamificação", ev_stat4_lbl:"Apps hoje com afluência em tempo real de desportos de praia",
+    ev_quote:'"A Strava tinha 1M de utilizadores antes da sua primeira ronda de financiamento.\nConstruíram-na para ciclistas.\nNós construímos para jogadores de praia."',
+    mx1:"Dados de afluência", mx2:"Gamificação", mx3:"Específico de desporto", mx4:"Local BCN", mx5:"Gratuito",
+    inf_num:"05", inf_eyebrow:"Infraestrutura, não uma app",
+    inf_headline:'Não organizamos jogos.<br>Tornamos a praia <span class="amber">legível.</span>',
+    inf_sub:"A Arenviu não é uma plataforma de reservas. Não é um organizador de torneios. Não é uma ferramenta de gestão de clubes. Somos a camada de dados subjacente — a inteligência partilhada que todo o jogador de praia sempre precisou mas nunca teve.",
+    inf1_title:"A Infraestrutura", inf1_body:"Como a Waze construiu a camada de tráfego que nenhum mapa tinha. Como a Google construiu a pesquisa que nenhum diretório tinha. Nós estamos a construir a camada de desportos de praia.",
+    inf2_title:"Para todos os jogadores, pelos jogadores", inf2_body:"Cada relatório que envias treina o sistema. Quanto mais jogadores reportarem, mais inteligente o radar fica. Tu beneficias dos outros. Os outros beneficiam de ti.",
+    inf3_title:"Não Playtomic. Não Airbnb.", inf3_body:"Não vendemos tempo de campo nem organizamos jogos. Damos-te a inteligência para decidires onde ir, quando ir e o que esperar quando chegares.",
+    inf_strip1:"WAZE PARA AFLUÊNCIA", inf_strip2:"DARK SKY PARA PRAIA", inf_strip3:"STRAVA PARA CULTURA",
+    par_num:"06", par_eyebrow:"Partners",
+    par_headline:'A tua marca,<br>onde os jogadores <span class="amber">decidem.</span>',
+    par_sub:"Colocamos a tua marca no momento exato em que um jogador de desportos de praia abre a Arenviu para decidir para onde ir. Seja a vender bebidas, roupa, comida, serviços ou experiências — se a tua audiência joga ao ar livre, somos o teu canal.",
+    par_coming:"Em breve", par_name:"Nome do Partner", par_role:"Partner de Marca",
+    par_cta_headline:'Marca, produto, serviço — <span style="color:var(--primary)">se a tua audiência joga,</span> somos o teu canal.',
+    par_cta_body:"Contacta-nos para discutir formatos de parceria: posicionamentos na app, drops comunitários, promos de Arena.",
+    par_cta_btn:"Parceria connosco",
+    team_num:"07", team_eyebrow:"A equipa",
+    team_headline:'A <span class="amber">equipa.</span>',
+    team_sub:"Pequena, focada e genuinamente obcecada com os desportos de praia.",
+    team1_role:"O Visionário", team1_quote:'"Não encontrava uma zona livre. Construiu um radar."',
+    team2_role:"O Construtor", team2_quote:'"Se funciona, o Pietro escreveu-o."',
+    team3_role:"A Amplificadora", team3_quote:'"Faz com que a comunidade queira fazer parte disto."',
+    team4_badge:"Mascote oficial", team4_role:"A Mascote", team4_quote:'"Chefe de sestas. Departamento de moral."',
+    final_headline:'Sabe antes<br>de <span class="amber">ir.</span>',
+    final_sub:"Junta-te à comunidade que está a construir inteligência de praia em tempo real para Barcelona.",
+    final_cta:"Experimenta Arenviu — é grátis",
+    final_mono1:"Sem conta necessária", final_mono2:"Funciona em qualquer dispositivo", final_mono3:"Só BCN por agora",
+    foot_privacy:"Privacidade", foot_contact:"Contacto", foot_copy:"© 2026 Arenviu · Construído na praia.",
+    lang_label:"PT", lang_flag:"🇵🇹"
+  },
+
+  it: {
+    nav_problem:"Problema", nav_solution:"Soluzione", nav_arena:"Arena",
+    nav_evidence:"Evidenza", nav_infra:"Infrastruttura", nav_partners:"Partner",
+    nav_team:"Team", nav_try:"Prova ora",
+    hero_tag:"BCN · Radar in Diretta · Intelligenza per gli Sport da Spiaggia",
+    hero_headline:'Smettila di indovinare,<br>inizia a <span class="amber">giocare.</span>',
+    hero_sub:"Intelligenza in tempo reale sull'affollamento per la comunità degli sport da spiaggia di Barcellona. Sai prima di andare — segnala, guadagna, gioca.",
+    hero_cta1:"Prova Arenviu — è gratis", hero_cta2:"Come funziona",
+    prob_num:"01", prob_eyebrow:"Il problema",
+    prob_headline:'Arrivi.<br>La spiaggia è <span class="amber">piena.</span>',
+    prob_sub:"Le spiagge di Barcellona ospitano migliaia di giocatori di sport da spiaggia — senza alcuna infrastruttura digitale per coordinarli.",
+    prob1_title:"Nessun dato sull'affollamento", prob1_body:"Non sai se la tua zona è libera finché non sei già lì, borsa in mano.",
+    prob2_title:"Nessuna meteo dedicata", prob2_body:"Le app meteo generiche non ti dicono se è una buona giornata per il beach volley. La direzione del vento conta. L'UV conta. Gli orari contano.",
+    prob3_title:"Comunità frammentata", prob3_body:"Migliaia di gruppi WhatsApp scollegati, fogli Excel sparsi, qualche app di nicchia. Nessun layer condiviso. Nessuna intelligenza.",
+    stat1:"SPIAGGE URBANE", stat2:"ZONE DI GIOCO", stat3:"DATI IN TEMPO REALE",
+    sol_num:"02", sol_eyebrow:"La soluzione",
+    sol_headline:'Radar in diretta.<br>Alimentato dalla <span class="amber">comunità.</span>',
+    sol1_title:"Play Score", sol1_body:"Combinazione di meteo, vento, UV e affollamento. Un numero: andare o non andare.",
+    sol2_title:"Report comunitari", sol2_body:"Stile Waze: gli utenti segnalano l'affollamento in un tocco. Libero / Occupato / Pieno.",
+    sol3_title:"Arena Points", sol3_body:"Ogni report guadagna XP. Classifiche, streak, badge. Il gioco nel gioco.",
+    sol4_title:"Mappa delle zone", sol4_body:"100+ zone di gioco mappate: reti municipali, zone di allenamento, campi liberi.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Gioca<br>Segnala<br>Guadagna<br><span class="amber">Premi.</span>',
+    arena_sub:"Ogni report che invii alimenta la comunità — e alimenta il tuo ranking. Arena Points, streak, badge, classifiche. Il gioco nel gioco.",
+    arena1_title:"Arena Points", arena1_body:"Guadagna XP per ogni report. Più report, più peso nella comunità.",
+    arena2_title:"Streak di report", arena2_body:"I giorni consecutivi di segnalazione sbloccano bonus e progressi sui badge.",
+    arena3_title:"5 Famiglie di badge", arena3_body:"Origine, Stagionale, Comunità, Contributo, Sport. Ognuna con il suo quadrante di progressione.",
+    arena4_title:"Classifiche", arena4_body:"Classifiche settimanali e di tutti i tempi. Classifiche per territorio in arrivo.",
+    badge1:"Reporter Precoce", badge2:"Pioniere", badge3:"Scoperta", badge4:"Prima Luce",
+    badge5:"Esploratore", badge6:"Sentinella", badge7:"Apertura di Stagione", badge8:"Pattuglia dell'Alba",
+    ev_num:"04", ev_eyebrow:"Segnale di mercato",
+    ev_headline:'Il mercato<br>è già <span class="amber">lì.</span>',
+    ev_stat1_lbl:"Visitatori annuali alle spiagge di Barcellona", ev_stat2_lbl:"Zone di gioco mappate su 8 spiagge",
+    ev_stat3_lbl:"Nessun concorrente diretto che combina affollamento + gamification", ev_stat4_lbl:"App oggi con affollamento in tempo reale per sport da spiaggia",
+    ev_quote:'"Strava aveva 1M di utenti prima del suo primo round di finanziamento.\nL\'hanno costruito per i ciclisti.\nNoi l\'abbiamo costruito per i giocatori da spiaggia."',
+    mx1:"Dati affollamento", mx2:"Gamification", mx3:"Specifico per sport", mx4:"Locale BCN", mx5:"Gratuito",
+    inf_num:"05", inf_eyebrow:"Infrastruttura, non un'app",
+    inf_headline:'Non organizziamo partite.<br>Rendiamo la spiaggia <span class="amber">leggibile.</span>',
+    inf_sub:"Arenviu non è una piattaforma di prenotazione. Non è un organizzatore di tornei. Non è uno strumento di gestione di club. Siamo il layer di dati sottostante — l'intelligenza condivisa che ogni giocatore da spiaggia ha sempre avuto bisogno ma non ha mai avuto.",
+    inf1_title:"L'Infrastruttura", inf1_body:"Come Waze ha costruito il layer del traffico che nessuna mappa aveva. Come Google ha costruito la ricerca che nessuna directory aveva. Noi stiamo costruendo il layer degli sport da spiaggia.",
+    inf2_title:"Per tutti i giocatori, dai giocatori", inf2_body:"Ogni report che invii allena il sistema. Più giocatori segnalano, più intelligente diventa il radar. Tu benefici dagli altri. Gli altri beneficiano da te.",
+    inf3_title:"Non Playtomic. Non Airbnb.", inf3_body:"Non vendiamo tempo campo né organizziamo partite. Ti diamo l'intelligenza per decidere dove andare, quando andare e cosa aspettarti quando arrivi.",
+    inf_strip1:"WAZE PER L'AFFOLLAMENTO", inf_strip2:"DARK SKY PER LA SPIAGGIA", inf_strip3:"STRAVA PER LA CULTURA",
+    par_num:"06", par_eyebrow:"Partner",
+    par_headline:'Il tuo brand,<br>dove i giocatori <span class="amber">decidono.</span>',
+    par_sub:"Mettiamo il tuo brand nel momento esatto in cui un giocatore di sport da spiaggia apre Arenviu per decidere dove andare. Che tu venda bevande, abbigliamento, cibo, servizi o esperienze — se il tuo pubblico gioca all'aperto, siamo il tuo canale.",
+    par_coming:"Prossimamente", par_name:"Nome del Partner", par_role:"Brand Partner",
+    par_cta_headline:'Brand, prodotto, servizio — <span style="color:var(--primary)">se il tuo pubblico gioca,</span> siamo il tuo canale.',
+    par_cta_body:"Contattaci per discutere i formati di partnership: posizionamenti in-app, community drop, promo Arena.",
+    par_cta_btn:"Collabora con noi",
+    team_num:"07", team_eyebrow:"Il team",
+    team_headline:'Il <span class="amber">team.</span>',
+    team_sub:"Piccolo, focalizzato e genuinamente ossessionato dagli sport da spiaggia.",
+    team1_role:"Il Visionario", team1_quote:'"Non trovava una zona libera. Ha costruito un radar."',
+    team2_role:"Il Costruttore", team2_quote:'"Se funziona, l\'ha scritto Pietro."',
+    team3_role:"L'Amplificatrice", team3_quote:'"Fa sì che la comunità voglia essere parte di questo."',
+    team4_badge:"Mascotte ufficiale", team4_role:"La Mascotte", team4_quote:'"Responsabile pisolini. Dipartimento morale."',
+    final_headline:'Sai prima<br>di <span class="amber">andare.</span>',
+    final_sub:"Unisciti alla comunità che sta costruendo l'intelligenza delle spiagge in tempo reale per Barcellona.",
+    final_cta:"Prova Arenviu — è gratis",
+    final_mono1:"Nessun account richiesto", final_mono2:"Funziona su qualsiasi dispositivo", final_mono3:"Solo BCN per ora",
+    foot_privacy:"Privacy", foot_contact:"Contatto", foot_copy:"© 2026 Arenviu · Costruito in spiaggia.",
+    lang_label:"IT", lang_flag:"🇮🇹"
+  },
+
+  fr: {
+    nav_problem:"Problème", nav_solution:"Solution", nav_arena:"Arena",
+    nav_evidence:"Preuves", nav_infra:"Infrastructure", nav_partners:"Partenaires",
+    nav_team:"Équipe", nav_try:"Essayer",
+    hero_tag:"BCN · Radar en Direct · Intelligence Sports de Plage",
+    hero_headline:'Arrête de deviner,<br>commence à <span class="amber">jouer.</span>',
+    hero_sub:"Renseignements en temps réel sur la fréquentation pour la communauté des sports de plage de Barcelone. Sache avant d'y aller — signale, gagne, joue.",
+    hero_cta1:"Essaie Arenviu — c'est gratuit", hero_cta2:"Comment ça marche",
+    prob_num:"01", prob_eyebrow:"Le problème",
+    prob_headline:'Tu arrives.<br>La plage est <span class="amber">pleine.</span>',
+    prob_sub:"Les plages de Barcelone accueillent des milliers de joueurs de sports de plage — sans la moindre infrastructure numérique pour les coordonner.",
+    prob1_title:"Aucune donnée de fréquentation", prob1_body:"Tu ne sais pas si ta zone est libre avant d'y être déjà, sac à la main.",
+    prob2_title:"Pas de météo dédiée", prob2_body:"Les apps météo génériques ne te disent pas si c'est une bonne journée de beach-volley. La direction du vent compte. L'UV compte. L'horaire compte.",
+    prob3_title:"Communauté fragmentée", prob3_body:"Des milliers de groupes WhatsApp déconnectés, des feuilles Excel éparpillées, quelques apps de niche. Aucune couche partagée. Aucune intelligence.",
+    stat1:"PLAGES URBAINES", stat2:"ZONES DE JEU", stat3:"DONNÉES EN TEMPS RÉEL",
+    sol_num:"02", sol_eyebrow:"La solution",
+    sol_headline:'Radar en direct.<br>Alimenté par la <span class="amber">communauté.</span>',
+    sol1_title:"Play Score", sol1_body:"Combinaison de météo, vent, UV et fréquentation. Un chiffre : y aller ou pas.",
+    sol2_title:"Rapports communautaires", sol2_body:"Style Waze : les utilisateurs signalent la fréquentation en un toucher. Libre / Occupé / Plein.",
+    sol3_title:"Arena Points", sol3_body:"Chaque rapport gagne des XP. Classements, séries, badges. Le jeu dans le jeu.",
+    sol4_title:"Carte des zones", sol4_body:"100+ zones de jeu cartographiées : filets municipaux, zones d'entraînement, terrains libres.",
+    arena_num:"03", arena_eyebrow:"Arena",
+    arena_headline:'Joue<br>Signale<br>Gagne<br><span class="amber">Des récompenses.</span>',
+    arena_sub:"Chaque rapport que tu envoies nourrit la communauté — et nourrit ton classement. Arena Points, séries, badges, leaderboards. Le jeu dans le jeu.",
+    arena1_title:"Arena Points", arena1_body:"Gagne des XP pour chaque rapport. Plus de rapports, plus de poids dans la communauté.",
+    arena2_title:"Séries de rapports", arena2_body:"Les jours consécutifs de signalement débloquent des bonus et la progression des badges.",
+    arena3_title:"5 Familles de badges", arena3_body:"Origine, Saisonnier, Communauté, Contribution, Sport. Chacune avec son propre cadran de progression.",
+    arena4_title:"Classements", arena4_body:"Classements hebdomadaires et de tous les temps. Classements par territoire à venir.",
+    badge1:"Reporter Précoce", badge2:"Pionnier", badge3:"Découverte", badge4:"Première Lueur",
+    badge5:"Explorateur", badge6:"Sentinelle", badge7:"Ouverture de Saison", badge8:"Patrouille de l'Aube",
+    ev_num:"04", ev_eyebrow:"Signal de marché",
+    ev_headline:'Le marché<br>est déjà <span class="amber">là.</span>',
+    ev_stat1_lbl:"Visiteurs annuels des plages de Barcelone", ev_stat2_lbl:"Zones de jeu cartographiées sur 8 plages",
+    ev_stat3_lbl:"Aucun concurrent direct combinant fréquentation + gamification", ev_stat4_lbl:"Apps aujourd'hui avec fréquentation en temps réel des sports de plage",
+    ev_quote:'"Strava avait 1M d\'utilisateurs avant son premier tour de financement.\nIls l\'ont construit pour les cyclistes.\nNous l\'avons construit pour les joueurs de plage."',
+    mx1:"Données fréquentation", mx2:"Gamification", mx3:"Spécifique au sport", mx4:"Local BCN", mx5:"Gratuit",
+    inf_num:"05", inf_eyebrow:"Infrastructure, pas une app",
+    inf_headline:'Nous n\'organisons pas de matchs.<br>Nous rendons la plage <span class="amber">lisible.</span>',
+    inf_sub:"Arenviu n'est pas une plateforme de réservation. Pas un organisateur de tournois. Pas un outil de gestion de club. Nous sommes la couche de données sous-jacente — l'intelligence partagée dont chaque joueur de plage a toujours eu besoin mais n'a jamais eue.",
+    inf1_title:"L'Infrastructure", inf1_body:"Comme Waze a construit la couche de trafic qu'aucune carte n'avait. Comme Google a construit la recherche qu'aucun annuaire n'avait. Nous construisons la couche des sports de plage.",
+    inf2_title:"Pour tous les joueurs, par les joueurs", inf2_body:"Chaque rapport que tu envoies entraîne le système. Plus les joueurs signalent, plus le radar devient intelligent. Tu bénéficies des autres. Les autres bénéficient de toi.",
+    inf3_title:"Pas Playtomic. Pas Airbnb.", inf3_body:"Nous ne vendons pas de temps de terrain ni n'organisons de matchs. Nous te donnons l'intelligence pour décider où aller, quand aller et quoi attendre à ton arrivée.",
+    inf_strip1:"WAZE POUR LA FRÉQUENTATION", inf_strip2:"DARK SKY POUR LA PLAGE", inf_strip3:"STRAVA POUR LA CULTURE",
+    par_num:"06", par_eyebrow:"Partenaires",
+    par_headline:'Ta marque,<br>là où les joueurs <span class="amber">décident.</span>',
+    par_sub:"Nous plaçons ta marque au moment exact où un joueur de sports de plage ouvre Arenviu pour décider où aller. Que tu vendes des boissons, des vêtements, de la nourriture, des services ou des expériences — si ton audience joue en plein air, nous sommes ton canal.",
+    par_coming:"Bientôt disponible", par_name:"Nom du Partenaire", par_role:"Partenaire de Marque",
+    par_cta_headline:'Marque, produit, service — <span style="color:var(--primary)">si ton audience joue,</span> nous sommes ton canal.',
+    par_cta_body:"Contacte-nous pour discuter des formats de partenariat : placements in-app, community drops, promos Arena.",
+    par_cta_btn:"Deviens partenaire",
+    team_num:"07", team_eyebrow:"L'équipe",
+    team_headline:'L\'<span class="amber">équipe.</span>',
+    team_sub:"Petite, concentrée et véritablement obsédée par les sports de plage.",
+    team1_role:"Le Visionnaire", team1_quote:'"Ne trouvait pas de zone libre. A construit un radar."',
+    team2_role:"Le Constructeur", team2_quote:'"Si ça tourne, Pietro l\'a écrit."',
+    team3_role:"L'Amplificatrice", team3_quote:'"Fait en sorte que la communauté veuille en faire partie."',
+    team4_badge:"Mascotte officielle", team4_role:"La Mascotte", team4_quote:'"Responsable siestes. Département moral."',
+    final_headline:'Sache-le avant<br>d\'<span class="amber">y aller.</span>',
+    final_sub:"Rejoins la communauté qui construit l'intelligence des plages en temps réel pour Barcelone.",
+    final_cta:"Essaie Arenviu — c'est gratuit",
+    final_mono1:"Aucun compte requis", final_mono2:"Fonctionne sur n'importe quel appareil", final_mono3:"BCN seulement pour l'instant",
+    foot_privacy:"Confidentialité", foot_contact:"Contact", foot_copy:"© 2026 Arenviu · Construit sur la plage.",
+    lang_label:"FR", lang_flag:"🇫🇷"
+  }
+};
+
+/* ─── LANG ENGINE ──────────────────────────────────────────────────── */
+let currentLang = localStorage.getItem('arenviu_lang') || 'en';
+
+function applyLang(lang) {
+  if (!T[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('arenviu_lang', lang);
+  document.documentElement.lang = lang;
+
+  const tr = T[lang];
+
+  // Simple text replacement
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (tr[key] !== undefined) el.textContent = tr[key];
   });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navLinks.classList.remove('open'); hb.classList.remove('open');
-  }));
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+  // HTML replacement (for spans, brs)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (tr[key] !== undefined) el.innerHTML = tr[key];
+  });
 
-  const countIO = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const el = e.target;
-      const target = parseFloat(el.dataset.count);
-      const suffix = el.dataset.suffix || '';
-      const prefix = el.dataset.prefix || '';
-      const isFloat = String(target).includes('.');
-      const dur = 1400;
-      const start = performance.now();
-      function tick(t) {
-        const p = Math.min(1, (t - start) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = target * eased;
-        el.textContent = prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      countIO.unobserve(el);
-    });
-  }, { threshold: 0.4 });
-  document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
+  // Update lang switcher UI
+  document.getElementById('lang-current').textContent = tr.lang_label;
+  document.getElementById('lang-flag').textContent = tr.lang_flag;
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
+  });
 
-  const glow = document.querySelector('.hero-glow');
-  if (glow) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y < window.innerHeight) glow.style.transform = `translateY(calc(-50% + ${y * 0.15}px))`;
-    }, { passive: true });
+  // Update page title & meta
+  const titles = {
+    en:'Arenviu — Stop Guessing, Start Playing · Barcelona',
+    es:'Arenviu — Deja de Adivinar, Empieza a Jugar · Barcelona',
+    ca:'Arenviu — Deixa d\'Endevinar, Comença a Jugar · Barcelona',
+    pt:'Arenviu — Para de Adivinhar, Começa a Jogar · Barcelona',
+    it:'Arenviu — Smettila di Indovinare, Inizia a Giocare · Barcellona',
+    fr:'Arenviu — Arrête de Deviner, Commence à Jouer · Barcelone'
+  };
+  document.title = titles[lang] || titles.en;
+}
+
+/* ─── DROPDOWN LOGIC ───────────────────────────────────────────────── */
+const switcher = document.getElementById('lang-switcher');
+const langBtn  = document.getElementById('lang-btn');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const open = switcher.classList.toggle('open');
+  langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    switcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (!switcher.contains(e.target)) {
+    switcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
   }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    switcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+/* ─── NAV HIDE/SHOW ────────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+let lastY = 0, ticking = false;
+function onScroll() {
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 20);
+  if (y > lastY && y > 120) nav.classList.add('hidden');
+  else nav.classList.remove('hidden');
+  lastY = y; ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+}, { passive: true });
+
+/* ─── HAMBURGER ────────────────────────────────────────────────────── */
+const hb = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hb.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  hb.classList.toggle('open', open);
+  hb.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open'); hb.classList.remove('open');
+}));
+
+/* ─── SCROLL ANIMATIONS ────────────────────────────────────────────── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+/* ─── COUNT UP ─────────────────────────────────────────────────────── */
+const countIO = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const isFloat = String(target).includes('.');
+    const dur = 1400;
+    const start = performance.now();
+    function tick(t) {
+      const p = Math.min(1, (t - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    countIO.unobserve(el);
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
+
+/* ─── PARALLAX ─────────────────────────────────────────────────────── */
+const glow = document.querySelector('.hero-glow');
+if (glow) {
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < window.innerHeight) glow.style.transform = `translateY(calc(-50% + ${y * 0.15}px))`;
+  }, { passive: true });
+}
+
+/* ─── INIT ─────────────────────────────────────────────────────────── */
+applyLang(currentLang);
 </script>
 
 </body>
