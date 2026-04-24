@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Arenviu — Stop Guessing, Start Playing · Barcelona</title>
+<meta name="description" content="Real-time beach sports intelligence for Barcelona. Know before you go — report, earn, play." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,800;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: hsl(0 0% 4%);
+    --fg: hsl(0 0% 98%);
+    --card: hsl(240 6% 10%);
+    --card-2: hsl(240 6% 13%);
+    --muted-fg: hsl(240 5% 65%);
+    --border: hsl(240 4% 16%);
+    --border-strong: hsl(240 4% 24%);
+    --primary: hsl(38 95% 55%);
+    --primary-deep: hsl(32 88% 42%);
+    --c-great: hsl(142 72% 45%);
+    --c-moderate: hsl(40 96% 55%);
+    --c-poor: hsl(0 80% 62%);
+    --radius: 16px;
+    --shadow-glow-primary: 0 0 24px hsl(38 95% 55% / .35);
+    --ease-out: cubic-bezier(.2,.8,.2,1);
+    --f-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --f-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--f-ui);
+    background: var(--bg); color: var(--fg);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background-image:
+      linear-gradient(to right, hsl(0 0% 100% / .04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(0 0% 100% / .04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+
+  .mono { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-fg); }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* Lucide-style icon defaults */
+  .lucide { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* NAVBAR */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    border-bottom: 1px solid transparent;
+    transition: transform .35s var(--ease-out), border-color .3s, background .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--border); }
+  .nav.hidden { transform: translateY(-100%); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 32px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo img { width: 32px; height: 32px; border-radius: 8px; }
+  .logo-wm { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 17px; text-transform: uppercase; letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: 4px; margin-left: auto; align-items: center; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted-fg); padding: 8px 14px; border-radius: 10px;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color: var(--fg); background: hsl(0 0% 100% / .04); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--f-display); font-weight: 800; font-size: 13px;
+    padding: 10px 18px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: transform .2s var(--ease-out), filter .2s, box-shadow .3s;
+  }
+  .btn-primary {
+    background: linear-gradient(180deg, hsl(38 95% 60%), hsl(32 88% 44%));
+    color: #1a0e00; box-shadow: var(--shadow-glow-primary);
+  }
+  .btn-primary:hover { transform: translateY(-1px); animation: pulse-glow 1.2s ease-in-out infinite; }
+  .btn-ghost { border: 1px solid var(--border-strong); color: var(--fg); padding: 9px 17px; }
+  .btn-ghost:hover { background: hsl(0 0% 100% / .05); border-color: var(--muted-fg); }
+  .btn-lg { padding: 16px 28px; font-size: 14px; }
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 32px hsl(38 95% 55% / .6); }
+    50%     { box-shadow: 0 0 48px hsl(38 95% 55% / .9); }
+  }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 10px; margin-left: auto; }
+  .hamburger span { width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform .3s, opacity .3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  section { min-height: 100vh; padding: 140px 0 100px; position: relative; display: flex; flex-direction: column; justify-content: center; }
+  section#hero { padding-top: 120px; }
+  .eyebrow {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted-fg);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .eyebrow b { color: var(--primary); font-weight: 500; }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .stagger.in > * { opacity: 1; transform: translateY(0); }
+  .stagger.in > *:nth-child(1) { transition-delay: 0ms; }
+  .stagger.in > *:nth-child(2) { transition-delay: 80ms; }
+  .stagger.in > *:nth-child(3) { transition-delay: 160ms; }
+  .stagger.in > *:nth-child(4) { transition-delay: 240ms; }
+  .stagger.in > *:nth-child(5) { transition-delay: 320ms; }
+  .stagger.in > *:nth-child(6) { transition-delay: 400ms; }
+  .stagger.in > *:nth-child(7) { transition-delay: 480ms; }
+  .stagger.in > *:nth-child(8) { transition-delay: 560ms; }
+
+  /* HERO */
+  #hero { position: relative; overflow: hidden; }
+  .hero-glow {
+    position: absolute; top: 50%; right: -10%; width: 900px; height: 900px;
+    background: radial-gradient(circle, hsl(38 95% 55% / .22), transparent 60%);
+    transform: translateY(-50%);
+    animation: breathe 4.5s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes breathe {
+    0%,100% { opacity: .6; transform: translateY(-50%) scale(1); }
+    50%     { opacity: 1;  transform: translateY(-50%) scale(1.12); }
+  }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.25fr 1fr; gap: 64px; align-items: center; }
+  .hero-tag { margin-bottom: 22px; }
+  .hero-tag .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--c-great); position: relative; }
+  .hero-tag .dot-live::after {
+    content: ""; position: absolute; inset: -4px; border-radius: 50%;
+    background: var(--c-great); opacity: .35; animation: ping 1.6s ease-out infinite;
+  }
+  @keyframes ping { 0% { opacity: .6; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
+  .mega {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(72px, 11vw, 160px); line-height: 0.88;
+    letter-spacing: -0.04em; margin: 0;
+  }
+  .mega .amber { color: var(--primary); }
+  .hero-sub { margin: 28px 0 36px; color: var(--muted-fg); font-size: 22px; line-height: 1.5; max-width: 600px; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Phone mock */
+  .phone-mock {
+    width: 380px; max-width: 100%; aspect-ratio: 9 / 19.5;
+    background: hsl(0 0% 2%); border: 1px solid var(--border-strong);
+    border-radius: 44px; padding: 10px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px hsl(38 95% 55% / .1), var(--shadow-glow-primary);
+    position: relative; margin-left: auto; overflow: hidden;
+  }
+  .phone-mock .screen-img { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; display: block; }
+
+  /* PROBLEM */
+  .problem-head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
+  .h-section {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(40px, 6vw, 84px); line-height: 0.95;
+    letter-spacing: -0.03em; margin: 0;
+  }
+  .h-section .amber { color: var(--primary); }
+  .section-sub { color: var(--muted-fg); font-size: 17px; line-height: 1.55; max-width: 520px; }
+
+  .problem-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .p-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 32px;
+    transition: transform .3s var(--ease-out), border-color .3s, background .3s;
+  }
+  .p-card:hover { transform: translateY(-4px); border-color: var(--border-strong); background: var(--card-2); }
+  .p-card .iconwrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
+    display: grid; place-items: center; color: var(--primary);
+    margin-bottom: 20px;
+  }
+  .p-card h3 {
+    font-family: var(--f-display); font-weight: 800; font-size: 22px;
+    margin: 0 0 10px; letter-spacing: -0.01em;
+  }
+  .p-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
+
+  .stat-strip {
+    margin-top: 56px; padding: 22px 28px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+    font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted-fg);
+  }
+  .stat-strip b { color: var(--primary); font-weight: 500; }
+  .stat-strip .dot { color: var(--border-strong); }
+
+  /* SOLUTION */
+  .solution-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+  .features { display: grid; gap: 28px; }
+  .feature { display: grid; grid-template-columns: 54px 1fr; gap: 18px; align-items: start; }
+  .feature .ficon {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
+    display: grid; place-items: center; color: var(--primary);
+  }
+  .feature h4 { font-family: var(--f-display); font-weight: 800; font-size: 19px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .feature p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
+
+  /* ARENA / Gamification */
+  .arena-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .badge-showcase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .badge-showcase-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 16px 8px; display: grid; place-items: center; gap: 8px;
+    transition: transform 200ms var(--ease-out), border-color 200ms, box-shadow 200ms;
+  }
+  .badge-showcase-item:hover {
+    transform: translateY(-4px) scale(1.04);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glow-primary);
+  }
+  .badge-showcase-item img {
+    width: 64px; height: 64px;
+    animation: badgeFloat 3s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.4s);
+  }
+  .badge-showcase-item .bn {
+    font-family: var(--f-display); font-weight: 700; font-size: 11px;
+    color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.06em;
+    text-align: center;
+  }
+  @keyframes badgeFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  /* EVIDENCE */
+  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 960px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 32px; }
+  .stat-num {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: clamp(56px, 7vw, 96px); line-height: 1;
+    color: var(--primary); letter-spacing: -0.03em;
+  }
+  .stat-lbl { margin-top: 12px; color: var(--muted-fg); font-size: 15px; line-height: 1.5; max-width: 360px; }
+
+  .quote-card {
+    margin-top: 48px; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--primary); border-radius: 12px;
+    padding: 28px 32px;
+    font-family: var(--f-mono); font-size: 14px; line-height: 1.7; color: var(--fg);
+    white-space: pre-line; max-width: 780px;
+  }
+  .matrix {
+    margin-top: 40px; width: 100%; max-width: 780px;
+    border-collapse: separate; border-spacing: 0;
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden;
+  }
+  .matrix th, .matrix td { padding: 14px 16px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border); }
+  .matrix tr:last-child td { border-bottom: 0; }
+  .matrix th { font-family: var(--f-display); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; text-align: center; }
+  .matrix th:first-child { text-align: left; }
+  .matrix th.ours { color: var(--primary); }
+  .matrix td { text-align: center; }
+  .matrix td:first-child { text-align: left; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted-fg); text-transform: uppercase; }
+  .matrix .y { color: var(--c-great); font-size: 18px; font-weight: 700; }
+  .matrix .n { color: hsl(0 0% 30%); font-size: 18px; }
+  .matrix .half { color: var(--c-moderate); font-size: 14px; font-family: var(--f-mono); }
+  .matrix td.col-ours { background: hsl(38 95% 55% / .05); }
+
+  /* INFRASTRUCTURE */
+  .inf-head { max-width: 720px; margin-bottom: 48px; }
+  .inf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .inf-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 32px;
+    transition: transform .3s var(--ease-out), border-color .3s;
+  }
+  .inf-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+  .inf-card .iconwrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
+    display: grid; place-items: center; color: var(--primary);
+    margin-bottom: 20px;
+  }
+  .inf-card h4 { font-family: var(--f-display); font-weight: 800; font-size: 20px; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .inf-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
+
+  .inf-strip {
+    margin-top: 48px; padding: 20px 28px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    display: flex; justify-content: center; flex-wrap: wrap;
+    font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted-fg); gap: 18px;
+    text-align: center;
+  }
+  .inf-strip .sep { color: var(--primary); }
+
+  /* PARTNERS */
+  .partner-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .partner {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    border-top: 3px solid var(--primary);
+    padding: 32px;
+    opacity: 0.6; position: relative;
+    transition: transform .3s var(--ease-out), opacity .3s;
+  }
+  .partner:hover { transform: translateY(-4px); opacity: 0.85; }
+  .partner .coming {
+    position: absolute; top: 14px; right: 18px;
+    font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--primary); text-transform: uppercase;
+  }
+  .partner .logo-ph {
+    width: 60px; height: 60px; border-radius: 50%;
+    border: 1.5px dashed var(--primary); margin-bottom: 22px;
+    background: hsl(38 40% 10%);
+  }
+  .partner h4 { font-family: var(--f-display); font-weight: 800; font-size: 20px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .partner .role { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted-fg); text-transform: uppercase; }
+
+  .partner-cta {
+    margin-top: 56px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 48px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+  }
+  .partner-cta h3 { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 36px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: -0.02em; }
+  .partner-cta p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; max-width: 620px; }
+
+  /* TEAM */
+  .team-head { max-width: 640px; margin-bottom: 48px; }
+  .team-sub { color: var(--muted-fg); font-size: 17px; line-height: 1.55; margin-top: 20px; }
+  .team-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .team {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px 24px; text-align: center; position: relative;
+  }
+  .team.mascot { border-color: hsl(38 80% 38%); box-shadow: 0 0 20px hsl(38 95% 55% / .15); }
+  .avatar {
+    width: 108px; height: 108px; border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: hsl(38 40% 14%);
+    display: grid; place-items: center;
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 30px; color: var(--primary);
+    margin: 0 auto 18px;
+    box-shadow: 0 0 16px hsl(38 95% 55% / .22);
+    overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar .lucide { width: 34px; height: 34px; }
+  .team h4 { font-family: var(--f-display); font-weight: 800; font-size: 18px; margin: 0 0 6px; }
+  .team .role-nick { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--primary); text-transform: uppercase; margin-bottom: 14px; }
+  .team .quote { font-style: italic; color: var(--muted-fg); font-size: 14px; line-height: 1.55; margin: 0; }
+  .team .mascot-badge {
+    position: absolute; top: 12px; right: 14px;
+    font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--primary); text-transform: uppercase;
+  }
+
+  /* FINAL CTA */
+  #final {
+    text-align: center; min-height: 90vh;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, hsl(38 95% 55% / .15), transparent 60%),
+      hsl(0 0% 4%);
+    border-top: 1px solid var(--border);
+  }
+  #final .mega { font-size: clamp(56px, 10vw, 144px); }
+  #final p.sub { color: var(--muted-fg); font-size: 18px; max-width: 560px; margin: 28px auto 40px; line-height: 1.55; }
+  #final .cta-mono { margin-top: 22px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-fg); }
+  #final .cta-mono b { color: var(--primary); font-weight: 500; }
+
+  /* FOOTER */
+  footer { padding: 48px 0 28px; border-top: 1px solid var(--border); min-height: auto; }
+  .foot-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start; }
+  .foot-links { display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: var(--muted-fg); }
+  .foot-links a:hover { color: var(--fg); }
+  .foot-right { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--muted-fg); text-align: right; line-height: 1.8; }
+  .foot-bottom { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted-fg); text-align: center; text-transform: uppercase; }
+
+  @media (max-width: 980px) {
+    .nav-links a:not(.btn) { padding: 8px 10px; font-size: 12.5px; }
+  }
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+    .nav-inner { padding: 12px 20px; }
+    .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      flex-direction: column; padding: 16px 20px; gap: 0; }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 14px 12px; border-radius: 0; border-bottom: 1px solid var(--border); }
+    .nav-links .btn { margin-top: 14px; align-self: flex-start; }
+    .hamburger { display: flex; }
+    .hero-grid, .solution-grid, .arena-grid, .problem-head, .partner-cta { grid-template-columns: 1fr; gap: 40px; }
+    .problem-cards, .partner-cards, .inf-grid, .stat-grid { grid-template-columns: 1fr; }
+    .team-cards { grid-template-columns: 1fr 1fr; }
+    .badge-showcase { grid-template-columns: repeat(2, 1fr); }
+    .phone-mock { margin-left: 0; margin-right: auto; }
+    section { padding: 100px 0 80px; min-height: auto; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .foot-right { text-align: left; }
+    .matrix { font-size: 12px; }
+    .matrix th, .matrix td { padding: 10px 8px; }
+    .partner-cta { padding: 32px 24px; grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Inline Lucide-style icons as <symbol> sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></symbol>
+    <symbol id="i-cloud-sun" viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M2 12h2M20 12h2M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="10" r="3"/><path d="M20 17.58A5 5 0 0 0 17 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M22 18a3 3 0 0 1-3 3H8a4 4 0 0 1-1.5-7.7"/></symbol>
+    <symbol id="i-chat-frag" viewBox="0 0 24 24"><path d="M3 5h10v7H6l-3 3z"/><path d="M10 13h11v7l-3-3h-8z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3 .923.565 1.902 1.169 2.5 2.5z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4"/><path d="M18 9h2a2 2 0 0 0 2-2V5h-4"/><path d="M6 2h12v7a6 6 0 0 1-12 0z"/><path d="M9 18h6M10 14v4M14 14v4M8 22h8"/></symbol>
+    <symbol id="i-map-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+    <symbol id="i-users-check" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></symbol>
+    <symbol id="i-git-branch" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+    <symbol id="i-cat" viewBox="0 0 24 24"><path d="M4 4l4 5v7a4 4 0 0 0 4 4h0a4 4 0 0 0 4-4V9l4-5-2 6"/><path d="M8 9l-4-5 2 6"/><circle cx="10" cy="13" r=".8" fill="currentColor"/><circle cx="14" cy="13" r=".8" fill="currentColor"/><path d="M11 16c.3.4.7.6 1 .6s.7-.2 1-.6"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  </defs>
+</svg>
+
+<!-- NAVBAR -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo" aria-label="Arenviu home">
+      <img src="assets/logo-icon.jpeg" alt="Arenviu">
+      <span class="logo-wm">Arenviu</span>
+    </a>
+    <nav class="nav-links" id="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#arena">Arena</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#infrastructure">Infrastructure</a>
+      <a href="#partners">Partners</a>
+      <a href="#team">Team</a>
+      <a href="https://app.arenviu.com" class="btn btn-primary" target="_blank" rel="noopener">Try now <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg></a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="mono hero-tag reveal">
+          <span class="dot-live"></span>
+          BCN · Live Radar · Beach Sports Intelligence
+        </div>
+        <h1 class="mega reveal">Stop Guessing,<br>Start <span class="amber">Playing.</span></h1>
+        <p class="hero-sub reveal">Real-time crowding intelligence for Barcelona's beach sports community. Know before you go — report, earn, play.</p>
+        <div class="hero-ctas reveal">
+          <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Try Arenviu — it's free</a>
+          <a href="#problem" class="btn btn-ghost btn-lg">How it works <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-down"/></svg></a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="phone-mock">
+          <img class="screen-img" src="assets/screenshot-hero.jpeg" alt="Arenviu live radar screenshot">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="problem-head">
+      <div class="reveal">
+        <div class="eyebrow"><b>01</b> · The problem</div>
+        <h2 class="h-section">You arrive.<br>The beach is <span class="amber">full.</span></h2>
+      </div>
+      <p class="section-sub reveal">Barcelona's beaches host thousands of beach sports players — without a single piece of digital infrastructure to coordinate them.</p>
+    </div>
+    <div class="problem-cards stagger">
+      <div class="p-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-ban"/></svg></div>
+        <h3>No Crowding Intel</h3>
+        <p>You have no idea if your zone is free until you're already there, bag in hand.</p>
+      </div>
+      <div class="p-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
+        <h3>No Dedicated Weather</h3>
+        <p>Generic weather apps don't tell you if it's a good beach volleyball day. Wind direction matters. UV matters. Timing matters.</p>
+      </div>
+      <div class="p-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
+        <h3>Community Geopardized</h3>
+        <p>Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.</p>
+      </div>
+    </div>
+    <div class="stat-strip reveal">
+      <span><b>8</b> URBAN BEACHES</span><span class="dot">·</span>
+      <span><b>100+</b> PLAY ZONES</span><span class="dot">·</span>
+      <span><b>0</b> REAL-TIME DATA</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="solution-grid">
+      <div>
+        <div class="eyebrow reveal"><b>02</b> · The solution</div>
+        <h2 class="h-section reveal" style="margin-bottom: 48px">Live radar.<br>Community-<span class="amber">powered.</span></h2>
+        <div class="features stagger">
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
+            <div><h4>Play Score</h4><p>Composite of weather, wind, UV, and crowding. 
+One number: go or don't go.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
+            <div><h4>Community reports</h4><p>Waze-style: users report crowding in one tap. Free / Busy / Full.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
+            <div><h4>Arena Points</h4><p>Every report earns XP. Leaderboards, streaks, badges. 
+The game within the game.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
+            <div><h4>Zone map</h4><p>100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="phone-mock">
+          <img class="screen-img" src="assets/screenshot-solution.jpeg?v=2" alt="Arenviu Nova Icària beach score screenshot">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARENA / GAMIFICATION -->
+<section id="arena">
+  <div class="container">
+    <div class="arena-grid">
+      <div>
+        <div class="eyebrow reveal"><b>03</b> · Arena</div>
+        <h2 class="h-section reveal" style="margin-bottom: 32px">Play<br>Report<br>Earn<br><span class="amber">Rewards.</span></h2>
+        <p class="section-sub reveal" style="margin-bottom: 40px; max-width: 560px">Every report you submit feeds the community — and feeds your rank. Arena Points, streaks, badges, leaderboards. The game within the game.</p>
+        <div class="features stagger">
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
+            <div><h4>Arena Points</h4><p>Earn XP for every report. More reports, more weight in the community.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-flame"/></svg></div>
+            <div><h4>Report Streaks</h4><p>Consecutive days reporting unlock streak bonuses and badge progress.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-shield"/></svg></div>
+            <div><h4>5 Badge Families</h4><p>Origin, Seasonal, Community, Contribution, Sport. Each with its own progression dial.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
+            <div><h4>Leaderboards</h4><p>Weekly and all-time rankings. Territory-based boards coming.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="badge-showcase stagger">
+        <div class="badge-showcase-item" style="--i:0"><img src="assets/badges/early_reporter.svg" alt=""><span class="bn">Early Reporter</span></div>
+        <div class="badge-showcase-item" style="--i:1"><img src="assets/badges/pioneer.svg" alt=""><span class="bn">Pioneer</span></div>
+        <div class="badge-showcase-item" style="--i:2"><img src="assets/badges/discovery.svg" alt=""><span class="bn">Discovery</span></div>
+        <div class="badge-showcase-item" style="--i:3"><img src="assets/badges/first_light.svg" alt=""><span class="bn">First Light</span></div>
+        <div class="badge-showcase-item" style="--i:4"><img src="assets/badges/trailblazer.svg" alt=""><span class="bn">Trailblazer</span></div>
+        <div class="badge-showcase-item" style="--i:5"><img src="assets/badges/sentinel.svg" alt=""><span class="bn">Sentinel</span></div>
+        <div class="badge-showcase-item" style="--i:6"><img src="assets/badges/season_opener.svg" alt=""><span class="bn">Season Opener</span></div>
+        <div class="badge-showcase-item" style="--i:7"><img src="assets/badges/dawn_patrol.svg" alt=""><span class="bn">Dawn Patrol</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section id="evidence">
+  <div class="container">
+    <div class="eyebrow reveal"><b>04</b> · Market signal</div>
+    <h2 class="h-section reveal" style="margin-bottom: 48px">The market<br>is <span class="amber">already there.</span></h2>
+
+    <div class="stat-grid stagger">
+      <div class="stat-card">
+        <div class="stat-num" data-count="4.5" data-suffix="M">0</div>
+        <div class="stat-lbl">Annual beach visitors in Barcelona</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="100" data-suffix="+">0</div>
+        <div class="stat-lbl">Mapped play zones across 8 beaches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-prefix="#" data-count="1">#0</div>
+        <div class="stat-lbl">No direct competitor combining crowding + gamification</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="0">0</div>
+        <div class="stat-lbl">Apps today with real-time beach sports crowding</div>
+      </div>
+    </div>
+
+    <div class="quote-card reveal">"Strava had 1M users before its first funding round.
+They built it for cyclists.
+We built it for beach players."</div>
+
+    <table class="matrix reveal">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="ours">Arenviu</th>
+          <th>Waze</th>
+          <th>Surfline</th>
+          <th>Strava</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Crowding intel</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Gamification</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="y">✓</td></tr>
+        <tr><td>Sport-specific</td><td class="col-ours y">✓</td><td class="n">—</td><td class="y">✓</td><td class="half">partial</td></tr>
+        <tr><td>BCN-local</td><td class="col-ours y">✓</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>Free</td><td class="col-ours y">✓</td><td class="y">✓</td><td class="n">—</td><td class="half">freemium</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE / WHY WE'RE DIFFERENT -->
+<section id="infrastructure">
+  <div class="container">
+    <div class="inf-head">
+      <div class="eyebrow reveal"><b>05</b> · Infrastructure, not an app</div>
+      <h2 class="h-section reveal">We don't organize games.<br>We make the beach <span class="amber">legible.</span></h2>
+      <p class="section-sub reveal" style="max-width: 640px; font-size: 18px; margin-top: 24px">Arenviu is not a booking platform. Not a tournament organizer. Not a club management tool. We are the data layer underneath — the shared intelligence that every beach sports player has always needed but never had.</p>
+    </div>
+
+    <div class="inf-grid stagger">
+      <div class="inf-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
+        <h4>The Infrastructure</h4>
+        <p>Like Waze built the traffic layer no map had. Like Google built search no directory had. We're building the beach sports layer.</p>
+      </div>
+      <div class="inf-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-users-check"/></svg></div>
+        <h4>For All Players, By Players</h4>
+        <p>Every report you submit trains the system. The more players report, the smarter the radar gets. You benefit from others. Others benefit from you.</p>
+      </div>
+      <div class="inf-card">
+        <div class="iconwrap"><svg class="lucide"><use href="#i-git-branch"/></svg></div>
+        <h4>Not Playtomic. Not Airbnb.</h4>
+        <p>We don't sell court time or organize matches. We give you the intelligence to decide where to go, when to go, and what to expect when you get there.</p>
+      </div>
+    </div>
+
+    <div class="inf-strip reveal">
+      <span>WAZE FOR CROWDS</span>
+      <span class="sep">·</span>
+      <span>DARK SKY FOR BEACH</span>
+      <span class="sep">·</span>
+      <span>STRAVA FOR CULTURE</span>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="container">
+    <div class="eyebrow reveal"><b>06</b> · Partners</div>
+    <h2 class="h-section reveal" style="margin-bottom: 48px">Your brand,<br>where players <span class="amber">decide.</span></h2>
+    <p class="section-sub reveal" style="margin-bottom: 48px; max-width: 720px; font-size: 17px">We put your brand at the exact moment a beach sports player opens Arenviu to decide where to go. Whether you sell drinks, apparel, food, services, or experiences — if your audience plays outdoors, we're your channel.</p>
+
+    <div class="partner-cards stagger">
+      <div class="partner">
+        <span class="coming">Coming soon</span>
+        <div class="logo-ph"></div>
+        <h4>Partner Name</h4>
+        <div class="role">Brand Partner</div>
+      </div>
+      <div class="partner">
+        <span class="coming">Coming soon</span>
+        <div class="logo-ph"></div>
+        <h4>Partner Name</h4>
+        <div class="role">Brand Partner</div>
+      </div>
+      <div class="partner">
+        <span class="coming">Coming soon</span>
+        <div class="logo-ph"></div>
+        <h4>Partner Name</h4>
+        <div class="role">Brand Partner</div>
+      </div>
+    </div>
+
+    <div class="partner-cta reveal">
+      <div>
+        <h3>Brand, product, service — <span style="color:var(--primary)">if your audience plays,</span> we're your channel.</h3>
+        <p style="width: 1000px">Get in touch to discuss partnership formats: in-app placements, community drops, Arena-wide promos.</p>
+      </div>
+      <a href="/cdn-cgi/l/email-protection#355d5059595a755447505b435c401b565a58" class="btn btn-ghost btn-lg">Partner with us <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="team-head">
+      <div class="eyebrow reveal"><b>07</b> · The team</div>
+      <h2 class="h-section reveal">The <span class="amber">team.</span></h2>
+      <p class="team-sub reveal">Small, focused, and genuinely obsessed with beach sports.</p>
+    </div>
+
+    <div class="team-cards stagger">
+      <div class="team">
+        <div class="avatar"><img src="assets/team/federico.jpeg" alt="Federico"></div>
+        <h4>Federico</h4>
+        <div class="role-nick">The Visioner</div>
+        <p class="quote">"Couldn't find a free space. 
+Built a radar."</p>
+      </div>
+      <div class="team">
+        <div class="avatar"><img src="assets/team/pietro.jpeg" alt="Pietro"></div>
+        <h4>Pietro</h4>
+        <div class="role-nick">The Builder</div>
+        <p class="quote">"If it runs, Pietro wrote it."</p>
+      </div>
+      <div class="team">
+        <div class="avatar"><img src="assets/team/giulia.jpeg" alt="Giulia"></div>
+        <h4>Giulia</h4>
+        <div class="role-nick">The Amplifier</div>
+        <p class="quote">"Makes the community want to be part of this."</p>
+      </div>
+      <div class="team mascot">
+        <span class="mascot-badge">Official mascot</span>
+        <div class="avatar"><img src="assets/team/alfredo.jpeg" alt="Alfredo"></div>
+        <h4>Alfredo</h4>
+        <div class="role-nick">The Mascot</div>
+        <p class="quote">"Chief nap officer. Morale department."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="final">
+  <div class="container">
+    <h2 class="mega reveal">Know before<br>you <span class="amber">go.</span></h2>
+    <p class="sub reveal">Join the community building real-time beach intelligence for Barcelona.</p>
+    <div class="reveal">
+      <a href="https://app.arenviu.com" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Try Arenviu — it's free</a>
+    </div>
+    <div class="cta-mono reveal">
+      <b>No account required</b> · Works on any device · BCN only for now
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="logo">
+        <img src="assets/logo-icon.jpeg" alt="Arenviu">
+        <span class="logo-wm">Arenviu</span>
+      </div>
+      <div class="foot-links">
+        <a href="#">Privacy</a>
+        <a href="/cdn-cgi/l/email-protection#38505d54545778594a5d564e514d165b5755">Contact</a>
+        <a href="https://instagram.com/arenviuapp" target="_blank" rel="noopener">Instagram @arenviuapp</a>
+      </div>
+      <div class="foot-right">
+        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a4ccc1c8c8cbe4c5d6c1cad2cdd18ac7cbc9">[email&#160;protected]</a><br>
+        
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Arenviu · Built on the beach.</div>
+  </div>
+</footer>
+
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const nav = document.getElementById('nav');
+  let lastY = 0, ticking = false;
+  function onScroll() {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 20);
+    if (y > lastY && y > 120) nav.classList.add('hidden');
+    else nav.classList.remove('hidden');
+    lastY = y; ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+  }, { passive: true });
+
+  const hb = document.getElementById('hamburger');
+  const navLinks = document.getElementById('nav-links');
+  hb.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    hb.classList.toggle('open', open);
+    hb.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open'); hb.classList.remove('open');
+  }));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const isFloat = String(target).includes('.');
+      const dur = 1400;
+      const start = performance.now();
+      function tick(t) {
+        const p = Math.min(1, (t - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = target * eased;
+        el.textContent = prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countIO.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
+
+  const glow = document.querySelector('.hero-glow');
+  if (glow) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) glow.style.transform = `translateY(calc(-50% + ${y * 0.15}px))`;
+    }, { passive: true });
+  }
+</script>
+
+</body>
+</html>
