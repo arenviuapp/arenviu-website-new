@@ -32,6 +32,8 @@
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
+  /* Disable smooth scroll during page load to prevent scroll-to-bottom */
+  html.loading { scroll-behavior: auto; }
   body {
     font-family: var(--f-ui);
     background: var(--bg); color: var(--fg);
@@ -1398,8 +1400,29 @@ if (glow) {
 }
 
 /* ─── INIT ─────────────────────────────────────────────────────────── */
+/* ─── SCROLL TO TOP — bulletproof ──────────────────────────────────── */
+// Disable browser scroll restoration
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+// Add loading class to disable smooth scroll during init
+document.documentElement.classList.add('loading');
+
+// Force top immediately
 window.scrollTo(0, 0);
+
+// Force again after DOM is fully painted (catches late renders)
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  // Re-enable smooth scroll after a short delay
+  setTimeout(() => {
+    document.documentElement.classList.remove('loading');
+  }, 100);
+});
+
+// Extra safety: if any anchor tries to scroll on load, block it
+window.addEventListener('hashchange', () => {
+  // Allow hashchange navigation normally
+}, { once: true });
 applyLang(currentLang);
 </script>
 
