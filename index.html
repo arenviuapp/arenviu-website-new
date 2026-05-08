@@ -363,20 +363,23 @@
     body { overflow-x: hidden; }
     section { overflow-x: hidden; }
 
-    /* HERO — font sizes that work for all languages */
+    /* HERO — font sizes that work for all languages, no word breaking */
     .mega {
-      font-size: clamp(32px, 10vw, 52px) !important;
+      font-size: clamp(28px, 8.5vw, 52px) !important;
       line-height: 0.92;
-      word-break: break-word;
-      hyphens: auto;
+      word-break: normal;
+      hyphens: none;
+      overflow-wrap: normal;
     }
     #final .mega {
-      font-size: clamp(28px, 9vw, 46px) !important;
+      font-size: clamp(26px, 8vw, 46px) !important;
+      hyphens: none;
     }
     .h-section {
-      font-size: clamp(28px, 8vw, 44px) !important;
-      word-break: break-word;
-      hyphens: auto;
+      font-size: clamp(26px, 7.5vw, 44px) !important;
+      word-break: normal;
+      hyphens: none;
+      overflow-wrap: normal;
     }
     .hero-sub { font-size: 16px; margin: 20px 0 28px; }
 
@@ -401,7 +404,7 @@
     .problem-cards, .partner-cards, .inf-grid, .stat-grid { grid-template-columns: 1fr; }
     .team-cards { grid-template-columns: 1fr 1fr; }
     .badge-showcase { grid-template-columns: repeat(2, 1fr); }
-    .phone-mock { margin-left: 0; margin-right: auto; max-width: 300px; }
+    .phone-mock { margin: 0 auto; max-width: 300px; display: block; }
 
     section { padding: 100px 0 80px; min-height: auto; }
 
@@ -445,8 +448,8 @@
 
   /* Extra small — phones under 390px */
   @media (max-width: 390px) {
-    .mega { font-size: 28px !important; }
-    .h-section { font-size: 26px !important; }
+    .mega { font-size: 26px !important; hyphens: none; word-break: normal; }
+    .h-section { font-size: 24px !important; hyphens: none; word-break: normal; }
     .hero-sub { font-size: 15px; }
     .nav-inner { padding: 10px 14px; }
   }
