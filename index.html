@@ -267,11 +267,14 @@
     border-left: 3px solid var(--primary); border-radius: 12px;
     padding: 28px 32px; font-family: var(--f-mono); font-size: 14px; line-height: 1.7; color: var(--fg);
     white-space: pre-line; max-width: 780px;
+    overflow-wrap: break-word; word-break: break-word; overflow: hidden;
   }
+  .matrix-wrap { width: 100%; max-width: 780px; margin-top: 40px; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
   .matrix {
-    margin-top: 40px; width: 100%; max-width: 780px;
+    width: 100%; min-width: 460px;
     border-collapse: separate; border-spacing: 0;
     background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    margin-top: 0;
   }
   .matrix th, .matrix td { padding: 14px 16px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border); }
   .matrix tr:last-child td { border-bottom: 0; }
@@ -407,8 +410,10 @@
     .foot-right { text-align: left; }
 
     /* Matrix table — scrollable on mobile */
-    .matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .matrix { font-size: 12px; min-width: 480px; }
+    .matrix-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
+    .matrix { font-size: 11px; min-width: 400px; }
+    .matrix th { font-size: 11px; letter-spacing: 0.03em; }
+    .matrix td:first-child { font-size: 10px; letter-spacing: 0.02em; }
     .matrix th, .matrix td { padding: 10px 8px; }
 
     /* Partner CTA */
@@ -429,7 +434,7 @@
     .arena-grid { gap: 48px; }
 
     /* Quote card */
-    .quote-card { font-size: 13px; padding: 20px; }
+    .quote-card { font-size: 12px; padding: 18px; white-space: pre-line; word-break: break-word; overflow-wrap: break-word; }
 
     /* Section sub text */
     .section-sub { font-size: 15px; }
