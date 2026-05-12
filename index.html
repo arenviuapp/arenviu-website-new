@@ -309,6 +309,9 @@
 
   /* PARTNERS */
   .partner-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .partner.active { opacity: 1; }
+  .partner.active:hover { transform: translateY(-6px); opacity: 1; box-shadow: var(--shadow-glow-primary); }
+  .partner .partner-logo-img { width: 72px; height: 72px; border-radius: 14px; object-fit: cover; margin-bottom: 22px; display: block; }
   .partner { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); border-top: 3px solid var(--primary); padding: 32px; opacity: 0.6; position: relative; transition: transform .3s var(--ease-out), opacity .3s; }
   .partner:hover { transform: translateY(-4px); opacity: 0.85; }
   .partner .coming { position: absolute; top: 14px; right: 18px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--primary); text-transform: uppercase; }
@@ -754,12 +757,11 @@ We built it for beach players."</div>
     <h2 class="h-section reveal" style="margin-bottom:48px" data-i18n-html="par_headline">Your brand,<br>where players <span class="amber">decide.</span></h2>
     <p class="section-sub reveal" style="margin-bottom:48px;max-width:720px;font-size:17px" data-i18n="par_sub">We put your brand at the exact moment a beach sports player opens Arenviu to decide where to go. Whether you sell drinks, apparel, food, services, or experiences — if your audience plays outdoors, we're your channel.</p>
     <div class="partner-cards stagger">
-      <div class="partner">
-        <span class="coming" data-i18n="par_coming">Coming soon</span>
-        <div class="logo-ph"></div>
-        <h4 data-i18n="par_name">Partner Name</h4>
-        <div class="role" data-i18n="par_role">Brand Partner</div>
-      </div>
+      <a href="https://www.instagram.com/tropicool.bcn" target="_blank" rel="noopener" class="partner active" style="text-decoration:none;display:block">
+        <img src="assets/partners/tropicool.png" alt="Tropicool" class="partner-logo-img">
+        <h4>Tropicool</h4>
+        <div class="role">Recovery &amp; Nutrition · BCN</div>
+      </a>
       <div class="partner">
         <span class="coming" data-i18n="par_coming">Coming soon</span>
         <div class="logo-ph"></div>
