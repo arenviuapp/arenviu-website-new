@@ -377,7 +377,8 @@
     .h-section { font-size: clamp(28px, 8vw, 52px) !important; }
     .placements-grid { grid-template-columns: 1fr; gap: 40px; }
     .placement { gap: 16px; }
-    .phone-mock { width: 160px; }
+    .phone-mock { width: 160px; border-radius: 32px; padding: 8px; }
+    .phone-mock img { border-radius: 24px; }
     .phone-mock-lg { width: 180px; }
     .circle-grid { grid-template-columns: 1fr 1fr; }
     .arrow-v:nth-child(4), .arrow-v:nth-child(5) { display: none; }
@@ -391,14 +392,18 @@
     .offer-grid { grid-template-columns: 1fr; }
     .form-grid { grid-template-columns: 1fr; }
     .form-actions { flex-direction: column; align-items: flex-start; }
-    .hamburger { display: flex; }
+    .hamburger { display: none; }
+    .nav-back { display: none; }
+    .nav-try span { display: none; }
+    .nav-try { padding: 8px 12px; flex-shrink: 0; }
     .hero-ctas { flex-direction: column; align-items: flex-start; }
     .stats-inner { gap: 0; }
     .stat-item { padding: 8px 18px; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
   }
   @media (max-width: 480px) {
-    .phone-mock { width: 120px; }
+    .phone-mock { width: 130px; border-radius: 22px; padding: 6px; }
+    .phone-mock img { border-radius: 16px; }
     .slot-boxes { flex-direction: column; }
     .circle-grid { grid-template-columns: 1fr; }
     .metrics { grid-template-columns: 1fr; }
