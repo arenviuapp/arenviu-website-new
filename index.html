@@ -188,6 +188,15 @@
     letter-spacing: -0.04em; margin: 0;
   }
   .mega .amber { color: var(--primary); }
+  /* Hero font size per lingua */
+  html[lang="en"] .mega { font-size: clamp(56px, 8.5vw, 130px); }
+  html[lang="es"] .mega { font-size: clamp(52px, 7.5vw, 110px); }
+  html[lang="ca"] .mega { font-size: clamp(44px, 6vw,   88px);  }
+  html[lang="pt"] .mega { font-size: clamp(52px, 7.5vw, 110px); }
+  html[lang="it"] .mega { font-size: clamp(44px, 6vw,   88px);  }
+  html[lang="fr"] .mega { font-size: clamp(40px, 5.5vw, 82px);  }
+
+  .hero-sub { margin: 28px 0 36px; color: var(--muted-fg); font-size: 22px; line-height: 1.5; max-width: 600px; }
   .hero-sub { margin: 28px 0 36px; color: var(--muted-fg); font-size: 22px; line-height: 1.5; max-width: 600px; }
   .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
