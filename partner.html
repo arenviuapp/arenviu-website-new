@@ -1,0 +1,1269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Arenviu — Founding Partner Program · Barcelona 2026</title>
+<meta name="description" content="Put your brand at the exact moment a beach sports player decides where to play. Zero cash. Branded challenges. Real customers." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,800;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: hsl(0 0% 4%);
+    --fg: hsl(0 0% 98%);
+    --card: hsl(240 6% 10%);
+    --card-2: hsl(240 6% 13%);
+    --muted-fg: hsl(240 5% 65%);
+    --border: hsl(240 4% 16%);
+    --border-strong: hsl(240 4% 24%);
+    --primary: hsl(38 95% 55%);
+    --primary-deep: hsl(32 88% 42%);
+    --c-great: hsl(142 72% 45%);
+    --radius: 16px;
+    --shadow-glow-primary: 0 0 24px hsl(38 95% 55% / .35);
+    --ease-out: cubic-bezier(.2,.8,.2,1);
+    --f-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --f-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--f-ui);
+    background: var(--bg); color: var(--fg);
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background-image:
+      linear-gradient(to right, hsl(0 0% 100% / .04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(0 0% 100% / .04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: 0; background: transparent; color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  .mono { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-fg); }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .lucide { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* NAV */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+    border-bottom: 1px solid transparent;
+    transition: transform .35s var(--ease-out), border-color .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--border); }
+  .nav.hidden { transform: translateY(-100%); }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+  .logo img { width: 32px; height: 32px; border-radius: 8px; }
+  .logo-wm { font-family: var(--f-display); font-style: italic; font-weight: 900; font-size: 17px; text-transform: uppercase; letter-spacing: 0.01em; }
+  .nav-back { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted-fg); padding: 8px 0; transition: color .2s; }
+  .nav-back:hover { color: var(--fg); }
+  .nav-try { margin-left: auto; }
+
+  /* LANG SWITCHER */
+  .lang-switcher { position: relative; flex-shrink: 0; }
+  .lang-btn {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-fg); padding: 8px 12px; border-radius: 10px;
+    border: 1px solid var(--border); background: transparent;
+    transition: color .2s, border-color .2s, background .2s; cursor: pointer;
+  }
+  .lang-btn:hover { color: var(--fg); border-color: var(--border-strong); background: hsl(0 0% 100% / .04); }
+  .lang-btn svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; transition: transform .2s; }
+  .lang-switcher.open .lang-btn svg { transform: rotate(180deg); }
+  .lang-flag { font-size: 14px; line-height: 1; }
+  .lang-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 12px; padding: 6px; min-width: 160px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.6);
+    opacity: 0; pointer-events: none; transform: translateY(-8px);
+    transition: opacity .2s var(--ease-out), transform .2s var(--ease-out); z-index: 200;
+  }
+  .lang-switcher.open .lang-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .lang-option {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted-fg); cursor: pointer; transition: background .15s, color .15s;
+  }
+  .lang-option:hover { background: hsl(0 0% 100% / .06); color: var(--fg); }
+  .lang-option.active { color: var(--primary); background: hsl(38 95% 55% / .08); }
+  .lang-option .flag { font-size: 16px; line-height: 1; }
+
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; gap: 5px; padding: 10px; margin-left: 8px; }
+  .hamburger span { width: 22px; height: 2px; background: var(--fg); border-radius: 2px; transition: transform .3s, opacity .3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--f-display); font-weight: 800; font-size: 13px;
+    padding: 10px 18px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap;
+    transition: transform .2s var(--ease-out), filter .2s, box-shadow .3s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary {
+    background: linear-gradient(180deg, hsl(38 95% 60%), hsl(32 88% 44%));
+    color: #1a0e00; box-shadow: var(--shadow-glow-primary);
+  }
+  .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.06); }
+  .btn-ghost { border: 1px solid var(--border-strong); color: var(--fg); padding: 9px 17px; }
+  .btn-ghost:hover { background: hsl(0 0% 100% / .05); border-color: var(--muted-fg); }
+  .btn-lg { padding: 16px 28px; font-size: 14px; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .stagger > * { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+  .stagger.in > * { opacity: 1; transform: translateY(0); }
+  .stagger.in > *:nth-child(1) { transition-delay:0ms; }
+  .stagger.in > *:nth-child(2) { transition-delay:80ms; }
+  .stagger.in > *:nth-child(3) { transition-delay:160ms; }
+  .stagger.in > *:nth-child(4) { transition-delay:240ms; }
+  .stagger.in > *:nth-child(5) { transition-delay:320ms; }
+  .stagger.in > *:nth-child(6) { transition-delay:400ms; }
+
+  /* EYEBROW */
+  .eyebrow {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted-fg);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .eyebrow b { color: var(--primary); font-weight: 500; }
+
+  /* HERO */
+  .hero-section {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 140px 0 100px;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; top: 50%; right: -10%; width: 900px; height: 900px;
+    background: radial-gradient(circle, hsl(38 95% 55% / .22), transparent 60%);
+    transform: translateY(-50%);
+    animation: breathe 4.5s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes breathe { 0%,100%{opacity:.6;transform:translateY(-50%) scale(1)} 50%{opacity:1;transform:translateY(-50%) scale(1.12)} }
+  .hero-inner { position: relative; z-index: 1; }
+  .dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--c-great); position: relative; display: inline-block; }
+  .dot-live::after {
+    content:""; position:absolute; inset:-4px; border-radius:50%;
+    background: var(--c-great); opacity:.35; animation: ping 1.6s ease-out infinite;
+  }
+  @keyframes ping { 0%{opacity:.6;transform:scale(1)} 100%{opacity:0;transform:scale(2.6)} }
+  .mega {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    text-transform: uppercase; font-size: clamp(52px, 9vw, 140px);
+    line-height: 0.88; letter-spacing: -0.04em; margin: 0;
+  }
+  .amber { color: var(--primary); }
+  .h-section {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    text-transform: uppercase; font-size: clamp(36px, 5.5vw, 80px);
+    line-height: 0.95; letter-spacing: -0.03em; margin: 0;
+  }
+  .section-sub { color: var(--muted-fg); font-size: 17px; line-height: 1.55; max-width: 600px; margin: 0; }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+
+  /* STATS BAR */
+  .stats-bar {
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 20px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 12px 0;
+  }
+  .stats-inner { display: flex; align-items: center; gap: 0; flex-wrap: wrap; flex: 1; }
+  .stat-item { display: flex; flex-direction: column; gap: 2px; padding: 0 32px; }
+  .stat-item + .stat-item { border-left: 1px solid var(--border); }
+  .stat-num-big { font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 32px; letter-spacing: -0.02em; color: var(--primary); line-height: 1; }
+  .stat-lbl-sm { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted-fg); }
+  .stats-note { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em;
+    color: hsl(240 5% 35%); padding: 0 24px; }
+
+  /* SECTIONS */
+  .p-section { padding: 100px 0; border-bottom: 1px solid var(--border); }
+  .p-section-alt { background: hsl(240 6% 7%); }
+  .section-head { margin-bottom: 56px; }
+
+  /* PHONE MOCK */
+  .phone-mock {
+    width: 260px; flex-shrink: 0; aspect-ratio: 9/19.5;
+    background: hsl(0 0% 2%); border: 1px solid var(--border-strong);
+    border-radius: 44px; padding: 10px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px hsl(38 95% 55% / .08);
+    overflow: hidden;
+  }
+  .phone-mock img { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; object-position: top; }
+  .phone-mock-lg { width: 300px; }
+
+  /* PLACEMENTS */
+  .placements-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .placement { display: flex; gap: 28px; align-items: flex-start; }
+  .placement-text { flex: 1; }
+  .placement-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+    border-radius: 999px; font-family: var(--f-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .badge-passive { background: hsl(240 4% 14%); color: var(--muted-fg); border: 1px solid var(--border); }
+  .badge-active { background: hsl(38 95% 55% / .12); color: hsl(38 95% 65%); border: 1px solid hsl(38 80% 40% / .5); }
+  .placement h3 { font-family: var(--f-display); font-weight: 800; font-size: 22px; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .placement p { color: var(--muted-fg); font-size: 15px; line-height: 1.6; margin: 0; }
+
+  /* CIRCLE */
+  .circle-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 48px; }
+  .circle-step {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 24px; border-radius: 16px;
+    transition: border-color .3s, transform .3s;
+  }
+  .circle-step:hover { border-color: hsl(38 80% 40% / .5); transform: translateY(-3px); }
+  .step-num { font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 40px; color: hsl(38 95% 55% / .22); line-height: 1; margin-bottom: 10px; letter-spacing: -0.03em; }
+  .step-title { font-family: var(--f-display); font-weight: 800; font-size: 16px; margin-bottom: 6px; }
+  .step-body { font-size: 13px; color: var(--muted-fg); line-height: 1.5; }
+  .circle-arrows { display: contents; }
+  .arrow-v { display: flex; align-items: center; justify-content: center;
+    color: hsl(38 95% 55% / .4); font-size: 24px; padding: 4px 0; }
+  .circle-result {
+    margin-top: 28px; padding: 16px 24px;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted-fg); text-align: center;
+  }
+
+  /* TIMELINE */
+  .timeline-wrap { margin-top: 56px; position: relative; }
+  .timeline-line {
+    position: absolute; top: 26px; left: 26px; right: 26px;
+    height: 2px; background: var(--border); z-index: 0;
+  }
+  .timeline { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; position: relative; z-index: 1; }
+  .tl-step { padding: 0 14px; }
+  .tl-dot {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: hsl(38 40% 14%); border: 2px solid hsl(38 80% 40% / .6);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 16px; color: hsl(38 95% 60%);
+    box-shadow: 0 0 16px hsl(38 95% 55% / .2); margin-bottom: 18px;
+  }
+  .tl-week { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+  .tl-title { font-family: var(--f-display); font-weight: 800; font-size: 15px; margin-bottom: 8px; }
+  .tl-body { font-size: 13px; color: var(--muted-fg); line-height: 1.5; }
+
+  /* ANALYTICS */
+  .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 32px; }
+  .metric {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px;
+    transition: border-color .2s;
+  }
+  .metric:hover { border-color: var(--border-strong); }
+  .metric-title { font-family: var(--f-display); font-weight: 800; font-size: 14px;
+    margin-bottom: 4px; color: var(--primary); }
+  .metric-body { font-size: 12px; color: var(--muted-fg); line-height: 1.4; }
+
+  /* SLOTS */
+  .slots { display: grid; gap: 14px; margin-top: 48px; max-width: 860px; }
+  .slot-row { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: center; }
+  .slot-cat { display: flex; align-items: center; gap: 12px; }
+  .slot-icon { font-size: 22px; }
+  .slot-name { font-family: var(--f-display); font-weight: 800; font-size: 15px; }
+  .slot-boxes { display: flex; gap: 12px; }
+  .slot {
+    flex: 1; border-radius: 14px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px; min-width: 0;
+  }
+  .slot-filled { background: hsl(38 40% 10%); border: 1px solid hsl(38 80% 35%); box-shadow: 0 0 14px hsl(38 95% 55% / .1); }
+  .slot-empty { background: hsl(240 6% 8%); border: 1.5px dashed hsl(240 4% 22%); }
+  .slot-logo { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+  .slot-brand { font-family: var(--f-display); font-weight: 800; font-size: 14px; }
+  .slot-tag { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: hsl(38 95% 60%); margin-top: 2px; }
+  .slot-ph { width: 32px; height: 32px; border-radius: 50%; border: 1.5px dashed hsl(240 4% 30%); flex-shrink: 0; }
+  .slot-open-lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: hsl(240 5% 38%); }
+  .urgency-strip {
+    margin-top: 28px; display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 18px; background: hsl(38 40% 8%); border: 1px solid hsl(38 80% 30% / .6);
+    border-radius: 999px; font-family: var(--f-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: hsl(38 95% 65%);
+  }
+  .urgency-strip::before { content:""; width:6px; height:6px; border-radius:50%;
+    background: var(--primary); box-shadow:0 0 8px var(--primary); animation: ping 1.8s ease-out infinite; }
+
+  /* PROOF */
+  .quote { font-family: var(--f-display); font-style: italic; font-weight: 800;
+    font-size: clamp(20px, 3vw, 30px); line-height: 1.3; letter-spacing: -0.01em;
+    color: hsl(0 0% 92%); margin-bottom: 16px;
+    padding-left: 20px; border-left: 3px solid var(--primary); }
+  .proof-meta {
+    display: flex; align-items: center; gap: 16px; margin-top: 32px;
+    padding: 20px 24px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; max-width: 460px;
+  }
+  .proof-logo { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+  .proof-name { font-family: var(--f-display); font-weight: 800; font-size: 16px; }
+  .proof-role { font-size: 13px; color: var(--primary); margin-top: 2px; }
+  .proof-brand { font-size: 12px; color: var(--muted-fg); margin-top: 1px; }
+
+  /* OFFER */
+  .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+  .offer-col { border-radius: 16px; padding: 32px; }
+  .offer-get { background: hsl(38 40% 9%); border: 1px solid hsl(38 80% 30% / .5); }
+  .offer-ask { background: var(--card); border: 1px solid var(--border); }
+  .offer-title { font-family: var(--f-display); font-weight: 800; font-size: 20px; margin-bottom: 20px; }
+  .offer-get .offer-title { color: hsl(38 95% 60%); }
+  .offer-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .offer-item { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.5; }
+  .offer-icon {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; margin-top: 1px;
+  }
+  .offer-get .offer-icon { background: var(--primary); color: #1a0e00; }
+  .offer-ask .offer-icon { background: hsl(240 4% 18%); color: var(--muted-fg); }
+
+  /* FORM */
+  .form-wrap { max-width: 760px; margin-top: 48px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field-full { grid-column: 1 / -1; }
+  .field label { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted-fg); }
+  .field input, .field select, .field textarea {
+    background: hsl(240 4% 12%); border: 1px solid var(--border); color: var(--fg);
+    font-family: var(--f-ui); font-size: 14px; padding: 12px 16px; border-radius: 10px;
+    transition: border-color .2s, box-shadow .2s; width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px hsl(38 95% 55% / .15);
+  }
+  .field select { appearance: none; cursor: pointer; }
+  .field textarea { resize: vertical; min-height: 120px; line-height: 1.55; }
+  .form-actions { margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .form-or { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: hsl(240 5% 35%); }
+
+  /* FOOTER */
+  footer { padding: 40px 0; border-top: 1px solid var(--border); }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-copy { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: hsl(240 5% 35%); }
+  .footer-email { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em;
+    color: var(--muted-fg); transition: color .2s; }
+  .footer-email:hover { color: var(--primary); }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 12px 16px; gap: 12px; }
+    .container { padding: 0 18px; }
+    .p-section { padding: 72px 0; }
+    .hero-section { padding: 120px 0 80px; }
+    .mega { font-size: clamp(40px, 11vw, 80px) !important; }
+    .h-section { font-size: clamp(28px, 8vw, 52px) !important; }
+    .placements-grid { grid-template-columns: 1fr; gap: 40px; }
+    .placement { gap: 16px; }
+    .phone-mock { width: 160px; }
+    .phone-mock-lg { width: 180px; }
+    .circle-grid { grid-template-columns: 1fr 1fr; }
+    .arrow-v:nth-child(4), .arrow-v:nth-child(5) { display: none; }
+    .timeline { grid-template-columns: 1fr; gap: 24px; }
+    .timeline-line { display: none; }
+    .tl-step { display: grid; grid-template-columns: 52px 1fr; gap: 16px; align-items: start; padding: 0; }
+    .tl-dot { margin-bottom: 0; }
+    .analytics-grid { grid-template-columns: 1fr; gap: 40px; }
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .slot-row { grid-template-columns: 1fr; gap: 8px; }
+    .offer-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column; align-items: flex-start; }
+    .hamburger { display: flex; }
+    .hero-ctas { flex-direction: column; align-items: flex-start; }
+    .stats-inner { gap: 0; }
+    .stat-item { padding: 8px 18px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+  @media (max-width: 480px) {
+    .phone-mock { width: 120px; }
+    .slot-boxes { flex-direction: column; }
+    .circle-grid { grid-template-columns: 1fr; }
+    .metrics { grid-template-columns: 1fr; }
+    .btn-lg { padding: 14px 22px; font-size: 13px; }
+  }
+  @media (max-width: 390px) {
+    .mega { font-size: 26px !important; }
+    .h-section { font-size: 24px !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  </defs>
+</svg>
+
+<!-- NAVBAR -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Arenviu home">
+      <img src="assets/logo-icon.jpeg" alt="Arenviu">
+      <span class="logo-wm">Arenviu</span>
+    </a>
+    <a href="/" class="nav-back" data-i18n="nav_back">← arenviu.com</a>
+
+    <a href="https://app.arenviu.com" class="btn btn-primary nav-try" target="_blank" rel="noopener">
+      <span data-i18n="nav_try">Try the app</span>
+      <svg class="lucide" style="width:14px;height:14px;stroke-width:2.5"><use href="#i-arrow-right"/></svg>
+    </a>
+
+    <div class="lang-switcher" id="lang-switcher">
+      <button class="lang-btn" id="lang-btn" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-flag" id="lang-flag">🇬🇧</span>
+        <span id="lang-current">EN</span>
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown" role="listbox">
+        <div class="lang-option active" data-lang="en" role="option"><span class="flag">🇬🇧</span><span class="name">English</span></div>
+        <div class="lang-option" data-lang="es" role="option"><span class="flag">🇪🇸</span><span class="name">Español</span></div>
+        <div class="lang-option" data-lang="ca" role="option"><span class="flag">🏴</span><span class="name">Català</span></div>
+        <div class="lang-option" data-lang="pt" role="option"><span class="flag">🇵🇹</span><span class="name">Português</span></div>
+        <div class="lang-option" data-lang="it" role="option"><span class="flag">🇮🇹</span><span class="name">Italiano</span></div>
+        <div class="lang-option" data-lang="fr" role="option"><span class="flag">🇫🇷</span><span class="name">Français</span></div>
+      </div>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero-section" id="hero">
+  <div class="hero-glow"></div>
+  <div class="container hero-inner">
+    <div class="mono reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:22px">
+      <span class="dot-live"></span>
+      <span data-i18n="hero_eyebrow">FOUNDING PARTNER PROGRAM · 2026 SEASON · BARCELONA</span>
+    </div>
+    <h1 class="mega reveal" data-i18n-html="hero_headline">Your brand.<br><span class="amber">Their decision moment.</span></h1>
+    <p class="reveal" style="color:var(--muted-fg);font-size:20px;line-height:1.55;max-width:640px;margin:28px 0 0" data-i18n="hero_sub">Every time a beach sports player opens Arenviu to choose where to play today, your brand is there — not as an ad, but as part of the experience.</p>
+    <div class="hero-ctas reveal">
+      <a href="#apply" class="btn btn-primary btn-lg" data-i18n="hero_cta">Apply now →</a>
+      <a href="#how-it-works" class="btn btn-ghost btn-lg" data-i18n="hero_scroll">See how it works ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="container" style="width:100%;display:flex;align-items:center;flex-wrap:wrap;gap:10px 0">
+    <div class="stats-inner">
+      <div class="stat-item"><span class="stat-num-big">2,500+</span><span class="stat-lbl-sm" data-i18n="stat1_lbl">Active players</span></div>
+      <div class="stat-item"><span class="stat-num-big">8</span><span class="stat-lbl-sm" data-i18n="stat2_lbl">Beaches covered</span></div>
+      <div class="stat-item"><span class="stat-num-big">100+</span><span class="stat-lbl-sm" data-i18n="stat3_lbl">Play zones mapped</span></div>
+      <div class="stat-item"><span class="stat-num-big" style="color:hsl(38 95% 55%)">~47%</span><span class="stat-lbl-sm" data-i18n="stat4_lbl">Avg partner CTR*</span></div>
+    </div>
+    <span class="stats-note" data-i18n="stats_note">* Indicative figures based on early-season projections.</span>
+  </div>
+</div>
+
+<!-- PLACEMENTS -->
+<section class="p-section" id="placements">
+  <div class="container">
+    <div class="eyebrow reveal"><b>02</b> · <span data-i18n="place_eyebrow">Placements</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:20px" data-i18n="place_headline">Two ways your brand lives in the app.</h2>
+    <p class="section-sub reveal" style="margin-bottom:56px" data-i18n="place_sub">One is passive presence. The other drives customers to your door. Together, they form a complete brand experience at the right moment.</p>
+    <div class="placements-grid stagger">
+      <div class="placement">
+        <div class="phone-mock phone-mock-lg">
+          <img src="assets/partner/spot-drawer.png" alt="Official Partner Card in SpotDrawer">
+        </div>
+        <div class="placement-text">
+          <span class="placement-badge badge-passive" data-i18n="badge_passive">Passive · always on</span>
+          <h3 data-i18n="place_banner_title">Official Partner Card</h3>
+          <p data-i18n="place_banner_body">Your logo, name, and CTA button appear in the SpotDrawer of your associated beach. Every player who checks conditions sees you — at exactly the moment they decide where to play.</p>
+        </div>
+      </div>
+      <div class="placement">
+        <div class="phone-mock phone-mock-lg">
+          <img src="assets/partner/challenge.png" alt="Branded Challenge in Arena">
+        </div>
+        <div class="placement-text">
+          <span class="placement-badge badge-active" data-i18n="badge_active">Active · drives customers</span>
+          <h3 data-i18n="place_challenge_title">Branded Challenges</h3>
+          <p data-i18n="place_challenge_body">You define the prize — a discount, a product, an experience. We design a custom challenge. Players compete in your beach zone. Winners earn your exclusive code directly inside the app.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIRTUOUS CIRCLE -->
+<section class="p-section p-section-alt" id="circle">
+  <div class="container">
+    <div class="eyebrow reveal"><b>03</b> · <span data-i18n="circle_eyebrow">The flywheel</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:20px" data-i18n="circle_headline">The virtuous circle.</h2>
+    <p class="section-sub reveal" data-i18n="circle_sub">Your prize creates engagement. Engagement brings players to you. Players become your customers. Happy customers spread the word. More players means more value for your brand — every season.</p>
+    <div class="circle-grid stagger">
+      <!-- Row 1 -->
+      <div class="circle-step"><div class="step-num">01</div><div class="step-title" data-i18n="step1_title">You offer a prize</div><div class="step-body" data-i18n="step1_body">Define a discount, product, or experience as the reward.</div></div>
+      <div class="circle-step"><div class="step-num">02</div><div class="step-title" data-i18n="step2_title">We build the challenge</div><div class="step-body" data-i18n="step2_body">Arenviu designs a custom challenge around your brand.</div></div>
+      <div class="circle-step"><div class="step-num">03</div><div class="step-title" data-i18n="step3_title">Players compete</div><div class="step-body" data-i18n="step3_body">Beach sports players engage with your brand to earn progress.</div></div>
+      <!-- Row 2 (reversed for loop) -->
+      <div class="circle-step"><div class="step-num">06</div><div class="step-title" data-i18n="step6_title">Community grows</div><div class="step-body" data-i18n="step6_body">Happy customers refer others. The loop starts again.</div></div>
+      <div class="circle-step"><div class="step-num">05</div><div class="step-title" data-i18n="step5_title">They visit your store</div><div class="step-body" data-i18n="step5_body">Winners redeem at your business, physically or digitally.</div></div>
+      <div class="circle-step"><div class="step-num">04</div><div class="step-title" data-i18n="step4_title">Winners earn your code</div><div class="step-body" data-i18n="step4_body">Exclusive discount codes delivered in-app automatically.</div></div>
+    </div>
+    <div class="circle-result reveal" data-i18n="circle_result">More players · better prizes · stronger community · bigger brand impact</div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="p-section" id="how-it-works">
+  <div class="container">
+    <div class="eyebrow reveal"><b>04</b> · <span data-i18n="tl_eyebrow">How it works</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:0" data-i18n="tl_headline">From agreement to live in 2 weeks.</h2>
+    <div class="timeline-wrap reveal">
+      <div class="timeline-line"></div>
+      <div class="timeline">
+        <div class="tl-step">
+          <div><div class="tl-dot">01</div></div>
+          <div><div class="tl-week" data-i18n="tl1_week">Week 1</div><div class="tl-title" data-i18n="tl1_title">Agreement</div><div class="tl-body" data-i18n="tl1_body">We align on prize type, discount %, and validity window. A simple LOI is signed.</div></div>
+        </div>
+        <div class="tl-step">
+          <div><div class="tl-dot">02</div></div>
+          <div><div class="tl-week" data-i18n="tl2_week">Week 1–2</div><div class="tl-title" data-i18n="tl2_title">Partner Setup</div><div class="tl-body" data-i18n="tl2_body">Arenviu creates your Official Partner profile, card content, and beach zone assignment.</div></div>
+        </div>
+        <div class="tl-step">
+          <div><div class="tl-dot">03</div></div>
+          <div><div class="tl-week" data-i18n="tl3_week">Week 2</div><div class="tl-title" data-i18n="tl3_title">Challenge Design</div><div class="tl-body" data-i18n="tl3_body">We design a custom challenge around your brand — mechanics, copy, and visuals.</div></div>
+        </div>
+        <div class="tl-step">
+          <div><div class="tl-dot">04</div></div>
+          <div><div class="tl-week" data-i18n="tl4_week">Week 2–3</div><div class="tl-title" data-i18n="tl4_title">Go Live</div><div class="tl-body" data-i18n="tl4_body">Your Partner Card appears in the SpotDrawer. The challenge launches in the Arena.</div></div>
+        </div>
+        <div class="tl-step">
+          <div><div class="tl-dot">05</div></div>
+          <div><div class="tl-week" data-i18n="tl5_week">Ongoing</div><div class="tl-title" data-i18n="tl5_title">Track & Redeem</div><div class="tl-body" data-i18n="tl5_body">Players win codes and redeem them at your location. You validate via your Partner dashboard.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section class="p-section p-section-alt" id="analytics">
+  <div class="container">
+    <div class="analytics-grid">
+      <div>
+        <div class="eyebrow reveal"><b>05</b> · <span data-i18n="an_eyebrow">Partner Dashboard</span></div>
+        <h2 class="h-section reveal" style="margin-bottom:20px" data-i18n="an_headline">You always know what's happening.</h2>
+        <p class="section-sub reveal" data-i18n="an_sub">Every Founding Partner gets access to a real-time analytics dashboard. Card views, tap-through rate, codes won and redeemed. Real customers, tracked.</p>
+        <div class="metrics stagger">
+          <div class="metric"><div class="metric-title" data-i18n="m1_title">Card Views</div><div class="metric-body" data-i18n="m1_body">How many players saw your brand</div></div>
+          <div class="metric"><div class="metric-title" data-i18n="m2_title">Tap CTR</div><div class="metric-body" data-i18n="m2_body">How many clicked your CTA</div></div>
+          <div class="metric"><div class="metric-title" data-i18n="m3_title">Codes Won</div><div class="metric-body" data-i18n="m3_body">Potential customers, confirmed</div></div>
+          <div class="metric"><div class="metric-title" data-i18n="m4_title">Codes Used</div><div class="metric-body" data-i18n="m4_body">Real customers who visited you</div></div>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;justify-content:center">
+        <div class="phone-mock" style="width:280px">
+          <img src="assets/partner/analytics.png" alt="Partner analytics dashboard">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLOTS -->
+<section class="p-section" id="slots">
+  <div class="container">
+    <div class="eyebrow reveal"><b>06</b> · <span data-i18n="sl_eyebrow">Founding Partners</span></div>
+    <h2 class="h-section reveal" style="margin-bottom:20px" data-i18n="sl_headline">8 slots. 4 categories. 2026 only.</h2>
+    <p class="section-sub reveal" data-i18n="sl_sub">One brand per category — no direct competitors. When all 8 slots are filled, the program closes for the season. Zero cash required.</p>
+    <div class="slots stagger">
+      <div class="slot-row">
+        <div class="slot-cat"><span class="slot-icon">🥤</span><span class="slot-name" data-i18n="cat1">Recovery & Nutrition</span></div>
+        <div class="slot-boxes">
+          <div class="slot slot-filled">
+            <img src="assets/partner/tropicool.png" alt="Tropicool" class="slot-logo">
+            <div><div class="slot-brand">Tropicool</div><div class="slot-tag" data-i18n="slot_taken">PARTNER</div></div>
+          </div>
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+        </div>
+      </div>
+      <div class="slot-row">
+        <div class="slot-cat"><span class="slot-icon">🏐</span><span class="slot-name" data-i18n="cat2">Sport & Equipment</span></div>
+        <div class="slot-boxes">
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+        </div>
+      </div>
+      <div class="slot-row">
+        <div class="slot-cat"><span class="slot-icon">🧘</span><span class="slot-name" data-i18n="cat3">Lifestyle & Wellness</span></div>
+        <div class="slot-boxes">
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+        </div>
+      </div>
+      <div class="slot-row">
+        <div class="slot-cat"><span class="slot-icon">🚴</span><span class="slot-name" data-i18n="cat4">Tech & Mobility</span></div>
+        <div class="slot-boxes">
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+          <div class="slot slot-empty"><div class="slot-ph"></div><div class="slot-open-lbl" data-i18n="slot_open">OPEN</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="urgency-strip reveal" data-i18n="urgency">Free for the full 2026 test season. Irrepetable.</div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="p-section p-section-alt" id="proof">
+  <div class="container">
+    <div class="eyebrow reveal"><b>07</b> · <span data-i18n="pr_eyebrow">Social Proof</span></div>
+    <div class="reveal" style="max-width:760px">
+      <blockquote class="quote" data-i18n="proof_q1">"¡Me encanta la idea y el proyecto, vamos adelante!"</blockquote>
+      <blockquote class="quote" data-i18n="proof_q2">"¡Muy ilusionado con vuestro (nuestro) proyecto!"</blockquote>
+      <div class="proof-meta">
+        <img src="assets/partner/tropicool.png" alt="Tropicool" class="proof-logo">
+        <div>
+          <div class="proof-name" data-i18n="proof_name">Fernando Felicio</div>
+          <div class="proof-role" data-i18n="proof_role">Iberic Peninsula Manager</div>
+          <div class="proof-brand" data-i18n="proof_brand">Tropicool Superfoods</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="p-section" id="offer">
+  <div class="container">
+    <div class="eyebrow reveal"><b>08</b> · <span data-i18n="of_eyebrow">The Deal</span></div>
+    <h2 class="h-section reveal" data-i18n="of_headline">What you get. What we ask.</h2>
+    <div class="offer-grid reveal">
+      <div class="offer-col offer-get">
+        <div class="offer-title" data-i18n="of_get_title">You get</div>
+        <ul class="offer-list">
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get1">Official Partner Card in your beach's SpotDrawer</span></li>
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get2">Custom branded challenge in the Arena</span></li>
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get3">Real-time analytics dashboard</span></li>
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get4">Arena badge linked to your brand</span></li>
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get5">Community mentions @arenviu</span></li>
+          <li class="offer-item"><span class="offer-icon">✓</span><span data-i18n="of_get6">100% free for the 2026 season</span></li>
+        </ul>
+      </div>
+      <div class="offer-col offer-ask">
+        <div class="offer-title" data-i18n="of_ask_title">We ask</div>
+        <ul class="offer-list">
+          <li class="offer-item"><span class="offer-icon">→</span><span data-i18n="of_ask1">Zero cash — no payment required</span></li>
+          <li class="offer-item"><span class="offer-icon">→</span><span data-i18n="of_ask2">Define a prize: min 10% discount, product, or experience</span></li>
+          <li class="offer-item"><span class="offer-icon">→</span><span data-i18n="of_ask3">Set a validity window for the prize</span></li>
+          <li class="offer-item"><span class="offer-icon">→</span><span data-i18n="of_ask4">One brand per category — no conflicts</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="p-section p-section-alt" id="apply">
+  <div class="container">
+    <div class="eyebrow reveal"><b>09</b> · <span data-i18n="fm_eyebrow">Apply</span></div>
+    <h2 class="h-section reveal" data-i18n="fm_headline">Ready to be part of this?</h2>
+    <p class="section-sub reveal" data-i18n="fm_sub">Fill in the form and we'll get back within 48 hours to align details.</p>
+    <form class="form-wrap reveal" id="partner-form" onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div class="field"><label data-i18n="fm_brand">Brand name *</label><input id="f-brand" required></div>
+        <div class="field"><label data-i18n="fm_website">Website</label><input id="f-website" type="url" placeholder="https://"></div>
+        <div class="field"><label data-i18n="fm_social">Instagram / social</label><input id="f-social" placeholder="@yourbrand"></div>
+        <div class="field"><label data-i18n="fm_contact">Contact name *</label><input id="f-contact" required></div>
+        <div class="field"><label data-i18n="fm_email">Contact email *</label><input id="f-email" type="email" required></div>
+        <div class="field">
+          <label data-i18n="fm_category">Category *</label>
+          <select id="f-category" required>
+            <option value="">—</option>
+            <option data-i18n="cat1">Recovery &amp; Nutrition</option>
+            <option data-i18n="cat2">Sport &amp; Equipment</option>
+            <option data-i18n="cat3">Lifestyle &amp; Wellness</option>
+            <option data-i18n="cat4">Tech &amp; Mobility</option>
+            <option data-i18n="fm_cat_other">Other</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label data-i18n="fm_message">Tell us about your brand and the prize you'd offer</label>
+          <textarea id="f-message" rows="5" data-i18n-placeholder="fm_msg_ph" placeholder="e.g. We sell beach volleyball equipment and we'd offer 15% discount on our online store for Arenviu community members..."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-lg" data-i18n="fm_submit">Send application →</button>
+        <span class="form-or" data-i18n="fm_or">or contact us directly</span>
+        <!-- ⚠️ Replace 34000000000 with your actual WhatsApp number -->
+        <a href="https://wa.me/34683625710" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="fm_wa">WhatsApp us</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="logo"><img src="assets/logo-icon.jpeg" alt="Arenviu"><span class="logo-wm">Arenviu</span></a>
+      <span class="footer-copy" data-i18n="foot_copy">© 2026 Arenviu · Built on the beach.</span>
+      <a href="mailto:hello@arenviu.com" class="footer-email">hello@arenviu.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ─── TRANSLATIONS ─────────────────────────────────────────────────────────── */
+const T = {
+  en: {
+    nav_back:"← arenviu.com", nav_try:"Try the app", lang_label:"EN", lang_flag:"🇬🇧",
+    hero_eyebrow:"FOUNDING PARTNER PROGRAM · 2026 SEASON · BARCELONA",
+    hero_headline:"Your brand.<br><span class='amber'>Their decision moment.</span>",
+    hero_sub:"Every time a beach sports player opens Arenviu to choose where to play today, your brand is there — not as an ad, but as part of the experience.",
+    hero_cta:"Apply now →", hero_scroll:"See how it works ↓",
+    stat1_lbl:"Active players", stat2_lbl:"Beaches covered", stat3_lbl:"Play zones mapped", stat4_lbl:"Avg partner CTR*",
+    stats_note:"* Indicative figures based on early-season projections.",
+    place_eyebrow:"Placements", place_headline:"Two ways your brand lives in the app.",
+    place_sub:"One is passive presence. The other drives customers to your door. Together, they form a complete brand experience at the right moment.",
+    badge_passive:"Passive · always on", badge_active:"Active · drives customers",
+    place_banner_title:"Official Partner Card",
+    place_banner_body:"Your logo, name, and CTA button appear in the SpotDrawer of your associated beach. Every player who checks conditions sees you — at exactly the moment they decide where to play.",
+    place_challenge_title:"Branded Challenges",
+    place_challenge_body:"You define the prize — a discount, a product, an experience. We design a custom challenge. Players compete in your beach zone. Winners earn your exclusive code directly inside the app.",
+    circle_eyebrow:"The flywheel", circle_headline:"The virtuous circle.",
+    circle_sub:"Your prize creates engagement. Engagement brings players to you. Players become your customers. Happy customers spread the word. More players means more value for your brand — every season.",
+    step1_title:"You offer a prize", step1_body:"Define a discount, product, or experience as the reward.",
+    step2_title:"We build the challenge", step2_body:"Arenviu designs a custom challenge around your brand.",
+    step3_title:"Players compete", step3_body:"Beach sports players engage with your brand to earn progress.",
+    step4_title:"Winners earn your code", step4_body:"Exclusive discount codes delivered in-app automatically.",
+    step5_title:"They visit your store", step5_body:"Winners redeem at your business, physically or digitally.",
+    step6_title:"Community grows", step6_body:"Happy customers refer others. The loop starts again.",
+    circle_result:"More players · better prizes · stronger community · bigger brand impact",
+    tl_eyebrow:"How it works", tl_headline:"From agreement to live in 2 weeks.",
+    tl1_week:"Week 1", tl1_title:"Agreement", tl1_body:"We align on prize type, discount %, and validity window. A simple LOI is signed.",
+    tl2_week:"Week 1–2", tl2_title:"Partner Setup", tl2_body:"Arenviu creates your Official Partner profile, card content, and beach zone assignment.",
+    tl3_week:"Week 2", tl3_title:"Challenge Design", tl3_body:"We design a custom challenge around your brand — mechanics, copy, and visuals.",
+    tl4_week:"Week 2–3", tl4_title:"Go Live", tl4_body:"Your Partner Card appears in the SpotDrawer. The challenge launches in the Arena.",
+    tl5_week:"Ongoing", tl5_title:"Track & Redeem", tl5_body:"Players win codes and redeem them at your location. You validate via your Partner dashboard.",
+    an_eyebrow:"Partner Dashboard", an_headline:"You always know what's happening.",
+    an_sub:"Every Founding Partner gets access to a real-time analytics dashboard. Card views, tap-through rate, codes won and redeemed. Real customers, tracked.",
+    m1_title:"Card Views", m1_body:"How many players saw your brand",
+    m2_title:"Tap CTR", m2_body:"How many clicked your CTA",
+    m3_title:"Codes Won", m3_body:"Potential customers, confirmed",
+    m4_title:"Codes Used", m4_body:"Real customers who visited you",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 slots. 4 categories. 2026 only.",
+    sl_sub:"One brand per category — no direct competitors. When all 8 slots are filled, the program closes for the season. Zero cash required.",
+    cat1:"Recovery & Nutrition", cat2:"Sport & Equipment", cat3:"Lifestyle & Wellness", cat4:"Tech & Mobility",
+    slot_taken:"PARTNER", slot_open:"OPEN",
+    urgency:"Free for the full 2026 test season. Irrepetable.",
+    pr_eyebrow:"Social Proof",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"The Deal", of_headline:"What you get. What we ask.",
+    of_get_title:"You get",
+    of_get1:"Official Partner Card in your beach's SpotDrawer",
+    of_get2:"Custom branded challenge in the Arena",
+    of_get3:"Real-time analytics dashboard",
+    of_get4:"Arena badge linked to your brand",
+    of_get5:"Community mentions @arenviu",
+    of_get6:"100% free for the 2026 season",
+    of_ask_title:"We ask",
+    of_ask1:"Zero cash — no payment required",
+    of_ask2:"Define a prize: min 10% discount, product, or experience",
+    of_ask3:"Set a validity window for the prize",
+    of_ask4:"One brand per category — no conflicts",
+    fm_eyebrow:"Apply", fm_headline:"Ready to be part of this?",
+    fm_sub:"Fill in the form and we'll get back within 48 hours to align details.",
+    fm_brand:"Brand name *", fm_website:"Website", fm_social:"Instagram / social", fm_contact:"Contact name *",
+    fm_email:"Contact email *", fm_category:"Category *", fm_cat_other:"Other",
+    fm_message:"Tell us about your brand and the prize you'd offer",
+    fm_msg_ph:"e.g. We sell beach volleyball equipment and we'd offer 15% discount on our online store for Arenviu community members...",
+    fm_submit:"Send application →", fm_or:"or contact us directly", fm_wa:"WhatsApp us",
+    foot_copy:"© 2026 Arenviu · Built on the beach."
+  },
+  es: {
+    nav_back:"← arenviu.com", nav_try:"Probar la app", lang_label:"ES", lang_flag:"🇪🇸",
+    hero_eyebrow:"PROGRAMA FOUNDING PARTNER · TEMPORADA 2026 · BARCELONA",
+    hero_headline:"Tu marca.<br><span class='amber'>Su momento de decisión.</span>",
+    hero_sub:"Cada vez que un jugador de deportes de playa abre Arenviu para elegir dónde jugar hoy, tu marca está ahí — no como un anuncio, sino como parte de la experiencia.",
+    hero_cta:"Aplica ahora →", hero_scroll:"Ver cómo funciona ↓",
+    stat1_lbl:"Jugadores activos", stat2_lbl:"Playas cubiertas", stat3_lbl:"Zonas de juego mapeadas", stat4_lbl:"CTR medio partner*",
+    stats_note:"* Cifras orientativas basadas en proyecciones de inicio de temporada.",
+    place_eyebrow:"Placements", place_headline:"Dos formas de estar presente en la app.",
+    place_sub:"Una es presencia pasiva. La otra lleva clientes a tu puerta. Juntas forman una experiencia de marca completa en el momento exacto.",
+    badge_passive:"Pasiva · siempre activa", badge_active:"Activa · lleva clientes",
+    place_banner_title:"Tarjeta Official Partner",
+    place_banner_body:"Tu logo, nombre y botón CTA aparecen en el SpotDrawer de tu playa asociada. Cada jugador que consulta las condiciones te ve — exactamente cuando decide dónde jugar.",
+    place_challenge_title:"Challenges de marca",
+    place_challenge_body:"Tú defines el premio — un descuento, un producto, una experiencia. Nosotros diseñamos un challenge personalizado. Los jugadores compiten en tu zona de playa y los ganadores obtienen tu código exclusivo.",
+    circle_eyebrow:"El círculo virtuoso", circle_headline:"El círculo virtuoso.",
+    circle_sub:"Tu premio genera engagement. El engagement lleva jugadores hacia ti. Los jugadores se convierten en clientes. Los clientes felices difunden la palabra. Más jugadores significa más valor para tu marca — cada temporada.",
+    step1_title:"Ofreces un premio", step1_body:"Define un descuento, producto o experiencia como recompensa.",
+    step2_title:"Creamos el challenge", step2_body:"Arenviu diseña un challenge personalizado alrededor de tu marca.",
+    step3_title:"Los jugadores compiten", step3_body:"Los deportistas de playa interactúan con tu marca para ganar progreso.",
+    step4_title:"Los ganadores consiguen tu código", step4_body:"Códigos de descuento exclusivos entregados en la app automáticamente.",
+    step5_title:"Visitan tu tienda", step5_body:"Los ganadores canjean en tu negocio, físicamente o digitalmente.",
+    step6_title:"La comunidad crece", step6_body:"Los clientes felices recomiendan. El ciclo vuelve a empezar.",
+    circle_result:"Más jugadores · mejores premios · comunidad más fuerte · mayor impacto de marca",
+    tl_eyebrow:"Cómo funciona", tl_headline:"Del acuerdo al directo en 2 semanas.",
+    tl1_week:"Semana 1", tl1_title:"Acuerdo", tl1_body:"Alineamos tipo de premio, % de descuento y ventana de validez. Se firma un LOI simple.",
+    tl2_week:"Semana 1–2", tl2_title:"Setup del Partner", tl2_body:"Arenviu crea tu perfil Official Partner, el contenido de la tarjeta y la zona de playa.",
+    tl3_week:"Semana 2", tl3_title:"Diseño del Challenge", tl3_body:"Diseñamos un challenge personalizado alrededor de tu marca — mecánicas, copy y visuales.",
+    tl4_week:"Semana 2–3", tl4_title:"Go Live", tl4_body:"Tu Partner Card aparece en el SpotDrawer. El challenge se lanza en la Arena.",
+    tl5_week:"Continuo", tl5_title:"Seguimiento y canje", tl5_body:"Los jugadores ganan códigos y los canjean en tu local. Tú validas desde tu panel de partner.",
+    an_eyebrow:"Panel de Partner", an_headline:"Siempre sabes qué está pasando.",
+    an_sub:"Cada Founding Partner tiene acceso a un panel de analítica en tiempo real. Vistas, CTR, códigos ganados y canjeados. Clientes reales, registrados.",
+    m1_title:"Vistas de tarjeta", m1_body:"Cuántos jugadores vieron tu marca",
+    m2_title:"CTR de clics", m2_body:"Cuántos hicieron clic en tu CTA",
+    m3_title:"Códigos ganados", m3_body:"Clientes potenciales confirmados",
+    m4_title:"Códigos usados", m4_body:"Clientes reales que te visitaron",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 plazas. 4 categorías. Solo 2026.",
+    sl_sub:"Una marca por categoría — sin competidores directos. Cuando se llenen las 8 plazas, el programa cierra para la temporada. Sin coste.",
+    cat1:"Recuperación & Nutrición", cat2:"Deporte & Equipamiento", cat3:"Lifestyle & Bienestar", cat4:"Tecnología & Movilidad",
+    slot_taken:"PARTNER", slot_open:"LIBRE",
+    urgency:"Gratuito durante toda la temporada de prueba 2026. Irrepetible.",
+    pr_eyebrow:"Prueba Social",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"El Trato", of_headline:"Qué obtienes. Qué pedimos.",
+    of_get_title:"Obtienes",
+    of_get1:"Tarjeta Official Partner en el SpotDrawer de tu playa",
+    of_get2:"Challenge de marca personalizado en la Arena",
+    of_get3:"Panel de analítica en tiempo real",
+    of_get4:"Badge de Arena vinculado a tu marca",
+    of_get5:"Menciones en la comunidad @arenviu",
+    of_get6:"100% gratuito para la temporada 2026",
+    of_ask_title:"Pedimos",
+    of_ask1:"Cero dinero — sin pago requerido",
+    of_ask2:"Define un premio: mín. 10% descuento, producto o experiencia",
+    of_ask3:"Establece una ventana de validez para el premio",
+    of_ask4:"Una marca por categoría — sin conflictos",
+    fm_eyebrow:"Aplica", fm_headline:"¿Listo para ser parte de esto?",
+    fm_sub:"Rellena el formulario y te contactaremos en 48 horas para alinear los detalles.",
+    fm_brand:"Nombre de la marca *", fm_website:"Sitio web", fm_social:"Instagram / perfil social", fm_contact:"Nombre de contacto *",
+    fm_email:"Email de contacto *", fm_category:"Categoría *", fm_cat_other:"Otro",
+    fm_message:"Cuéntanos sobre tu marca y qué premio ofrecerías",
+    fm_msg_ph:"ej. Vendemos equipamiento de voley playa y ofreceríamos un 15% de descuento en nuestra tienda online...",
+    fm_submit:"Enviar solicitud →", fm_or:"o contáctanos directamente", fm_wa:"Escríbenos por WhatsApp",
+    foot_copy:"© 2026 Arenviu · Built on the beach."
+  },
+  ca: {
+    nav_back:"← arenviu.com", nav_try:"Prova l'app", lang_label:"CA", lang_flag:"🏴",
+    hero_eyebrow:"PROGRAMA FOUNDING PARTNER · TEMPORADA 2026 · BARCELONA",
+    hero_headline:"La teva marca.<br><span class='amber'>El seu moment de decisió.</span>",
+    hero_sub:"Cada vegada que un jugador d'esports de platja obre Arenviu per triar on jugar avui, la teva marca és allà — no com un anunci, sinó com a part de l'experiència.",
+    hero_cta:"Aplica ara →", hero_scroll:"Veure com funciona ↓",
+    stat1_lbl:"Jugadors actius", stat2_lbl:"Platges cobertes", stat3_lbl:"Zones de joc mapejades", stat4_lbl:"CTR mitjà partner*",
+    stats_note:"* Xifres orientatives basades en projeccions d'inici de temporada.",
+    place_eyebrow:"Placements", place_headline:"Dues maneres d'estar present a l'app.",
+    place_sub:"Una és presència passiva. L'altra porta clients a la teva porta. Juntes formen una experiència de marca completa en el moment exacte.",
+    badge_passive:"Passiva · sempre activa", badge_active:"Activa · porta clients",
+    place_banner_title:"Targeta Official Partner",
+    place_banner_body:"El teu logo, nom i botó CTA apareixen al SpotDrawer de la teva platja associada. Cada jugador que consulta les condicions et veu — exactament quan decideix on jugar.",
+    place_challenge_title:"Challenges de marca",
+    place_challenge_body:"Tu defineixes el premi — un descompte, un producte, una experiència. Nosaltres dissenyem un challenge personalitzat. Els jugadors competeixen a la teva zona i els guanyadors reben el teu codi exclusiu.",
+    circle_eyebrow:"El cercle virtuós", circle_headline:"El cercle virtuós.",
+    circle_sub:"El teu premi genera engagement. L'engagement porta jugadors cap a tu. Els jugadors es converteixen en clients. Els clients feliços escampen la paraula. Més jugadors significa més valor per a la teva marca.",
+    step1_title:"Ofereixes un premi", step1_body:"Defineix un descompte, producte o experiència com a recompensa.",
+    step2_title:"Creem el challenge", step2_body:"Arenviu dissenya un challenge personalitzat al voltant de la teva marca.",
+    step3_title:"Els jugadors competeixen", step3_body:"Els esportistes de platja interactuen amb la teva marca per guanyar progrés.",
+    step4_title:"Els guanyadors reben el teu codi", step4_body:"Codis de descompte exclusius entregats a l'app automàticament.",
+    step5_title:"Visiten la teva botiga", step5_body:"Els guanyadors bescanvien al teu negoci, físicament o digitalment.",
+    step6_title:"La comunitat creix", step6_body:"Els clients feliços recomanen. El cicle torna a començar.",
+    circle_result:"Més jugadors · millors premis · comunitat més forta · major impacte de marca",
+    tl_eyebrow:"Com funciona", tl_headline:"De l'acord al directe en 2 setmanes.",
+    tl1_week:"Setmana 1", tl1_title:"Acord", tl1_body:"Alinearem tipus de premi, % de descompte i finestra de validesa. Es signa un LOI simple.",
+    tl2_week:"Setmana 1–2", tl2_title:"Setup del Partner", tl2_body:"Arenviu crea el teu perfil Official Partner, el contingut de la targeta i la zona de platja.",
+    tl3_week:"Setmana 2", tl3_title:"Disseny del Challenge", tl3_body:"Dissenyem un challenge personalitzat al voltant de la teva marca — mecàniques, copy i visuals.",
+    tl4_week:"Setmana 2–3", tl4_title:"Go Live", tl4_body:"La teva Partner Card apareix al SpotDrawer. El challenge es llança a l'Arena.",
+    tl5_week:"Continu", tl5_title:"Seguiment i bescanvi", tl5_body:"Els jugadors guanyen codis i els bescanvien al teu local. Tu valides des del teu tauler de partner.",
+    an_eyebrow:"Tauler de Partner", an_headline:"Sempre saps què passa.",
+    an_sub:"Cada Founding Partner té accés a un tauler d'analítica en temps real. Visualitzacions, CTR, codis guanyats i bescanviats. Clients reals, registrats.",
+    m1_title:"Visualitzacions", m1_body:"Quants jugadors han vist la teva marca",
+    m2_title:"CTR de clics", m2_body:"Quants han fet clic al teu CTA",
+    m3_title:"Codis guanyats", m3_body:"Clients potencials confirmats",
+    m4_title:"Codis usats", m4_body:"Clients reals que t'han visitat",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 places. 4 categories. Només 2026.",
+    sl_sub:"Una marca per categoria — sense competidors directes. Quan s'omplin les 8 places, el programa es tanca per a la temporada. Sense cost.",
+    cat1:"Recuperació & Nutrició", cat2:"Esport & Equipament", cat3:"Lifestyle & Benestar", cat4:"Tecnologia & Mobilitat",
+    slot_taken:"PARTNER", slot_open:"LLIURE",
+    urgency:"Gratuït durant tota la temporada de prova 2026. Irrepetible.",
+    pr_eyebrow:"Prova Social",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"El Tracte", of_headline:"Què obtens. Què demanem.",
+    of_get_title:"Obtens",
+    of_get1:"Targeta Official Partner al SpotDrawer de la teva platja",
+    of_get2:"Challenge de marca personalitzat a l'Arena",
+    of_get3:"Tauler d'analítica en temps real",
+    of_get4:"Badge d'Arena vinculat a la teva marca",
+    of_get5:"Mencions a la comunitat @arenviu",
+    of_get6:"100% gratuït per a la temporada 2026",
+    of_ask_title:"Demanem",
+    of_ask1:"Zero diners — sense pagament requerit",
+    of_ask2:"Defineix un premi: mínim 10% descompte, producte o experiència",
+    of_ask3:"Estableix una finestra de validesa per al premi",
+    of_ask4:"Una marca per categoria — sense conflictes",
+    fm_eyebrow:"Aplica", fm_headline:"Llest per formar-ne part?",
+    fm_sub:"Omple el formulari i et contactarem en 48 hores per alinear els detalls.",
+    fm_brand:"Nom de la marca *", fm_website:"Lloc web", fm_social:"Instagram / perfil social", fm_contact:"Nom de contacte *",
+    fm_email:"Email de contacte *", fm_category:"Categoria *", fm_cat_other:"Altre",
+    fm_message:"Explica'ns la teva marca i quin premi oferiràs",
+    fm_msg_ph:"p. ex. Venem equipament de volei platja i oferiríem un 15% de descompte a la nostra botiga online...",
+    fm_submit:"Enviar sol·licitud →", fm_or:"o contacta'ns directament", fm_wa:"Escriu-nos per WhatsApp",
+    foot_copy:"© 2026 Arenviu · Construït a la platja."
+  },
+  pt: {
+    nav_back:"← arenviu.com", nav_try:"Experimentar a app", lang_label:"PT", lang_flag:"🇵🇹",
+    hero_eyebrow:"PROGRAMA FOUNDING PARTNER · TEMPORADA 2026 · BARCELONA",
+    hero_headline:"A tua marca.<br><span class='amber'>O momento de decisão deles.</span>",
+    hero_sub:"Cada vez que um jogador de desportos de praia abre o Arenviu para escolher onde jogar hoje, a tua marca está lá — não como publicidade, mas como parte da experiência.",
+    hero_cta:"Candidata-te →", hero_scroll:"Ver como funciona ↓",
+    stat1_lbl:"Jogadores ativos", stat2_lbl:"Praias cobertas", stat3_lbl:"Zonas de jogo mapeadas", stat4_lbl:"CTR médio partner*",
+    stats_note:"* Números indicativos baseados em projeções de início de temporada.",
+    place_eyebrow:"Posicionamentos", place_headline:"Duas formas de estar presente na app.",
+    place_sub:"Uma é presença passiva. A outra leva clientes até ti. Juntas formam uma experiência de marca completa no momento certo.",
+    badge_passive:"Passiva · sempre ativa", badge_active:"Ativa · leva clientes",
+    place_banner_title:"Cartão Official Partner",
+    place_banner_body:"O teu logo, nome e botão CTA aparecem no SpotDrawer da tua praia associada. Cada jogador que verifica as condições vê-te — exatamente quando decide onde jogar.",
+    place_challenge_title:"Desafios de marca",
+    place_challenge_body:"Tu defines o prémio — um desconto, um produto, uma experiência. Nós desenhamos um desafio personalizado. Os jogadores competem na tua zona e os vencedores recebem o teu código exclusivo.",
+    circle_eyebrow:"O círculo virtuoso", circle_headline:"O círculo virtuoso.",
+    circle_sub:"O teu prémio gera engagement. O engagement leva jogadores até ti. Os jogadores tornam-se clientes. Clientes felizes espalham a palavra. Mais jogadores significa mais valor para a tua marca.",
+    step1_title:"Ofereces um prémio", step1_body:"Define um desconto, produto ou experiência como recompensa.",
+    step2_title:"Criamos o desafio", step2_body:"Arenviu desenha um desafio personalizado à volta da tua marca.",
+    step3_title:"Os jogadores competem", step3_body:"Os atletas de praia interagem com a tua marca para ganhar progresso.",
+    step4_title:"Os vencedores ganham o teu código", step4_body:"Códigos de desconto exclusivos entregues na app automaticamente.",
+    step5_title:"Visitam a tua loja", step5_body:"Os vencedores resgatam no teu negócio, fisicamente ou digitalmente.",
+    step6_title:"A comunidade cresce", step6_body:"Clientes felizes recomendam. O ciclo recomeça.",
+    circle_result:"Mais jogadores · melhores prémios · comunidade mais forte · maior impacto de marca",
+    tl_eyebrow:"Como funciona", tl_headline:"Do acordo ao vivo em 2 semanas.",
+    tl1_week:"Semana 1", tl1_title:"Acordo", tl1_body:"Alinhamos tipo de prémio, % de desconto e janela de validade. Assina-se um LOI simples.",
+    tl2_week:"Semana 1–2", tl2_title:"Setup do Partner", tl2_body:"A Arenviu cria o teu perfil Official Partner, o conteúdo do cartão e a zona de praia.",
+    tl3_week:"Semana 2", tl3_title:"Design do Desafio", tl3_body:"Desenhamos um desafio personalizado à volta da tua marca — mecânicas, copy e visuais.",
+    tl4_week:"Semana 2–3", tl4_title:"Go Live", tl4_body:"O teu Partner Card fica ativo no SpotDrawer. O desafio lança-se na Arena.",
+    tl5_week:"Contínuo", tl5_title:"Acompanhamento e resgate", tl5_body:"Os jogadores ganham códigos e resgatam no teu local. Tu validas pelo teu painel de partner.",
+    an_eyebrow:"Painel de Partner", an_headline:"Sabes sempre o que está a acontecer.",
+    an_sub:"Cada Founding Partner tem acesso a um painel de análise em tempo real. Visualizações, CTR, códigos ganhos e utilizados. Clientes reais, registados.",
+    m1_title:"Visualizações", m1_body:"Quantos jogadores viram a tua marca",
+    m2_title:"CTR de cliques", m2_body:"Quantos clicaram no teu CTA",
+    m3_title:"Códigos ganhos", m3_body:"Clientes potenciais confirmados",
+    m4_title:"Códigos usados", m4_body:"Clientes reais que te visitaram",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 vagas. 4 categorias. Só 2026.",
+    sl_sub:"Uma marca por categoria — sem concorrentes diretos. Quando as 8 vagas estiverem preenchidas, o programa fecha para a temporada. Sem custo.",
+    cat1:"Recuperação & Nutrição", cat2:"Desporto & Equipamento", cat3:"Lifestyle & Bem-Estar", cat4:"Tecnologia & Mobilidade",
+    slot_taken:"PARTNER", slot_open:"LIVRE",
+    urgency:"Gratuito durante toda a temporada de teste 2026. Irrepetível.",
+    pr_eyebrow:"Prova Social",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"O Acordo", of_headline:"O que recebes. O que pedimos.",
+    of_get_title:"Recebes",
+    of_get1:"Cartão Official Partner no SpotDrawer da tua praia",
+    of_get2:"Desafio de marca personalizado na Arena",
+    of_get3:"Painel de análise em tempo real",
+    of_get4:"Badge Arena ligado à tua marca",
+    of_get5:"Menções na comunidade @arenviu",
+    of_get6:"100% gratuito para a temporada 2026",
+    of_ask_title:"Pedimos",
+    of_ask1:"Zero dinheiro — sem pagamento requerido",
+    of_ask2:"Define um prémio: mín. 10% desconto, produto ou experiência",
+    of_ask3:"Estabelece uma janela de validade para o prémio",
+    of_ask4:"Uma marca por categoria — sem conflitos",
+    fm_eyebrow:"Candidatura", fm_headline:"Pronto para fazer parte disto?",
+    fm_sub:"Preenche o formulário e entraremos em contacto em 48 horas para alinhar os detalhes.",
+    fm_brand:"Nome da marca *", fm_website:"Website", fm_social:"Instagram / perfil social", fm_contact:"Nome de contacto *",
+    fm_email:"Email de contacto *", fm_category:"Categoria *", fm_cat_other:"Outro",
+    fm_message:"Fala-nos da tua marca e que prémio oferecerias",
+    fm_msg_ph:"ex. Vendemos equipamento de voleibol de praia e ofereceríamos 15% de desconto na nossa loja online...",
+    fm_submit:"Enviar candidatura →", fm_or:"ou contacta-nos diretamente", fm_wa:"Fala connosco no WhatsApp",
+    foot_copy:"© 2026 Arenviu · Construído na praia."
+  },
+  it: {
+    nav_back:"← arenviu.com", nav_try:"Prova l'app", lang_label:"IT", lang_flag:"🇮🇹",
+    hero_eyebrow:"PROGRAMMA FOUNDING PARTNER · STAGIONE 2026 · BARCELLONA",
+    hero_headline:"Il tuo brand.<br><span class='amber'>Il loro momento decisivo.</span>",
+    hero_sub:"Ogni volta che un giocatore di sport da spiaggia apre Arenviu per scegliere dove giocare oggi, il tuo brand è lì — non come pubblicità, ma come parte dell'esperienza.",
+    hero_cta:"Candidati ora →", hero_scroll:"Come funziona ↓",
+    stat1_lbl:"Giocatori attivi", stat2_lbl:"Spiagge coperte", stat3_lbl:"Zone di gioco mappate", stat4_lbl:"CTR medio partner*",
+    stats_note:"* Numeri indicativi basati su proiezioni di inizio stagione.",
+    place_eyebrow:"Posizionamenti", place_headline:"Due modi di essere presente nell'app.",
+    place_sub:"Uno è presenza passiva. L'altro porta clienti da te. Insieme formano un'esperienza di brand completa nel momento giusto.",
+    badge_passive:"Passiva · sempre attiva", badge_active:"Attiva · porta clienti",
+    place_banner_title:"Carta Official Partner",
+    place_banner_body:"Il tuo logo, nome e pulsante CTA appaiono nello SpotDrawer della tua spiaggia associata. Ogni giocatore che controlla le condizioni ti vede — esattamente quando decide dove giocare.",
+    place_challenge_title:"Challenge brandizzate",
+    place_challenge_body:"Tu definisci il premio — uno sconto, un prodotto, un'esperienza. Noi progettiamo una challenge personalizzata. I giocatori competono nella tua zona spiaggia e i vincitori ricevono il tuo codice esclusivo.",
+    circle_eyebrow:"Il circolo virtuoso", circle_headline:"Il circolo virtuoso.",
+    circle_sub:"Il tuo premio genera engagement. L'engagement porta giocatori da te. I giocatori diventano clienti. I clienti felici diffondono la parola. Più giocatori significa più valore per il tuo brand.",
+    step1_title:"Offri un premio", step1_body:"Definisci uno sconto, prodotto o esperienza come ricompensa.",
+    step2_title:"Creiamo la challenge", step2_body:"Arenviu progetta una challenge personalizzata attorno al tuo brand.",
+    step3_title:"I giocatori competono", step3_body:"Gli atleti da spiaggia interagiscono con il tuo brand per guadagnare progresso.",
+    step4_title:"I vincitori ottengono il tuo codice", step4_body:"Codici sconto esclusivi consegnati nell'app automaticamente.",
+    step5_title:"Visitano il tuo negozio", step5_body:"I vincitori riscattano presso la tua attività, fisicamente o digitalmente.",
+    step6_title:"La community cresce", step6_body:"I clienti soddisfatti consigliano. Il ciclo ricomincia.",
+    circle_result:"Più giocatori · premi migliori · comunità più forte · maggiore impatto del brand",
+    tl_eyebrow:"Come funziona", tl_headline:"Dall'accordo al live in 2 settimane.",
+    tl1_week:"Settimana 1", tl1_title:"Accordo", tl1_body:"Allineiamo tipo di premio, % sconto e finestra di validità. Si firma un semplice LOI.",
+    tl2_week:"Settimana 1–2", tl2_title:"Setup del Partner", tl2_body:"Arenviu crea il tuo profilo Official Partner, il contenuto della carta e la zona spiaggia.",
+    tl3_week:"Settimana 2", tl3_title:"Design della Challenge", tl3_body:"Progettiamo una challenge personalizzata attorno al tuo brand — meccaniche, copy e visual.",
+    tl4_week:"Settimana 2–3", tl4_title:"Go Live", tl4_body:"La tua Partner Card va live nello SpotDrawer. La challenge si lancia nell'Arena.",
+    tl5_week:"Continuativo", tl5_title:"Monitoraggio e riscatto", tl5_body:"I giocatori vincono codici e li riscattano presso la tua attività. Tu validi tramite la dashboard Partner.",
+    an_eyebrow:"Dashboard Partner", an_headline:"Sai sempre cosa sta succedendo.",
+    an_sub:"Ogni Founding Partner ha accesso a una dashboard di analisi in tempo reale. Visualizzazioni, CTR, codici vinti e utilizzati. Clienti reali, tracciati.",
+    m1_title:"Visualizzazioni", m1_body:"Quanti giocatori hanno visto il tuo brand",
+    m2_title:"CTR click", m2_body:"Quanti hanno cliccato sul tuo CTA",
+    m3_title:"Codici vinti", m3_body:"Clienti potenziali confermati",
+    m4_title:"Codici usati", m4_body:"Clienti reali che ti hanno visitato",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 slot. 4 categorie. Solo 2026.",
+    sl_sub:"Un brand per categoria — nessun concorrente diretto. Quando tutti gli 8 slot sono occupati, il programma si chiude per la stagione. Nessun costo.",
+    cat1:"Recupero & Nutrizione", cat2:"Sport & Attrezzatura", cat3:"Lifestyle & Benessere", cat4:"Tech & Mobilità",
+    slot_taken:"PARTNER", slot_open:"APERTO",
+    urgency:"Gratuito per l'intera stagione di test 2026. Irripetibile.",
+    pr_eyebrow:"Prova Sociale",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"L'Accordo", of_headline:"Cosa ottieni. Cosa chiediamo.",
+    of_get_title:"Ottieni",
+    of_get1:"Carta Official Partner nello SpotDrawer della tua spiaggia",
+    of_get2:"Challenge brandizzata personalizzata nell'Arena",
+    of_get3:"Dashboard di analisi in tempo reale",
+    of_get4:"Badge Arena legato al tuo brand",
+    of_get5:"Menzioni nella community @arenviu",
+    of_get6:"100% gratuito per la stagione 2026",
+    of_ask_title:"Chiediamo",
+    of_ask1:"Zero cash — nessun pagamento richiesto",
+    of_ask2:"Definisci un premio: min 10% sconto, prodotto o esperienza",
+    of_ask3:"Stabilisci una finestra di validità per il premio",
+    of_ask4:"Un brand per categoria — nessun conflitto",
+    fm_eyebrow:"Candidatura", fm_headline:"Pronto a far parte di questo?",
+    fm_sub:"Compila il modulo e ti ricontatteremo entro 48 ore per allineare i dettagli.",
+    fm_brand:"Nome del brand *", fm_website:"Sito web", fm_social:"Instagram / profilo social", fm_contact:"Nome del contatto *",
+    fm_email:"Email del contatto *", fm_category:"Categoria *", fm_cat_other:"Altro",
+    fm_message:"Raccontaci del tuo brand e quale premio offriresti",
+    fm_msg_ph:"es. Vendiamo attrezzatura da beach volley e offriremmo il 15% di sconto sul nostro negozio online...",
+    fm_submit:"Invia candidatura →", fm_or:"o contattaci direttamente", fm_wa:"Scrivici su WhatsApp",
+    foot_copy:"© 2026 Arenviu · Costruito in spiaggia."
+  },
+  fr: {
+    nav_back:"← arenviu.com", nav_try:"Essayer l'app", lang_label:"FR", lang_flag:"🇫🇷",
+    hero_eyebrow:"PROGRAMME FOUNDING PARTNER · SAISON 2026 · BARCELONE",
+    hero_headline:"Ta marque.<br><span class='amber'>Leur moment de décision.</span>",
+    hero_sub:"Chaque fois qu'un joueur de sports de plage ouvre Arenviu pour choisir où jouer aujourd'hui, ta marque est là — pas comme une pub, mais comme une partie de l'expérience.",
+    hero_cta:"Postuler →", hero_scroll:"Voir comment ça marche ↓",
+    stat1_lbl:"Joueurs actifs", stat2_lbl:"Plages couvertes", stat3_lbl:"Zones de jeu cartographiées", stat4_lbl:"CTR moyen partner*",
+    stats_note:"* Chiffres indicatifs basés sur les projections de début de saison.",
+    place_eyebrow:"Placements", place_headline:"Deux façons d'être présent dans l'app.",
+    place_sub:"L'une est une présence passive. L'autre amène des clients chez toi. Ensemble, elles forment une expérience de marque complète au bon moment.",
+    badge_passive:"Passive · toujours active", badge_active:"Active · amène des clients",
+    place_banner_title:"Carte Official Partner",
+    place_banner_body:"Ton logo, nom et bouton CTA apparaissent dans le SpotDrawer de ta plage associée. Chaque joueur qui vérifie les conditions te voit — exactement au moment où il décide où jouer.",
+    place_challenge_title:"Challenges de marque",
+    place_challenge_body:"Tu définis le prix — une réduction, un produit, une expérience. Nous concevons un challenge personnalisé. Les joueurs s'affrontent dans ta zone et les gagnants reçoivent ton code exclusif.",
+    circle_eyebrow:"Le cercle vertueux", circle_headline:"Le cercle vertueux.",
+    circle_sub:"Ton prix génère de l'engagement. L'engagement amène des joueurs vers toi. Les joueurs deviennent tes clients. Les clients satisfaits font passer le mot. Plus de joueurs = plus de valeur pour ta marque.",
+    step1_title:"Tu offres un prix", step1_body:"Définis une réduction, un produit ou une expérience comme récompense.",
+    step2_title:"On crée le challenge", step2_body:"Arenviu conçoit un challenge personnalisé autour de ta marque.",
+    step3_title:"Les joueurs s'affrontent", step3_body:"Les sportifs de plage interagissent avec ta marque pour progresser.",
+    step4_title:"Les gagnants obtiennent ton code", step4_body:"Codes de réduction exclusifs livrés dans l'app automatiquement.",
+    step5_title:"Ils visitent ta boutique", step5_body:"Les gagnants rachètent dans ton commerce, physiquement ou en ligne.",
+    step6_title:"La communauté grandit", step6_body:"Les clients satisfaits recommandent. Le cycle recommence.",
+    circle_result:"Plus de joueurs · meilleurs prix · communauté plus forte · impact de marque plus grand",
+    tl_eyebrow:"Comment ça marche", tl_headline:"De l'accord au live en 2 semaines.",
+    tl1_week:"Semaine 1", tl1_title:"Accord", tl1_body:"On s'aligne sur le type de prix, le % de réduction et la fenêtre de validité. Une LOI simple est signée.",
+    tl2_week:"Semaine 1–2", tl2_title:"Setup du Partner", tl2_body:"Arenviu crée ton profil Official Partner, le contenu de la carte et l'attribution de zone de plage.",
+    tl3_week:"Semaine 2", tl3_title:"Design du Challenge", tl3_body:"On conçoit un challenge personnalisé autour de ta marque — mécaniques, copy et visuels.",
+    tl4_week:"Semaine 2–3", tl4_title:"Go Live", tl4_body:"Ta Partner Card est live dans le SpotDrawer. Le challenge se lance dans l'Arena.",
+    tl5_week:"En continu", tl5_title:"Suivi et rachat", tl5_body:"Les joueurs gagnent des codes et les rachètent dans ton local. Tu valides via ton tableau de bord Partner.",
+    an_eyebrow:"Tableau de Bord Partner", an_headline:"Tu sais toujours ce qui se passe.",
+    an_sub:"Chaque Founding Partner a accès à un tableau de bord analytique en temps réel. Vues, CTR, codes gagnés et utilisés. Vrais clients, suivis.",
+    m1_title:"Vues de carte", m1_body:"Combien de joueurs ont vu ta marque",
+    m2_title:"CTR clics", m2_body:"Combien ont cliqué sur ton CTA",
+    m3_title:"Codes gagnés", m3_body:"Clients potentiels confirmés",
+    m4_title:"Codes utilisés", m4_body:"Vrais clients qui t'ont rendu visite",
+    sl_eyebrow:"Founding Partners", sl_headline:"8 slots. 4 catégories. 2026 seulement.",
+    sl_sub:"Une marque par catégorie — sans concurrents directs. Quand les 8 slots sont remplis, le programme se ferme pour la saison. Sans frais.",
+    cat1:"Récupération & Nutrition", cat2:"Sport & Équipement", cat3:"Lifestyle & Bien-Être", cat4:"Tech & Mobilité",
+    slot_taken:"PARTNER", slot_open:"LIBRE",
+    urgency:"Gratuit pour toute la saison de test 2026. Irrépétable.",
+    pr_eyebrow:"Preuve Sociale",
+    proof_q1:"\"¡Me encanta la idea y el proyecto, vamos adelante!\"",
+    proof_q2:"\"¡Muy ilusionado con vuestro (nuestro) proyecto!\"",
+    proof_name:"Fernando Felicio", proof_role:"Iberic Peninsula Manager", proof_brand:"Tropicool Superfoods",
+    of_eyebrow:"Le Deal", of_headline:"Ce que tu obtiens. Ce qu'on demande.",
+    of_get_title:"Tu obtiens",
+    of_get1:"Carte Official Partner dans le SpotDrawer de ta plage",
+    of_get2:"Challenge de marque personnalisé dans l'Arena",
+    of_get3:"Tableau de bord analytique en temps réel",
+    of_get4:"Badge Arena lié à ta marque",
+    of_get5:"Mentions dans la communauté @arenviu",
+    of_get6:"100% gratuit pour la saison 2026",
+    of_ask_title:"On demande",
+    of_ask1:"Zéro cash — aucun paiement requis",
+    of_ask2:"Définis un prix : min. 10% de réduction, produit ou expérience",
+    of_ask3:"Fixe une fenêtre de validité pour le prix",
+    of_ask4:"Une marque par catégorie — aucun conflit",
+    fm_eyebrow:"Postuler", fm_headline:"Prêt à faire partie de ça ?",
+    fm_sub:"Remplis le formulaire et on te contactera sous 48 heures pour aligner les détails.",
+    fm_brand:"Nom de la marque *", fm_website:"Site web", fm_social:"Instagram / profil social", fm_contact:"Nom du contact *",
+    fm_email:"Email du contact *", fm_category:"Catégorie *", fm_cat_other:"Autre",
+    fm_message:"Parle-nous de ta marque et du prix que tu offrirais",
+    fm_msg_ph:"ex. On vend de l'équipement de beach volley et on offrirait 15% de réduction sur notre boutique en ligne...",
+    fm_submit:"Envoyer la candidature →", fm_or:"ou contacte-nous directement", fm_wa:"Écris-nous sur WhatsApp",
+    foot_copy:"© 2026 Arenviu · Construit sur la plage."
+  }
+};
+
+/* ─── LANG ENGINE ──────────────────────────────────────────────────────────── */
+let currentLang = localStorage.getItem('arenviu_lang') || 'en';
+
+function applyLang(lang) {
+  if (!T[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('arenviu_lang', lang);
+  document.documentElement.lang = lang;
+  const tr = T[lang];
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (tr[key] !== undefined) el.textContent = tr[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (tr[key] !== undefined) el.innerHTML = tr[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (tr[key] !== undefined) el.placeholder = tr[key];
+  });
+
+  // Handle hero headline (has HTML)
+  const heroH = document.querySelector('#hero h1');
+  if (heroH && tr.hero_headline) heroH.innerHTML = tr.hero_headline;
+
+  document.getElementById('lang-current').textContent = tr.lang_label;
+  document.getElementById('lang-flag').textContent = tr.lang_flag;
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.lang === lang);
+  });
+
+  const titles = {
+    en:'Arenviu — Founding Partner Program · Barcelona 2026',
+    es:'Arenviu — Programa Founding Partner · Barcelona 2026',
+    ca:'Arenviu — Programa Founding Partner · Barcelona 2026',
+    pt:'Arenviu — Programa Founding Partner · Barcelona 2026',
+    it:'Arenviu — Programma Founding Partner · Barcellona 2026',
+    fr:'Arenviu — Programme Founding Partner · Barcelone 2026'
+  };
+  document.title = titles[lang] || titles.en;
+}
+
+/* ─── FORM SUBMIT ──────────────────────────────────────────────────────────── */
+function handleSubmit(e) {
+  e.preventDefault();
+  const brand    = document.getElementById('f-brand').value;
+  const website  = document.getElementById('f-website').value;
+  const social   = document.getElementById('f-social').value;
+  const contact  = document.getElementById('f-contact').value;
+  const email    = document.getElementById('f-email').value;
+  const category = document.getElementById('f-category').value;
+  const message  = document.getElementById('f-message').value;
+  const subject  = `Arenviu Partner Application — ${brand}`;
+  const body = `Brand: ${brand}\nWebsite: ${website}\nSocial: ${social}\nContact: ${contact}\nEmail: ${email}\nCategory: ${category}\n\n${message}`;
+  window.location.href = `mailto:hello@arenviu.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/* ─── LANG DROPDOWN ────────────────────────────────────────────────────────── */
+const switcher = document.getElementById('lang-switcher');
+const langBtn  = document.getElementById('lang-btn');
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const open = switcher.classList.toggle('open');
+  langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    switcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+document.addEventListener('click', (e) => {
+  if (!switcher.contains(e.target)) {
+    switcher.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') switcher.classList.remove('open');
+});
+
+/* ─── NAV SCROLL ───────────────────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+let lastY = 0, ticking = false;
+function onScroll() {
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 20);
+  if (y > lastY && y > 120) nav.classList.add('hidden');
+  else nav.classList.remove('hidden');
+  lastY = y; ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+}, { passive: true });
+
+/* ─── HAMBURGER ────────────────────────────────────────────────────────────── */
+const hb = document.getElementById('hamburger');
+hb.addEventListener('click', () => {
+  hb.classList.toggle('open');
+  hb.setAttribute('aria-expanded', hb.classList.contains('open') ? 'true' : 'false');
+});
+
+/* ─── SCROLL ANIMATIONS ────────────────────────────────────────────────────── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+/* ─── INIT ─────────────────────────────────────────────────────────────────── */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+window.addEventListener('load', () => window.scrollTo(0, 0));
+applyLang(currentLang);
+</script>
+
+</body>
+</html>
