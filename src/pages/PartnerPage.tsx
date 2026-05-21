@@ -1294,7 +1294,7 @@ export default function PartnerPage() {
               <button type="submit" className="pp-btn pp-btn-primary pp-btn-lg">{t.form_submit}</button>
               <span className="pp-form-or">{t.form_or}</span>
               {/* ⚠️ Replace 34000000000 with your actual WhatsApp number before deploying */}
-              <a href="https://wa.me/34000000000" target="_blank" rel="noopener"
+              <a href="https://wa.me/34683625710" target="_blank" rel="noopener"
                 className="pp-btn pp-btn-ghost">{t.form_wa}</a>
             </div>
           </form>
