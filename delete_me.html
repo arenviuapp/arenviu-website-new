@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Delete Account — Arenviu</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: hsl(0 0% 4%);
+    --fg: hsl(0 0% 98%);
+    --card: hsl(240 6% 10%);
+    --muted-fg: hsl(240 5% 65%);
+    --border: hsl(240 4% 16%);
+    --primary: hsl(38 95% 55%);
+    --red: hsl(0 78% 60%);
+    --f-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --f-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--f-ui);
+    background: var(--bg); color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    background-image:
+      linear-gradient(to right, hsl(0 0% 100% / .04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(0 0% 100% / .04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* NAV */
+  .nav {
+    padding: 14px 32px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(14px);
+    background: color-mix(in oklab, var(--bg) 82%, transparent);
+  }
+  .logo-wm {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 17px; text-transform: uppercase; letter-spacing: 0.01em;
+  }
+  .nav a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-back {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted-fg);
+    display: flex; align-items: center; gap: 6px; margin-left: auto;
+    text-decoration: none; color: inherit;
+    transition: color .2s;
+  }
+  .nav-back:hover { color: var(--fg); }
+
+  /* LAYOUT */
+  .page {
+    max-width: 640px; margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  /* HEADER */
+  .eyebrow {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--red);
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  }
+  .eyebrow::before {
+    content: ""; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--red); box-shadow: 0 0 10px var(--red);
+  }
+  h1 {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: clamp(36px, 8vw, 64px); line-height: 0.92;
+    text-transform: uppercase; letter-spacing: -0.03em;
+    margin: 0 0 20px;
+  }
+  h1 span { color: var(--red); }
+
+  .lede {
+    color: var(--muted-fg); font-size: 16px; line-height: 1.6;
+    margin-bottom: 40px; max-width: 560px;
+  }
+
+  /* INFO BOX */
+  .info-box {
+    background: hsl(0 78% 60% / .08); border: 1px solid hsl(0 78% 60% / .25);
+    border-radius: 14px; padding: 18px 20px;
+    margin-bottom: 36px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .info-box .icon {
+    font-size: 20px; flex-shrink: 0; margin-top: 1px;
+  }
+  .info-box p {
+    font-size: 14px; color: hsl(0 78% 80%); line-height: 1.55; margin: 0;
+  }
+  .info-box strong { color: hsl(0 78% 90%); }
+
+  /* FORM WRAPPER */
+  .form-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    min-height: 480px;
+  }
+  .form-wrap iframe {
+    width: 100%; min-height: 480px; border: none; display: block;
+  }
+
+  /* FOOTER */
+  .foot {
+    margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--muted-fg); text-transform: uppercase; text-align: center;
+  }
+  .foot a { color: var(--primary); text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .nav { padding: 12px 20px; }
+    .page { padding: 40px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/">
+    <span class="logo-wm">Arenviu</span>
+  </a>
+  <a href="/" class="nav-back">← Back to site</a>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <div class="eyebrow">Account deletion</div>
+
+  <h1>Delete your<br><span>account.</span></h1>
+
+  <p class="lede">
+    To request deletion of your Arenviu account and all associated data,
+    fill in the form below. We will process your request within <strong>30 days</strong>
+    and send a confirmation to your email.
+  </p>
+
+  <div class="info-box">
+    <div class="icon">⚠</div>
+    <p>
+      <strong>This action is permanent.</strong> Deleting your account will remove
+      your Arena Points, badges, report history, and all personal data from our servers.
+      This cannot be undone.
+    </p>
+  </div>
+
+  <!-- TALLY FORM — sostituisci FORM_ID con il tuo ID Tally -->
+  <div class="form-wrap">
+    <iframe
+      src="https://tally.so/embed/FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      loading="lazy"
+      title="Arenviu account deletion request"
+    ></iframe>
+  </div>
+
+  <div class="foot">
+    Questions? <a href="mailto:hello@arenviu.com">hello@arenviu.com</a>
+    &nbsp;·&nbsp;
+    <a href="/privacy">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    © 2026 Arenviu
+  </div>
+
+</div>
+
+<script>
+  // Tally resizer — adatta l'altezza dell'iframe al contenuto del form
+  window.addEventListener("message", function(e) {
+    if (typeof e.data === "object" && e.data.type === "tally-height") {
+      var iframes = document.querySelectorAll("iframe[src*='tally.so']");
+      iframes.forEach(function(f) { f.style.height = e.data.height + "px"; });
+    }
+  });
+</script>
+
+</body>
+</html>
