@@ -394,6 +394,20 @@
   .feature:hover { border-color: hsl(38 95% 55% / .35); transform: translateY(-2px); background: var(--card-2); }
   .features { gap: 14px; }
 
+  /* HERO CAROUSEL */
+  .phone-carousel { position: relative; width: 100%; height: 100%; border-radius: 34px; overflow: hidden; }
+  .carousel-slide { position: absolute; inset: 0; transform: translateX(100%); transition: transform .55s cubic-bezier(.4,0,.2,1); }
+  .carousel-slide.active { transform: translateX(0); }
+  .carousel-slide.slide-out { transform: translateX(-100%); }
+  .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .carousel-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 10; }
+  .carousel-dot { height: 4px; width: 4px; border-radius: 2px; background: rgba(255,255,255,.3); transition: width .3s, background .3s; }
+  .carousel-dot.active { width: 14px; background: rgba(255,255,255,.9); }
+
+  /* BEACH GUIDE */
+  .guide-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px; align-items: center; }
+  @media (max-width: 768px) { .guide-grid { grid-template-columns: 1fr; } .guide-visual { order: -1; } }
+
   /* NAV ACTIVE LINK */
   .nav-links a.nav-active { color: var(--fg); }
 
@@ -545,6 +559,8 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
     <symbol id="i-cloud-sun" viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M2 12h2M20 12h2M19.07 4.93l-1.41 1.41"/><circle cx="12" cy="10" r="3"/><path d="M20 17.58A5 5 0 0 0 17 8h-1.26A8 8 0 1 0 4 16.25"/><path d="M22 18a3 3 0 0 1-3 3H8a4 4 0 0 1-1.5-7.7"/></symbol>
     <symbol id="i-chat-frag" viewBox="0 0 24 24"><path d="M3 5h10v7H6l-3 3z"/><path d="M10 13h11v7l-3-3h-8z"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="none"/></symbol>
@@ -570,6 +586,7 @@
     <nav class="nav-links" id="nav-links">
       <a href="#problem" data-i18n="nav_problem">Problem</a>
       <a href="#solution" data-i18n="nav_solution">Solution</a>
+      <a href="#guide" data-i18n="nav_guide">Guide</a>
       <a href="#arena" data-i18n="nav_arena">Arena</a>
       <a href="#evidence" data-i18n="nav_evidence">Evidence</a>
       <a href="#infrastructure" data-i18n="nav_infra">Infrastructure</a>
@@ -650,7 +667,22 @@
       </div>
       <div class="hero-visual reveal">
         <div class="phone-mock">
-          <img class="screen-img" src="assets/screenshot-hero.jpeg" alt="Arenviu live radar screenshot">
+          <div class="phone-carousel" id="hero-carousel">
+            <div class="carousel-slide active">
+              <img src="assets/map-score-real.png" alt="Arenviu score view">
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/map-crowding-real.png" alt="Arenviu crowding view">
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/map-weather-real.png" alt="Arenviu weather view">
+            </div>
+            <div class="carousel-dots">
+              <div class="carousel-dot active"></div>
+              <div class="carousel-dot"></div>
+              <div class="carousel-dot"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -731,6 +763,48 @@
       <div class="reveal">
         <div class="phone-mock">
           <img class="screen-img" src="assets/screenshot-solution.jpeg" alt="Arenviu beach score screenshot">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEACH GUIDE -->
+<section id="guide">
+  <div class="container">
+    <div class="guide-grid">
+      <div class="guide-visual reveal">
+        <div class="phone-mock">
+          <div class="phone-carousel" id="guide-carousel">
+            <div class="carousel-slide active">
+              <img src="assets/beach-guide.png" alt="Arenviu Beach Guide season">
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/beachguide-zones.png" alt="Arenviu Beach Guide zones">
+            </div>
+            <div class="carousel-dots">
+              <div class="carousel-dot active"></div>
+              <div class="carousel-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 class="h-section reveal" style="margin-bottom:32px" data-i18n-html="guide_headline">Beach<br>Guide.<span class="amber">.</span></h2>
+        <p class="section-sub reveal" style="margin-bottom:40px;max-width:520px" data-i18n="guide_sub">Barcelona's beaches have seasons, reserved zones, and sport-specific rules. Arenviu's Beach Guide puts all of it in one place — so you always know exactly when and where you can play.</p>
+        <div class="features stagger">
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-calendar"/></svg></div>
+            <div><h4 data-i18n="guide1_title">Season Calendar</h4><p data-i18n="guide1_body">High, Mid, and Low season — each with different zone rules. See which is active right now and when the next change happens.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
+            <div><h4 data-i18n="guide2_title">Zones & Rules</h4><p data-i18n="guide2_body">Training zones, municipal nets, free courts, LL zones. Know which are reserved, which are open, and the exact hours.</p></div>
+          </div>
+          <div class="feature">
+            <div class="ficon"><svg class="lucide"><use href="#i-clock"/></svg></div>
+            <div><h4 data-i18n="guide3_title">Always Up to Date</h4><p data-i18n="guide3_body">Weekend training reservations 09:00–13:00. Free play outside those hours. Schedule changes? We track them so you don't have to.</p></div>
+          </div>
         </div>
       </div>
     </div>
@@ -986,7 +1060,7 @@ We built it for beach players."</div>
 /* ─── TRANSLATIONS ─────────────────────────────────────────────────── */
 const T = {
   en: {
-    nav_problem:"Problem", nav_solution:"Solution", nav_arena:"Arena",
+    nav_problem:"Problem", nav_solution:"Solution", nav_guide:"Guide", nav_arena:"Arena",
     nav_evidence:"Evidence", nav_infra:"Infrastructure", nav_partners:"Partners",
     nav_team:"Team", nav_try:"Download",
     hero_tag:"BCN · Live Radar · Beach Sports Intelligence",
@@ -1007,6 +1081,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Every report earns XP. Leaderboards, streaks, badges. The game within the game.",
     sol4_title:"Zone map", sol4_body:"100+ play zones mapped: municipal nets, training zones, free courts.",
     sol5_title:"Smart Insights", sol5_body:"Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"Barcelona's beaches have seasons, reserved zones, and sport-specific rules. Arenviu's Beach Guide puts all of it in one place — so you always know exactly when and where you can play.",
+    guide1_title:"Season Calendar", guide1_body:"High, Mid, and Low season — each with different zone rules. See which is active right now and when the next change happens.",
+    guide2_title:"Zones & Rules", guide2_body:"Training zones, municipal nets, free courts, LL zones. Know which are reserved, which are open, and the exact hours.",
+    guide3_title:"Always Up to Date", guide3_body:"Weekend training reservations 09:00–13:00. Free play outside those hours. Schedule changes? We track them so you don't have to.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Play<br>Report<br>Earn<br><span class="amber">Rewards.</span>',
     arena_sub:"Every report you submit feeds the community — and feeds your rank. Arena Points, streaks, badges, leaderboards. The game within the game.",
@@ -1052,7 +1131,7 @@ const T = {
   },
 
   es: {
-    nav_problem:"Problema", nav_solution:"Solución", nav_arena:"Arena",
+    nav_problem:"Problema", nav_solution:"Solución", nav_guide:"Guía", nav_arena:"Arena",
     nav_evidence:"Evidencia", nav_infra:"Infraestructura", nav_partners:"Partners",
     nav_team:"Equipo", nav_try:"Descargar",
     hero_tag:"BCN · Radar en Vivo · Inteligencia de Deportes de Playa",
@@ -1073,6 +1152,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Cada reporte gana XP. Rankings, rachas, insignias. El juego dentro del juego.",
     sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de juego mapeadas: redes municipales, zonas de entrenamiento, pistas libres.",
     sol5_title:"Smart Insights", sol5_body:"Consejos por zona y deporte: refugios del viento, mejores horarios, táctica. No solo si ir — sino cómo jugar.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"Las playas de Barcelona tienen temporadas, zonas reservadas y reglas por deporte. La Beach Guide de Arenviu lo reúne todo — para que siempre sepas cuándo y dónde puedes jugar.",
+    guide1_title:"Calendario de temporada", guide1_body:"Temporada alta, media y baja — cada una con reglas distintas. Ve cuál está activa ahora y cuándo cambia.",
+    guide2_title:"Zonas y reglas", guide2_body:"Zonas de entrenamiento, redes municipales, pistas libres, zonas LL. Sabe cuáles están reservadas, cuáles libres y en qué horarios.",
+    guide3_title:"Siempre actualizado", guide3_body:"Reservas de entrenamiento fines de semana 09:00–13:00. Juego libre fuera de esas horas. ¿Cambios de horario? Los seguimos nosotros.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Juega<br>Reporta<br>Gana<br><span class="amber">Recompensas.</span>',
     arena_sub:"Cada reporte que envías alimenta la comunidad — y alimenta tu rango. Arena Points, rachas, insignias, rankings. El juego dentro del juego.",
@@ -1118,7 +1202,7 @@ const T = {
   },
 
   ca: {
-    nav_problem:"Problema", nav_solution:"Solució", nav_arena:"Arena",
+    nav_problem:"Problema", nav_solution:"Solució", nav_guide:"Guia", nav_arena:"Arena",
     nav_evidence:"Evidència", nav_infra:"Infraestructura", nav_partners:"Partners",
     nav_team:"Equip", nav_try:"Baixar",
     hero_tag:"BCN · Radar en Viu · Intel·ligència d'Esports de Platja",
@@ -1139,6 +1223,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Cada informe guanya XP. Rànquings, ratxes, insígnies. El joc dins del joc.",
     sol4_title:"Mapa de zones", sol4_body:"100+ zones de joc cartografiades: xarxes municipals, zones d'entrenament, pistes lliures.",
     sol5_title:"Smart Insights", sol5_body:"Consells per zona i esport: refugis del vent, millors horaris, tàctica. No sols si anar — sinó com jugar.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"Les platges de Barcelona tenen temporades, zones reservades i regles per esport. La Beach Guide d'Arenviu ho reuneix tot — perquè sempre sàpigues quan i on pots jugar.",
+    guide1_title:"Calendari de temporada", guide1_body:"Temporada alta, mitjana i baixa — cadascuna amb regles diferents. Veu quina és activa ara i quan canvia.",
+    guide2_title:"Zones i regles", guide2_body:"Zones d'entrenament, xarxes municipals, pistes lliures, zones LL. Sàpigues quines estan reservades, quines obertes i en quins horaris.",
+    guide3_title:"Sempre actualitzat", guide3_body:"Reserves d'entrenament caps de setmana 09:00–13:00. Joc lliure fora d'aquelles hores. Canvis d'horari? Els seguim nosaltres.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Juga<br>Informa<br>Guanya<br><span class="amber">Recompenses.</span>',
     arena_sub:"Cada informe que envies alimenta la comunitat — i alimenta el teu rang. Arena Points, ratxes, insígnies, rànquings. El joc dins del joc.",
@@ -1184,7 +1273,7 @@ const T = {
   },
 
   pt: {
-    nav_problem:"Problema", nav_solution:"Solução", nav_arena:"Arena",
+    nav_problem:"Problema", nav_solution:"Solução", nav_guide:"Guia", nav_arena:"Arena",
     nav_evidence:"Evidência", nav_infra:"Infraestrutura", nav_partners:"Partners",
     nav_team:"Equipa", nav_try:"Descarregar",
     hero_tag:"BCN · Radar ao Vivo · Inteligência de Desportos de Praia",
@@ -1205,6 +1294,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Cada relatório ganha XP. Rankings, sequências, insígnias. O jogo dentro do jogo.",
     sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de jogo mapeadas: redes municipais, zonas de treino, campos livres.",
     sol5_title:"Smart Insights", sol5_body:"Dicas por zona e desporto: abrigos do vento, melhores horários, táctica. Não só se ir — mas como jogar.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"As praias de Barcelona têm temporadas, zonas reservadas e regras por desporto. A Beach Guide da Arenviu reúne tudo — para saberes sempre quando e onde podes jogar.",
+    guide1_title:"Calendário de temporada", guide1_body:"Alta, média e baixa temporada — cada uma com regras diferentes. Vê qual está ativa agora e quando muda.",
+    guide2_title:"Zonas e regras", guide2_body:"Zonas de treino, redes municipais, campos livres, zonas LL. Sabe quais estão reservadas, quais abertas e em que horários.",
+    guide3_title:"Sempre atualizado", guide3_body:"Reservas de treino ao fim de semana 09:00–13:00. Jogo livre fora dessas horas. Mudanças de horário? Nós acompanhamos.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Joga<br>Reporta<br>Ganha<br><span class="amber">Recompensas.</span>',
     arena_sub:"Cada relatório que envias alimenta a comunidade — e alimenta o teu ranking. Arena Points, sequências, insígnias, leaderboards. O jogo dentro do jogo.",
@@ -1250,7 +1344,7 @@ const T = {
   },
 
   it: {
-    nav_problem:"Problema", nav_solution:"Soluzione", nav_arena:"Arena",
+    nav_problem:"Problema", nav_solution:"Soluzione", nav_guide:"Guida", nav_arena:"Arena",
     nav_evidence:"Evidenza", nav_infra:"Infrastruttura", nav_partners:"Partner",
     nav_team:"Team", nav_try:"Scarica",
     hero_tag:"BCN · Radar in Diretta · Intelligenza per gli Sport da Spiaggia",
@@ -1271,6 +1365,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Ogni report guadagna XP. Classifiche, streak, badge. Il gioco nel gioco.",
     sol4_title:"Mappa delle zone", sol4_body:"100+ zone di gioco mappate: reti municipali, zone di allenamento, campi liberi.",
     sol5_title:"Smart Insights", sol5_body:"Consigli per zona e sport: ripari dal vento, finestre orarie ottimali, tattica. Non solo se andare — ma come giocare.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"Le spiagge di Barcellona hanno stagioni, zone riservate e regole per sport. La Beach Guide di Arenviu raccoglie tutto in un posto — così sai sempre quando e dove puoi giocare.",
+    guide1_title:"Calendario stagionale", guide1_body:"Alta, media e bassa stagione — ognuna con regole diverse. Vedi qual è attiva adesso e quando cambia.",
+    guide2_title:"Zone e regole", guide2_body:"Zone di allenamento, reti municipali, campi liberi, zone LL. Sai quali sono riservate, quali aperte e in quali orari.",
+    guide3_title:"Sempre aggiornato", guide3_body:"Prenotazioni allenamento nel weekend 09:00–13:00. Gioco libero fuori da quegli orari. Cambi di orario? Li seguiamo noi.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Gioca<br>Segnala<br>Guadagna<br><span class="amber">Premi.</span>',
     arena_sub:"Ogni report che invii alimenta la comunità — e alimenta il tuo ranking. Arena Points, streak, badge, classifiche. Il gioco nel gioco.",
@@ -1316,7 +1415,7 @@ const T = {
   },
 
   fr: {
-    nav_problem:"Problème", nav_solution:"Solution", nav_arena:"Arena",
+    nav_problem:"Problème", nav_solution:"Solution", nav_guide:"Guide", nav_arena:"Arena",
     nav_evidence:"Preuves", nav_infra:"Infrastructure", nav_partners:"Partenaires",
     nav_team:"Équipe", nav_try:"Télécharger",
     hero_tag:"BCN · Radar en Direct · Intelligence Sports de Plage",
@@ -1337,6 +1436,11 @@ const T = {
     sol3_title:"Arena Points", sol3_body:"Chaque rapport gagne des XP. Classements, séries, badges. Le jeu dans le jeu.",
     sol4_title:"Carte des zones", sol4_body:"100+ zones de jeu cartographiées : filets municipaux, zones d'entraînement, terrains libres.",
     sol5_title:"Smart Insights", sol5_body:"Conseils par zone et sport : abris du vent, meilleures fenêtres horaires, tactique. Pas seulement si y aller — mais comment y jouer.",
+    guide_headline:'Beach<br><span class="amber">Guide.</span>',
+    guide_sub:"Les plages de Barcelone ont des saisons, des zones réservées et des règles par sport. Le Beach Guide d'Arenviu regroupe tout — pour savoir toujours quand et où vous pouvez jouer.",
+    guide1_title:"Calendrier saisonnier", guide1_body:"Haute, moyenne et basse saison — chacune avec des règles différentes. Voyez laquelle est active maintenant et quand ça change.",
+    guide2_title:"Zones et règles", guide2_body:"Zones d'entraînement, filets municipaux, terrains libres, zones LL. Sachez lesquelles sont réservées, lesquelles sont ouvertes et à quelles heures.",
+    guide3_title:"Toujours à jour", guide3_body:"Réservations d'entraînement le week-end 09:00–13:00. Jeu libre en dehors de ces heures. Changements d'horaires ? On s'en charge.",
     arena_num:"03", arena_eyebrow:"Arena",
     arena_headline:'Joue<br>Signale<br>Gagne<br><span class="amber">Des récompenses.</span>',
     arena_sub:"Chaque rapport que tu envoies nourrit la communauté — et nourrit ton classement. Arena Points, séries, badges, leaderboards. Le jeu dans le jeu.",
@@ -1588,6 +1692,34 @@ window.addEventListener('hashchange', () => {
     }, 320);
   }
   setInterval(cyclePill, 2600);
+})();
+
+/* ─── PHONE CAROUSELS ───────────────────────────────────────────────── */
+(function() {
+  function initCarousel(id, interval) {
+    var carousel = document.getElementById(id);
+    if (!carousel) return;
+    var slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    var dots   = Array.from(carousel.querySelectorAll('.carousel-dot'));
+    var cur = 0;
+    function goTo(next) {
+      var prev = cur; cur = next;
+      slides[prev].classList.add('slide-out');
+      slides[prev].classList.remove('active');
+      slides[cur].classList.add('active');
+      dots[prev].classList.remove('active');
+      dots[cur].classList.add('active');
+      setTimeout(function() {
+        slides[prev].style.transition = 'none';
+        slides[prev].classList.remove('slide-out');
+        slides[prev].offsetHeight;
+        slides[prev].style.transition = '';
+      }, 580);
+    }
+    setInterval(function() { goTo((cur + 1) % slides.length); }, interval);
+  }
+  initCarousel('hero-carousel', 2600);
+  initCarousel('guide-carousel', 3200);
 })();
 
 /* ─── ACTIVE NAV HIGHLIGHT ─────────────────────────────────────────── */
