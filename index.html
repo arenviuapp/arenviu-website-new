@@ -233,15 +233,7 @@
   }
   .p-card h3 { font-family: var(--f-display); font-weight: 800; font-size: 22px; margin: 0 0 10px; letter-spacing: -0.01em; }
   .p-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
-  .stat-strip {
-    margin-top: 56px; padding: 22px 28px;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
-    font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--muted-fg);
-  }
-  .stat-strip b { color: var(--primary); font-weight: 500; }
-  .stat-strip .dot { color: var(--border-strong); }
+  /* stat-strip base — overridden by marquee block below */
 
   /* SOLUTION */
   .solution-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
@@ -351,18 +343,38 @@
   #final .cta-mono { margin-top: 22px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-fg); }
   #final .cta-mono b { color: var(--primary); font-weight: 500; }
 
-  /* MARQUEE TICKER */
-  .stat-strip { overflow: hidden; padding-left: 0; padding-right: 0; }
+  /* STAT STRIP / MARQUEE */
+  .stat-strip {
+    margin-top: 56px; overflow: hidden; position: relative;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .stat-strip::before, .stat-strip::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+  }
+  .stat-strip::before { left: 0; background: linear-gradient(to right, var(--bg) 20%, transparent); }
+  .stat-strip::after  { right: 0; background: linear-gradient(to left, var(--bg) 20%, transparent); }
   .stat-strip-inner {
-    display: flex; gap: 20px; flex-wrap: nowrap; align-items: center;
-    width: max-content; padding: 0 40px;
-    animation: ticker-scroll 34s linear infinite;
+    display: flex; align-items: center; width: max-content;
+    animation: ticker-scroll 32s linear infinite;
   }
   .stat-strip:hover .stat-strip-inner { animation-play-state: paused; }
   @keyframes ticker-scroll {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-33.333%); }
   }
+  .stat-item {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 22px 44px; white-space: nowrap;
+  }
+  .stat-item .s-num {
+    font-family: var(--f-display); font-style: italic; font-weight: 900;
+    font-size: 30px; letter-spacing: -0.02em; color: var(--primary); line-height: 1;
+  }
+  .stat-item .s-lbl {
+    font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted-fg);
+  }
+  .stat-sep { width: 1px; height: 24px; background: var(--border-strong); flex-shrink: 0; }
 
   /* SCORE PILL */
   .score-pill {
@@ -717,15 +729,30 @@
     </div>
     <div class="stat-strip reveal">
       <div class="stat-strip-inner" id="stat-ticker">
-        <span><b>8</b> <span data-i18n="stat1">URBAN BEACHES</span></span><span class="dot">·</span>
-        <span><b>100+</b> <span data-i18n="stat2">PLAY ZONES</span></span><span class="dot">·</span>
-        <span><b>0</b> <span data-i18n="stat3">REAL-TIME DATA</span></span><span class="dot">·</span>
-        <span><b>8</b> <span data-i18n="stat1">URBAN BEACHES</span></span><span class="dot">·</span>
-        <span><b>100+</b> <span data-i18n="stat2">PLAY ZONES</span></span><span class="dot">·</span>
-        <span><b>0</b> <span data-i18n="stat3">REAL-TIME DATA</span></span><span class="dot">·</span>
-        <span><b>8</b> <span data-i18n="stat1">URBAN BEACHES</span></span><span class="dot">·</span>
-        <span><b>100+</b> <span data-i18n="stat2">PLAY ZONES</span></span><span class="dot">·</span>
-        <span><b>0</b> <span data-i18n="stat3">REAL-TIME DATA</span></span><span class="dot">·</span>
+        <div class="stat-item"><span class="s-num">8</span><span class="s-lbl" data-i18n="stat1">Urban Beaches</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">100+</span><span class="s-lbl" data-i18n="stat2">Play Zones</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Live</span><span class="s-lbl" data-i18n="stat3">Real-time data</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Free</span><span class="s-lbl" data-i18n="stat4">iOS &amp; Android</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">8</span><span class="s-lbl" data-i18n="stat1">Urban Beaches</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">100+</span><span class="s-lbl" data-i18n="stat2">Play Zones</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Live</span><span class="s-lbl" data-i18n="stat3">Real-time data</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Free</span><span class="s-lbl" data-i18n="stat4">iOS &amp; Android</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">8</span><span class="s-lbl" data-i18n="stat1">Urban Beaches</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">100+</span><span class="s-lbl" data-i18n="stat2">Play Zones</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Live</span><span class="s-lbl" data-i18n="stat3">Real-time data</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><span class="s-num">Free</span><span class="s-lbl" data-i18n="stat4">iOS &amp; Android</span></div>
+        <div class="stat-sep"></div>
       </div>
     </div>
   </div>
@@ -1073,7 +1100,7 @@ const T = {
     prob1_title:"No Crowding Intel", prob1_body:"You have no idea if your zone is free until you're already there, bag in hand.",
     prob2_title:"No Dedicated Weather", prob2_body:"Generic weather apps don't tell you if it's a good beach volleyball day. Wind direction matters. UV matters. Timing matters.",
     prob3_title:"Community Geopardized", prob3_body:"Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.",
-    stat1:"URBAN BEACHES", stat2:"PLAY ZONES", stat3:"REAL-TIME DATA",
+    stat1:"Urban Beaches", stat2:"Play Zones", stat3:"Real-time data", stat4:"iOS & Android",
     sol_num:"02", sol_eyebrow:"The solution",
     sol_headline:'Live radar.<br>Community-<span class="amber">powered.</span>',
     sol1_title:"Play Score", sol1_body:"Composite of weather, wind, UV, and crowding. One number: go or don't go.",
@@ -1144,7 +1171,7 @@ const T = {
     prob1_title:"Sin datos de afluencia", prob1_body:"No sabes si tu zona está libre hasta que ya estás allí, con la bolsa en la mano.",
     prob2_title:"Sin meteorología dedicada", prob2_body:"Las apps genéricas de tiempo no te dicen si es un buen día de vóley playa. La dirección del viento importa. El UV importa. El horario importa.",
     prob3_title:"Comunidad fragmentada", prob3_body:"Miles de grupos de WhatsApp desconectados, hojas de Excel dispersas, algunas apps de nicho. Sin capa compartida. Sin inteligencia.",
-    stat1:"PLAYAS URBANAS", stat2:"ZONAS DE JUEGO", stat3:"DATOS EN TIEMPO REAL",
+    stat1:"Playas Urbanas", stat2:"Zonas de Juego", stat3:"Datos en Tiempo Real", stat4:"iOS y Android",
     sol_num:"02", sol_eyebrow:"La solución",
     sol_headline:'Radar en vivo.<br>Impulsado por la <span class="amber">comunidad.</span>',
     sol1_title:"Play Score", sol1_body:"Combinación de tiempo, viento, UV y afluencia. Un número: ir o no ir.",
@@ -1215,7 +1242,7 @@ const T = {
     prob1_title:"Sense dades d'afluència", prob1_body:"No saps si la teva zona és lliure fins que ja ets allà, amb la bossa a la mà.",
     prob2_title:"Sense meteorologia dedicada", prob2_body:"Les apps genèriques de temps no et diuen si és un bon dia de volei platja. La direcció del vent importa. L'UV importa. L'horari importa.",
     prob3_title:"Comunitat fragmentada", prob3_body:"Milers de grups de WhatsApp desconnectats, fulls d'Excel dispersos, algunes apps de nínxol. Sense capa compartida. Sense intel·ligència.",
-    stat1:"PLATGES URBANES", stat2:"ZONES DE JOC", stat3:"DADES EN TEMPS REAL",
+    stat1:"Platges Urbanes", stat2:"Zones de Joc", stat3:"Dades en Temps Real", stat4:"iOS i Android",
     sol_num:"02", sol_eyebrow:"La solució",
     sol_headline:'Radar en viu.<br>Impulsat per la <span class="amber">comunitat.</span>',
     sol1_title:"Play Score", sol1_body:"Combinació de temps, vent, UV i afluència. Un número: anar o no anar.",
@@ -1286,7 +1313,7 @@ const T = {
     prob1_title:"Sem dados de afluência", prob1_body:"Não sabes se a tua zona está livre até já lá estares, com o saco na mão.",
     prob2_title:"Sem meteorologia dedicada", prob2_body:"As apps genéricas de tempo não te dizem se é um bom dia de voleibol de praia. A direção do vento importa. O UV importa. O horário importa.",
     prob3_title:"Comunidade fragmentada", prob3_body:"Milhares de grupos de WhatsApp desligados, folhas de Excel dispersas, algumas apps de nicho. Sem camada partilhada. Sem inteligência.",
-    stat1:"PRAIAS URBANAS", stat2:"ZONAS DE JOGO", stat3:"DADOS EM TEMPO REAL",
+    stat1:"Praias Urbanas", stat2:"Zonas de Jogo", stat3:"Dados em Tempo Real", stat4:"iOS e Android",
     sol_num:"02", sol_eyebrow:"A solução",
     sol_headline:'Radar ao vivo.<br>Impulsionado pela <span class="amber">comunidade.</span>',
     sol1_title:"Play Score", sol1_body:"Combinação de tempo, vento, UV e afluência. Um número: ir ou não ir.",
@@ -1357,7 +1384,7 @@ const T = {
     prob1_title:"Nessun dato sull'affollamento", prob1_body:"Non sai se la tua zona è libera finché non sei già lì, borsa in mano.",
     prob2_title:"Nessuna meteo dedicata", prob2_body:"Le app meteo generiche non ti dicono se è una buona giornata per il beach volley. La direzione del vento conta. L'UV conta. Gli orari contano.",
     prob3_title:"Comunità frammentata", prob3_body:"Migliaia di gruppi WhatsApp scollegati, fogli Excel sparsi, qualche app di nicchia. Nessun layer condiviso. Nessuna intelligenza.",
-    stat1:"SPIAGGE URBANE", stat2:"ZONE DI GIOCO", stat3:"DATI IN TEMPO REALE",
+    stat1:"Spiagge Urbane", stat2:"Zone di Gioco", stat3:"Dati in Tempo Reale", stat4:"iOS e Android",
     sol_num:"02", sol_eyebrow:"La soluzione",
     sol_headline:'Radar in diretta.<br>Alimentato dalla <span class="amber">comunità.</span>',
     sol1_title:"Play Score", sol1_body:"Combinazione di meteo, vento, UV e affollamento. Un numero: andare o non andare.",
@@ -1428,7 +1455,7 @@ const T = {
     prob1_title:"Aucune donnée de fréquentation", prob1_body:"Tu ne sais pas si ta zone est libre avant d'y être déjà, sac à la main.",
     prob2_title:"Pas de météo dédiée", prob2_body:"Les apps météo génériques ne te disent pas si c'est une bonne journée de beach-volley. La direction du vent compte. L'UV compte. L'horaire compte.",
     prob3_title:"Communauté fragmentée", prob3_body:"Des milliers de groupes WhatsApp déconnectés, des feuilles Excel éparpillées, quelques apps de niche. Aucune couche partagée. Aucune intelligence.",
-    stat1:"PLAGES URBAINES", stat2:"ZONES DE JEU", stat3:"DONNÉES EN TEMPS RÉEL",
+    stat1:"Plages Urbaines", stat2:"Zones de Jeu", stat3:"Données en Temps Réel", stat4:"iOS et Android",
     sol_num:"02", sol_eyebrow:"La solution",
     sol_headline:'Radar en direct.<br>Alimenté par la <span class="amber">communauté.</span>',
     sol1_title:"Play Score", sol1_body:"Combinaison de météo, vent, UV et fréquentation. Un chiffre : y aller ou pas.",
