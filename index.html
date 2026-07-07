@@ -208,6 +208,14 @@
     position: relative; margin-left: auto; overflow: hidden;
   }
   .phone-mock .screen-img { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; display: block; }
+  .phone-mock-sm {
+    width: 100%; max-width: 100%; aspect-ratio: 9 / 19.5;
+    background: hsl(0 0% 2%); border: 1px solid var(--border-strong);
+    border-radius: 22px; padding: 6px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 1px hsl(38 95% 55% / .08);
+    overflow: hidden;
+  }
+  .phone-mock-sm img { width: 100%; height: 100%; object-fit: cover; border-radius: 17px; display: block; }
 
   /* PROBLEM */
   .problem-head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 64px; }
@@ -253,6 +261,45 @@
     border-color: hsl(38 95% 55% / .45);
     background: hsl(38 95% 55% / .07);
   }
+
+  /* SOLUTION — tall scroll showcase (scroll-driven tabs) */
+  .sol-section { padding: 0 !important; }
+  .sol-section > .container { padding-top: 72px; }
+  .sol-scroller { position: relative; min-height: calc(100vh + 5 * 300px); }
+  .sol-left { display: flex; flex-direction: column; gap: 24px; }
+  .sol-sticky {
+    position: sticky; top: 62px; height: calc(100vh - 62px);
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .sol-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; width: 100%; }
+  .sol-tabs { display: flex; flex-direction: column; gap: 4px; }
+  .sol-tab {
+    display: flex; align-items: flex-start; gap: 14px; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid transparent; background: transparent;
+    text-align: left; color: var(--fg); width: 100%;
+    cursor: pointer; transition: background .25s, border-color .25s;
+  }
+  .sol-tab:hover { background: var(--card); }
+  .sol-tab.active { background: hsl(38 40% 8%); border-color: hsl(38 95% 55% / .35); }
+  .sol-tab-icon {
+    width: 38px; height: 38px; flex-shrink: 0; border-radius: 10px;
+    background: hsl(38 40% 14%); border: 1px solid hsl(38 50% 24%);
+    display: grid; place-items: center; color: var(--primary);
+  }
+  .sol-tab.active .sol-tab-icon { background: hsl(38 40% 19%); }
+  .sol-tab-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .sol-tab-title {
+    font-family: var(--f-display); font-weight: 800; font-size: 15px;
+    color: var(--muted-fg); line-height: 1.2; transition: color .25s;
+  }
+  .sol-tab.active .sol-tab-title { color: var(--fg); }
+  .sol-tab-desc {
+    font-size: 13px; color: var(--muted-fg); line-height: 1.45;
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height .38s ease, opacity .38s ease;
+  }
+  .sol-tab.active .sol-tab-desc { max-height: 80px; opacity: 1; margin-top: 2px; }
+  .sol-phone { display: flex; justify-content: center; }
 
   /* ARENA */
   .arena-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -562,6 +609,18 @@
 
     /* Buttons general */
     .btn-lg { padding: 14px 22px; font-size: 13px; }
+
+    /* Solution tall-scroller — mobile reset to clickable tabs */
+    .sol-scroller { min-height: auto; }
+    .sol-sticky { position: static; height: auto; overflow: visible; align-items: flex-start; padding: 0 0 40px; }
+    .sol-inner { grid-template-columns: 1fr; gap: 24px; }
+    .sol-tabs { flex-direction: row; overflow-x: auto; gap: 8px; flex-wrap: nowrap; -ms-overflow-style: none; scrollbar-width: none; }
+    .sol-tabs::-webkit-scrollbar { display: none; }
+    .sol-tab { flex-direction: column; align-items: center; gap: 5px; padding: 10px 12px; flex-shrink: 0; width: auto; }
+    .sol-tab-icon { width: 32px; height: 32px; border-radius: 8px; }
+    .sol-tab-title { font-size: 11px; text-align: center; white-space: nowrap; }
+    .sol-tab.active .sol-tab-desc { max-height: 0 !important; opacity: 0 !important; }
+    .sol-phone { order: 2; }
   }
 
   /* Extra small — phones under 390px */
@@ -766,43 +825,56 @@
 </section>
 
 <!-- SOLUTION -->
-<section id="solution" style="padding-bottom:100px">
-  <div class="container">
-    <h2 class="h-section reveal" style="margin-bottom:56px" data-i18n-html="sol_headline">Live radar.<br>Community-<span class="amber">powered.</span></h2>
-    <div class="solution-grid">
-      <div class="features">
-        <div class="feature reveal" data-screenshot="assets/drawer-score.PNG">
-          <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
-          <div><h4 data-i18n="sol1_title">Play Score</h4><p data-i18n="sol1_body">Composite of weather, wind, UV, and crowding. One number: go or don't go.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/drawer-weather.PNG">
-          <div class="ficon"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
-          <div><h4 data-i18n="sol_weather_title">Weather</h4><p data-i18n="sol_weather_body">Wind speed, UV index, temperature. Know exactly if conditions match your sport before leaving home.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/drawer-crowding.PNG">
-          <div class="ficon"><svg class="lucide"><use href="#i-users-check"/></svg></div>
-          <div><h4 data-i18n="sol_crowd_title">Crowding</h4><p data-i18n="sol_crowd_body">Real-time occupancy per beach. See which zones are free, busy, or full — before you pack your bag.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/community-report.png">
-          <div class="ficon"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
-          <div><h4 data-i18n="sol2_title">Community reports</h4><p data-i18n="sol2_body">Waze-style: one tap — Free / Busy / Full. Validate someone else's report and earn the same +15 ⚡ as filing your own.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/arena-points.png">
-          <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
-          <div><h4 data-i18n="sol3_title">Arena Points</h4><p data-i18n="sol3_body">Every report earns XP. Leaderboards, streaks, badges. The game within the game.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/zone-map.png">
-          <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
-          <div><h4 data-i18n="sol4_title">Zone map</h4><p data-i18n="sol4_body">100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
-        </div>
-        <div class="feature reveal" data-screenshot="assets/smart-insights.png">
-          <div class="ficon"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
-          <div><h4 data-i18n="sol5_title">Smart Insights</h4><p data-i18n="sol5_body">Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.</p></div>
-        </div>
-      </div>
-      <div class="solution-phone">
-        <div class="phone-mock">
-          <img class="screen-img" id="sol-screen" src="assets/drawer-score.PNG" alt="Arenviu feature screenshot">
+<section id="solution" class="sol-section">
+  <div class="sol-scroller" id="sol-scroller">
+    <div class="sol-sticky">
+      <div class="container">
+        <div class="sol-inner">
+          <div class="sol-left">
+            <h2 class="h-section" data-i18n-html="sol_headline">Live <span class="amber">radar.</span></h2>
+            <div class="sol-tabs" id="sol-tabs">
+              <button class="sol-tab active" data-src="assets/drawer-score.PNG">
+                <span class="sol-tab-icon"><svg class="lucide" style="width:18px;height:18px"><use href="#i-bolt"/></svg></span>
+                <span class="sol-tab-text">
+                  <span class="sol-tab-title" data-i18n="sol1_title">Play Score</span>
+                  <span class="sol-tab-desc" data-i18n="sol1_body">Composite of weather, wind, UV, and crowding. One number: go or don't go.</span>
+                </span>
+              </button>
+              <button class="sol-tab" data-src="assets/drawer-weather.PNG">
+                <span class="sol-tab-icon"><svg class="lucide" style="width:18px;height:18px"><use href="#i-cloud-sun"/></svg></span>
+                <span class="sol-tab-text">
+                  <span class="sol-tab-title" data-i18n="sol_weather_title">Weather</span>
+                  <span class="sol-tab-desc" data-i18n="sol_weather_body">Wind speed, UV index, temperature. Know exactly if conditions match your sport before leaving home.</span>
+                </span>
+              </button>
+              <button class="sol-tab" data-src="assets/drawer-crowding.PNG">
+                <span class="sol-tab-icon"><svg class="lucide" style="width:18px;height:18px"><use href="#i-users-check"/></svg></span>
+                <span class="sol-tab-text">
+                  <span class="sol-tab-title" data-i18n="sol_crowd_title">Crowding</span>
+                  <span class="sol-tab-desc" data-i18n="sol_crowd_body">Real-time occupancy per beach. See which zones are free, busy, or full — before you pack your bag.</span>
+                </span>
+              </button>
+              <button class="sol-tab" data-src="assets/zone-map.png">
+                <span class="sol-tab-icon"><svg class="lucide" style="width:18px;height:18px"><use href="#i-map-layers"/></svg></span>
+                <span class="sol-tab-text">
+                  <span class="sol-tab-title" data-i18n="sol4_title">Zone map</span>
+                  <span class="sol-tab-desc" data-i18n="sol4_body">100+ play zones mapped: municipal nets, training zones, free courts.</span>
+                </span>
+              </button>
+              <button class="sol-tab" data-src="assets/smart-insights.png">
+                <span class="sol-tab-icon"><svg class="lucide" style="width:18px;height:18px"><use href="#i-bolt"/></svg></span>
+                <span class="sol-tab-text">
+                  <span class="sol-tab-title" data-i18n="sol5_title">Smart Insights</span>
+                  <span class="sol-tab-desc" data-i18n="sol5_body">Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="sol-phone">
+            <div class="phone-mock">
+              <img class="screen-img" id="sol-screen" src="assets/drawer-score.PNG" alt="Arenviu feature screenshot">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -881,15 +953,31 @@
           </div>
         </div>
       </div>
-      <div class="badge-showcase stagger">
-        <div class="badge-showcase-item" style="--i:0"><img src="assets/badges/early_reporter.svg" alt=""><span class="bn" data-i18n="badge1">Early Reporter</span></div>
-        <div class="badge-showcase-item" style="--i:1"><img src="assets/badges/pioneer.svg" alt=""><span class="bn" data-i18n="badge2">Pioneer</span></div>
-        <div class="badge-showcase-item" style="--i:2"><img src="assets/badges/discovery.svg" alt=""><span class="bn" data-i18n="badge3">Discovery</span></div>
-        <div class="badge-showcase-item" style="--i:3"><img src="assets/badges/first_light.svg" alt=""><span class="bn" data-i18n="badge4">First Light</span></div>
-        <div class="badge-showcase-item" style="--i:4"><img src="assets/badges/trailblazer.svg" alt=""><span class="bn" data-i18n="badge5">Trailblazer</span></div>
-        <div class="badge-showcase-item" style="--i:5"><img src="assets/badges/sentinel.svg" alt=""><span class="bn" data-i18n="badge6">Sentinel</span></div>
-        <div class="badge-showcase-item" style="--i:6"><img src="assets/badges/season_opener.svg" alt=""><span class="bn" data-i18n="badge7">Season Opener</span></div>
-        <div class="badge-showcase-item" style="--i:7"><img src="assets/badges/dawn_patrol.svg" alt=""><span class="bn" data-i18n="badge8">Dawn Patrol</span></div>
+      <div>
+        <div class="badge-showcase stagger">
+          <div class="badge-showcase-item" style="--i:0"><img src="assets/badges/early_reporter.svg" alt=""><span class="bn" data-i18n="badge1">Early Reporter</span></div>
+          <div class="badge-showcase-item" style="--i:1"><img src="assets/badges/pioneer.svg" alt=""><span class="bn" data-i18n="badge2">Pioneer</span></div>
+          <div class="badge-showcase-item" style="--i:2"><img src="assets/badges/discovery.svg" alt=""><span class="bn" data-i18n="badge3">Discovery</span></div>
+          <div class="badge-showcase-item" style="--i:3"><img src="assets/badges/first_light.svg" alt=""><span class="bn" data-i18n="badge4">First Light</span></div>
+          <div class="badge-showcase-item" style="--i:4"><img src="assets/badges/trailblazer.svg" alt=""><span class="bn" data-i18n="badge5">Trailblazer</span></div>
+          <div class="badge-showcase-item" style="--i:5"><img src="assets/badges/sentinel.svg" alt=""><span class="bn" data-i18n="badge6">Sentinel</span></div>
+          <div class="badge-showcase-item" style="--i:6"><img src="assets/badges/season_opener.svg" alt=""><span class="bn" data-i18n="badge7">Season Opener</span></div>
+          <div class="badge-showcase-item" style="--i:7"><img src="assets/badges/dawn_patrol.svg" alt=""><span class="bn" data-i18n="badge8">Dawn Patrol</span></div>
+        </div>
+        <div class="arena-phones reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;align-items:end">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="phone-mock-sm">
+              <img src="assets/community-report.png" alt="Community reports">
+            </div>
+            <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted-fg);text-align:center;display:block" data-i18n="sol2_title">Community reports</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="phone-mock-sm">
+              <img src="assets/arena-points.png" alt="Arena Points">
+            </div>
+            <span style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted-fg);text-align:center;display:block" data-i18n="sol3_title">Arena Points</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1115,7 +1203,7 @@ const T = {
     prob3_title:"Community Geopardized", prob3_body:"Thousands of disconnected WhatsApp groups, scattered Excel sheets, a few niche apps. No shared layer. No intelligence.",
     stat1:"Urban Beaches", stat2:"Play Zones", stat3:"Real-time data", stat4:"iOS & Android",
     sol_num:"02", sol_eyebrow:"The solution",
-    sol_headline:'Live radar.<br>Community-<span class="amber">powered.</span>',
+    sol_headline:'Live <span class="amber">radar.</span>',
     sol1_title:"Play Score", sol1_body:"Composite of weather, wind, UV, and crowding. One number: go or don't go.",
     sol2_title:"Community reports", sol2_body:"Waze-style: one tap — Free / Busy / Full. Validate someone else's report and earn the same +15 ⚡ as filing your own.",
     sol3_title:"Arena Points", sol3_body:"Every report earns XP. Leaderboards, streaks, badges. The game within the game.",
@@ -1188,7 +1276,7 @@ const T = {
     prob3_title:"Comunidad fragmentada", prob3_body:"Miles de grupos de WhatsApp desconectados, hojas de Excel dispersas, algunas apps de nicho. Sin capa compartida. Sin inteligencia.",
     stat1:"Playas Urbanas", stat2:"Zonas de Juego", stat3:"Datos en Tiempo Real", stat4:"iOS y Android",
     sol_num:"02", sol_eyebrow:"La solución",
-    sol_headline:'Radar en vivo.<br>Impulsado por la <span class="amber">comunidad.</span>',
+    sol_headline:'Radar en <span class="amber">vivo.</span>',
     sol1_title:"Play Score", sol1_body:"Combinación de tiempo, viento, UV y afluencia. Un número: ir o no ir.",
     sol2_title:"Reportes comunitarios", sol2_body:"Estilo Waze: un toque — Libre / Ocupado / Lleno. Valida el reporte de otro y gana los mismos +15 ⚡ que si lo hubieras enviado tú.",
     sol3_title:"Arena Points", sol3_body:"Cada reporte gana XP. Rankings, rachas, insignias. El juego dentro del juego.",
@@ -1261,7 +1349,7 @@ const T = {
     prob3_title:"Comunitat fragmentada", prob3_body:"Milers de grups de WhatsApp desconnectats, fulls d'Excel dispersos, algunes apps de nínxol. Sense capa compartida. Sense intel·ligència.",
     stat1:"Platges Urbanes", stat2:"Zones de Joc", stat3:"Dades en Temps Real", stat4:"iOS i Android",
     sol_num:"02", sol_eyebrow:"La solució",
-    sol_headline:'Radar en viu.<br>Impulsat per la <span class="amber">comunitat.</span>',
+    sol_headline:'Radar en <span class="amber">viu.</span>',
     sol1_title:"Play Score", sol1_body:"Combinació de temps, vent, UV i afluència. Un número: anar o no anar.",
     sol2_title:"Informes comunitaris", sol2_body:"Estil Waze: un toc — Lliure / Ocupat / Ple. Valida l'informe d'un altre i guanya els mateixos +15 ⚡ que si l'haguessis enviat tu.",
     sol3_title:"Arena Points", sol3_body:"Cada informe guanya XP. Rànquings, ratxes, insígnies. El joc dins del joc.",
@@ -1334,7 +1422,7 @@ const T = {
     prob3_title:"Comunidade fragmentada", prob3_body:"Milhares de grupos de WhatsApp desligados, folhas de Excel dispersas, algumas apps de nicho. Sem camada partilhada. Sem inteligência.",
     stat1:"Praias Urbanas", stat2:"Zonas de Jogo", stat3:"Dados em Tempo Real", stat4:"iOS e Android",
     sol_num:"02", sol_eyebrow:"A solução",
-    sol_headline:'Radar ao vivo.<br>Impulsionado pela <span class="amber">comunidade.</span>',
+    sol_headline:'Radar ao <span class="amber">vivo.</span>',
     sol1_title:"Play Score", sol1_body:"Combinação de tempo, vento, UV e afluência. Um número: ir ou não ir.",
     sol2_title:"Relatórios comunitários", sol2_body:"Estilo Waze: um toque — Livre / Ocupado / Cheio. Valida o relatório de outro e ganha os mesmos +15 ⚡ como se o tivesses enviado tu.",
     sol3_title:"Arena Points", sol3_body:"Cada relatório ganha XP. Rankings, sequências, insígnias. O jogo dentro do jogo.",
@@ -1407,7 +1495,7 @@ const T = {
     prob3_title:"Comunità frammentata", prob3_body:"Migliaia di gruppi WhatsApp scollegati, fogli Excel sparsi, qualche app di nicchia. Nessun layer condiviso. Nessuna intelligenza.",
     stat1:"Spiagge Urbane", stat2:"Zone di Gioco", stat3:"Dati in Tempo Reale", stat4:"iOS e Android",
     sol_num:"02", sol_eyebrow:"La soluzione",
-    sol_headline:'Radar in diretta.<br>Alimentato dalla <span class="amber">comunità.</span>',
+    sol_headline:'Radar in <span class="amber">diretta.</span>',
     sol1_title:"Play Score", sol1_body:"Combinazione di meteo, vento, UV e affollamento. Un numero: andare o non andare.",
     sol2_title:"Report comunitari", sol2_body:"Stile Waze: un tap — Libero / Occupato / Pieno. Valida il report di qualcun altro e guadagna gli stessi +15 ⚡ come se l'avessi inviato tu.",
     sol3_title:"Arena Points", sol3_body:"Ogni report guadagna XP. Classifiche, streak, badge. Il gioco nel gioco.",
@@ -1480,7 +1568,7 @@ const T = {
     prob3_title:"Communauté fragmentée", prob3_body:"Des milliers de groupes WhatsApp déconnectés, des feuilles Excel éparpillées, quelques apps de niche. Aucune couche partagée. Aucune intelligence.",
     stat1:"Plages Urbaines", stat2:"Zones de Jeu", stat3:"Données en Temps Réel", stat4:"iOS et Android",
     sol_num:"02", sol_eyebrow:"La solution",
-    sol_headline:'Radar en direct.<br>Alimenté par la <span class="amber">communauté.</span>',
+    sol_headline:'Radar en <span class="amber">direct.</span>',
     sol1_title:"Play Score", sol1_body:"Combinaison de météo, vent, UV et fréquentation. Un chiffre : y aller ou pas.",
     sol2_title:"Rapports communautaires", sol2_body:"Style Waze : un toucher — Libre / Occupé / Plein. Valide le rapport d'un autre et gagne les mêmes +15 ⚡ que si tu l'avais soumis toi-même.",
     sol3_title:"Arena Points", sol3_body:"Chaque rapport gagne des XP. Classements, séries, badges. Le jeu dans le jeu.",
@@ -1746,34 +1834,45 @@ window.addEventListener('hashchange', () => {
   setInterval(cyclePill, 2600);
 })();
 
-/* ─── SOLUTION SCROLL-DRIVEN PHONE ─────────────────────────────────── */
+/* ─── SOLUTION SCROLL-DRIVEN TABS ──────────────────────────────────── */
 (function() {
-  var features = Array.from(document.querySelectorAll('#solution .feature[data-screenshot]'));
+  var scroller = document.getElementById('sol-scroller');
   var screen = document.getElementById('sol-screen');
-  if (!features.length || !screen) return;
+  var tabs = Array.from(document.querySelectorAll('#sol-tabs .sol-tab'));
+  if (!scroller || !screen || !tabs.length) return;
 
-  function setActive(el) {
-    features.forEach(function(f) { f.classList.remove('sol-active'); });
-    el.classList.add('sol-active');
-    var src = el.dataset.screenshot;
-    if (screen.src.endsWith(src)) return;
+  var cur = -1;
+
+  function setActive(idx) {
+    if (idx === cur) return;
+    cur = idx;
+    tabs.forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+    var src = tabs[idx].dataset.src;
     screen.style.opacity = '0';
-    setTimeout(function() {
-      screen.src = src;
-      screen.style.opacity = '1';
-    }, 220);
+    setTimeout(function() { screen.src = src; screen.style.opacity = '1'; }, 200);
   }
 
-  // Activate first on load
-  setActive(features[0]);
+  // Desktop: scroll position within scroller drives active tab
+  function onScroll() {
+    if (window.innerWidth < 769) return;
+    var rect = scroller.getBoundingClientRect();
+    var scrolled = -rect.top;
+    var available = rect.height - window.innerHeight;
+    if (available <= 0) { setActive(0); return; }
+    var progress = Math.max(0, Math.min(1, scrolled / available));
+    var idx = Math.min(Math.floor(progress * tabs.length), tabs.length - 1);
+    setActive(idx);
+  }
 
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) setActive(e.target);
-    });
-  }, { threshold: 0.55, rootMargin: '-5% 0px -35% 0px' });
+  window.addEventListener('scroll', onScroll, { passive: true });
 
-  features.forEach(function(f) { obs.observe(f); });
+  // Mobile: tap to switch
+  tabs.forEach(function(tab, idx) {
+    tab.addEventListener('click', function() { setActive(idx); });
+  });
+
+  setActive(0);
+  onScroll();
 })();
 
 /* ─── PHONE CAROUSELS ───────────────────────────────────────────────── */
