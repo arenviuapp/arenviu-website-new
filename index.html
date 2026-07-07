@@ -235,9 +235,12 @@
   .p-card p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
   /* stat-strip base — overridden by marquee block below */
 
-  /* SOLUTION */
-  .solution-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
-  .features { display: grid; gap: 28px; }
+  /* SOLUTION — sticky scroll showcase */
+  .solution-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: start; }
+  .solution-phone { position: sticky; top: 110px; }
+  @media (max-width: 768px) { .solution-phone { position: static; margin-top: 40px; } }
+  .screen-img { transition: opacity .22s ease; }
+  .features { display: grid; gap: 20px; }
   .feature { display: grid; grid-template-columns: 54px 1fr; gap: 18px; align-items: start; }
   .feature .ficon {
     width: 54px; height: 54px; border-radius: 14px;
@@ -246,6 +249,10 @@
   }
   .feature h4 { font-family: var(--f-display); font-weight: 800; font-size: 19px; margin: 0 0 6px; letter-spacing: -0.01em; }
   .feature p { color: var(--muted-fg); font-size: 15px; line-height: 1.55; margin: 0; }
+  .feature.sol-active {
+    border-color: hsl(38 95% 55% / .45);
+    background: hsl(38 95% 55% / .07);
+  }
 
   /* ARENA */
   .arena-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -759,37 +766,43 @@
 </section>
 
 <!-- SOLUTION -->
-<section id="solution">
+<section id="solution" style="padding-bottom:100px">
   <div class="container">
+    <h2 class="h-section reveal" style="margin-bottom:56px" data-i18n-html="sol_headline">Live radar.<br>Community-<span class="amber">powered.</span></h2>
     <div class="solution-grid">
-      <div>
-        <h2 class="h-section reveal" style="margin-bottom:48px" data-i18n-html="sol_headline">Live radar.<br>Community-<span class="amber">powered.</span></h2>
-        <div class="features stagger">
-          <div class="feature">
-            <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
-            <div><h4 data-i18n="sol1_title">Play Score</h4><p data-i18n="sol1_body">Composite of weather, wind, UV, and crowding. One number: go or don't go.</p></div>
-          </div>
-          <div class="feature">
-            <div class="ficon"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
-            <div><h4 data-i18n="sol2_title">Community reports</h4><p data-i18n="sol2_body">Waze-style: one tap — Free / Busy / Full. Validate someone else's report and earn the same +15 ⚡ as filing your own.</p></div>
-          </div>
-          <div class="feature">
-            <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
-            <div><h4 data-i18n="sol3_title">Arena Points</h4><p data-i18n="sol3_body">Every report earns XP. Leaderboards, streaks, badges. The game within the game.</p></div>
-          </div>
-          <div class="feature">
-            <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
-            <div><h4 data-i18n="sol4_title">Zone map</h4><p data-i18n="sol4_body">100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
-          </div>
-          <div class="feature">
-            <div class="ficon"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
-            <div><h4 data-i18n="sol5_title">Smart Insights</h4><p data-i18n="sol5_body">Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.</p></div>
-          </div>
+      <div class="features">
+        <div class="feature reveal" data-screenshot="assets/drawer-score.PNG">
+          <div class="ficon"><svg class="lucide"><use href="#i-bolt"/></svg></div>
+          <div><h4 data-i18n="sol1_title">Play Score</h4><p data-i18n="sol1_body">Composite of weather, wind, UV, and crowding. One number: go or don't go.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/drawer-weather.PNG">
+          <div class="ficon"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
+          <div><h4 data-i18n="sol_weather_title">Weather</h4><p data-i18n="sol_weather_body">Wind speed, UV index, temperature. Know exactly if conditions match your sport before leaving home.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/drawer-crowding.PNG">
+          <div class="ficon"><svg class="lucide"><use href="#i-users-check"/></svg></div>
+          <div><h4 data-i18n="sol_crowd_title">Crowding</h4><p data-i18n="sol_crowd_body">Real-time occupancy per beach. See which zones are free, busy, or full — before you pack your bag.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/community-report.png">
+          <div class="ficon"><svg class="lucide"><use href="#i-chat-frag"/></svg></div>
+          <div><h4 data-i18n="sol2_title">Community reports</h4><p data-i18n="sol2_body">Waze-style: one tap — Free / Busy / Full. Validate someone else's report and earn the same +15 ⚡ as filing your own.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/arena-points.png">
+          <div class="ficon"><svg class="lucide"><use href="#i-trophy"/></svg></div>
+          <div><h4 data-i18n="sol3_title">Arena Points</h4><p data-i18n="sol3_body">Every report earns XP. Leaderboards, streaks, badges. The game within the game.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/zone-map.png">
+          <div class="ficon"><svg class="lucide"><use href="#i-map-layers"/></svg></div>
+          <div><h4 data-i18n="sol4_title">Zone map</h4><p data-i18n="sol4_body">100+ play zones mapped: municipal nets, training zones, free courts.</p></div>
+        </div>
+        <div class="feature reveal" data-screenshot="assets/smart-insights.png">
+          <div class="ficon"><svg class="lucide"><use href="#i-cloud-sun"/></svg></div>
+          <div><h4 data-i18n="sol5_title">Smart Insights</h4><p data-i18n="sol5_body">Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.</p></div>
         </div>
       </div>
-      <div class="reveal">
+      <div class="solution-phone">
         <div class="phone-mock">
-          <img class="screen-img" src="assets/screenshot-solution.jpeg" alt="Arenviu beach score screenshot">
+          <img class="screen-img" id="sol-screen" src="assets/drawer-score.PNG" alt="Arenviu feature screenshot">
         </div>
       </div>
     </div>
@@ -1107,6 +1120,8 @@ const T = {
     sol2_title:"Community reports", sol2_body:"Waze-style: one tap — Free / Busy / Full. Validate someone else's report and earn the same +15 ⚡ as filing your own.",
     sol3_title:"Arena Points", sol3_body:"Every report earns XP. Leaderboards, streaks, badges. The game within the game.",
     sol4_title:"Zone map", sol4_body:"100+ play zones mapped: municipal nets, training zones, free courts.",
+    sol_weather_title:"Weather", sol_weather_body:"Wind speed, UV index, temperature. Know exactly if conditions match your sport before leaving home.",
+    sol_crowd_title:"Crowding", sol_crowd_body:"Real-time occupancy per beach. See which zones are free, busy, or full — before you pack your bag.",
     sol5_title:"Smart Insights", sol5_body:"Sport-specific tips per zone: wind shelter spots, peak time windows, tactical advice. Know not just whether to go — but how to play it.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"Barcelona's beaches have seasons, reserved zones, and sport-specific rules. Arenviu's Beach Guide puts all of it in one place — so you always know exactly when and where you can play.",
@@ -1178,6 +1193,8 @@ const T = {
     sol2_title:"Reportes comunitarios", sol2_body:"Estilo Waze: un toque — Libre / Ocupado / Lleno. Valida el reporte de otro y gana los mismos +15 ⚡ que si lo hubieras enviado tú.",
     sol3_title:"Arena Points", sol3_body:"Cada reporte gana XP. Rankings, rachas, insignias. El juego dentro del juego.",
     sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de juego mapeadas: redes municipales, zonas de entrenamiento, pistas libres.",
+    sol_weather_title:"Tiempo", sol_weather_body:"Velocidad del viento, índice UV, temperatura. Sabe exactamente si las condiciones son ideales para tu deporte antes de salir.",
+    sol_crowd_title:"Afluencia", sol_crowd_body:"Ocupación en tiempo real por playa. Ve qué zonas están libres, ocupadas o llenas — antes de hacer la bolsa.",
     sol5_title:"Smart Insights", sol5_body:"Consejos por zona y deporte: refugios del viento, mejores horarios, táctica. No solo si ir — sino cómo jugar.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"Las playas de Barcelona tienen temporadas, zonas reservadas y reglas por deporte. La Beach Guide de Arenviu lo reúne todo — para que siempre sepas cuándo y dónde puedes jugar.",
@@ -1249,6 +1266,8 @@ const T = {
     sol2_title:"Informes comunitaris", sol2_body:"Estil Waze: un toc — Lliure / Ocupat / Ple. Valida l'informe d'un altre i guanya els mateixos +15 ⚡ que si l'haguessis enviat tu.",
     sol3_title:"Arena Points", sol3_body:"Cada informe guanya XP. Rànquings, ratxes, insígnies. El joc dins del joc.",
     sol4_title:"Mapa de zones", sol4_body:"100+ zones de joc cartografiades: xarxes municipals, zones d'entrenament, pistes lliures.",
+    sol_weather_title:"Temps", sol_weather_body:"Velocitat del vent, índex UV, temperatura. Sàpigues si les condicions s'adapten al teu esport abans de sortir.",
+    sol_crowd_title:"Afluència", sol_crowd_body:"Ocupació en temps real per platja. Veu quines zones estan lliures, ocupades o plenes — abans de preparar la bossa.",
     sol5_title:"Smart Insights", sol5_body:"Consells per zona i esport: refugis del vent, millors horaris, tàctica. No sols si anar — sinó com jugar.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"Les platges de Barcelona tenen temporades, zones reservades i regles per esport. La Beach Guide d'Arenviu ho reuneix tot — perquè sempre sàpigues quan i on pots jugar.",
@@ -1320,6 +1339,8 @@ const T = {
     sol2_title:"Relatórios comunitários", sol2_body:"Estilo Waze: um toque — Livre / Ocupado / Cheio. Valida o relatório de outro e ganha os mesmos +15 ⚡ como se o tivesses enviado tu.",
     sol3_title:"Arena Points", sol3_body:"Cada relatório ganha XP. Rankings, sequências, insígnias. O jogo dentro do jogo.",
     sol4_title:"Mapa de zonas", sol4_body:"100+ zonas de jogo mapeadas: redes municipais, zonas de treino, campos livres.",
+    sol_weather_title:"Tempo", sol_weather_body:"Velocidade do vento, índice UV, temperatura. Sabe se as condições são ideais para o teu desporto antes de sair.",
+    sol_crowd_title:"Afluência", sol_crowd_body:"Ocupação em tempo real por praia. Vê quais as zonas livres, ocupadas ou cheias — antes de fazer a mochila.",
     sol5_title:"Smart Insights", sol5_body:"Dicas por zona e desporto: abrigos do vento, melhores horários, táctica. Não só se ir — mas como jogar.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"As praias de Barcelona têm temporadas, zonas reservadas e regras por desporto. A Beach Guide da Arenviu reúne tudo — para saberes sempre quando e onde podes jogar.",
@@ -1391,6 +1412,8 @@ const T = {
     sol2_title:"Report comunitari", sol2_body:"Stile Waze: un tap — Libero / Occupato / Pieno. Valida il report di qualcun altro e guadagna gli stessi +15 ⚡ come se l'avessi inviato tu.",
     sol3_title:"Arena Points", sol3_body:"Ogni report guadagna XP. Classifiche, streak, badge. Il gioco nel gioco.",
     sol4_title:"Mappa delle zone", sol4_body:"100+ zone di gioco mappate: reti municipali, zone di allenamento, campi liberi.",
+    sol_weather_title:"Meteo", sol_weather_body:"Velocità del vento, indice UV, temperatura. Sai subito se le condizioni sono ideali per il tuo sport prima di uscire.",
+    sol_crowd_title:"Affluenza", sol_crowd_body:"Occupazione in tempo reale per spiaggia. Vedi quali zone sono libere, affollate o piene — prima di fare lo zaino.",
     sol5_title:"Smart Insights", sol5_body:"Consigli per zona e sport: ripari dal vento, finestre orarie ottimali, tattica. Non solo se andare — ma come giocare.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"Le spiagge di Barcellona hanno stagioni, zone riservate e regole per sport. La Beach Guide di Arenviu raccoglie tutto in un posto — così sai sempre quando e dove puoi giocare.",
@@ -1462,6 +1485,8 @@ const T = {
     sol2_title:"Rapports communautaires", sol2_body:"Style Waze : un toucher — Libre / Occupé / Plein. Valide le rapport d'un autre et gagne les mêmes +15 ⚡ que si tu l'avais soumis toi-même.",
     sol3_title:"Arena Points", sol3_body:"Chaque rapport gagne des XP. Classements, séries, badges. Le jeu dans le jeu.",
     sol4_title:"Carte des zones", sol4_body:"100+ zones de jeu cartographiées : filets municipaux, zones d'entraînement, terrains libres.",
+    sol_weather_title:"Météo", sol_weather_body:"Vitesse du vent, indice UV, température. Sachez si les conditions conviennent à votre sport avant de partir.",
+    sol_crowd_title:"Affluence", sol_crowd_body:"Occupation en temps réel par plage. Voyez quelles zones sont libres, occupées ou pleines — avant de préparer votre sac.",
     sol5_title:"Smart Insights", sol5_body:"Conseils par zone et sport : abris du vent, meilleures fenêtres horaires, tactique. Pas seulement si y aller — mais comment y jouer.",
     guide_headline:'Beach<br><span class="amber">Guide.</span>',
     guide_sub:"Les plages de Barcelone ont des saisons, des zones réservées et des règles par sport. Le Beach Guide d'Arenviu regroupe tout — pour savoir toujours quand et où vous pouvez jouer.",
@@ -1719,6 +1744,36 @@ window.addEventListener('hashchange', () => {
     }, 320);
   }
   setInterval(cyclePill, 2600);
+})();
+
+/* ─── SOLUTION SCROLL-DRIVEN PHONE ─────────────────────────────────── */
+(function() {
+  var features = Array.from(document.querySelectorAll('#solution .feature[data-screenshot]'));
+  var screen = document.getElementById('sol-screen');
+  if (!features.length || !screen) return;
+
+  function setActive(el) {
+    features.forEach(function(f) { f.classList.remove('sol-active'); });
+    el.classList.add('sol-active');
+    var src = el.dataset.screenshot;
+    if (screen.src.endsWith(src)) return;
+    screen.style.opacity = '0';
+    setTimeout(function() {
+      screen.src = src;
+      screen.style.opacity = '1';
+    }, 220);
+  }
+
+  // Activate first on load
+  setActive(features[0]);
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) setActive(e.target);
+    });
+  }, { threshold: 0.55, rootMargin: '-5% 0px -35% 0px' });
+
+  features.forEach(function(f) { obs.observe(f); });
 })();
 
 /* ─── PHONE CAROUSELS ───────────────────────────────────────────────── */
