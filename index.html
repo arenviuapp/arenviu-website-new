@@ -584,6 +584,19 @@
     .matrix td:first-child { font-size: 10px; letter-spacing: 0.02em; }
     .matrix th, .matrix td { padding: 10px 8px; }
 
+      .matrix-wrap, .matrix, table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        font-size: 13px !important;
+      }
+      .matrix th, .matrix td, table th, table td {
+        min-width: 70px;
+        padding: 8px 6px !important;
+        font-size: 12px !important;
+      }
+
     /* Partner CTA */
     .partner-cta { padding: 32px 24px; grid-template-columns: 1fr; }
     .partner-cta .btn { align-self: flex-start; white-space: normal; }
@@ -621,6 +634,34 @@
     .sol-tab-title { font-size: 11px; text-align: center; white-space: nowrap; }
     .sol-tab.active .sol-tab-desc { max-height: 0 !important; opacity: 0 !important; }
     .sol-phone { order: 2; }
+
+      .sol-scroller {
+        min-height: auto !important;
+      }
+      .sol-sticky {
+        position: static !important;
+        top: auto !important;
+      }
+      .sol-inner {
+        grid-template-columns: 1fr !important;
+        gap: 32px;
+      }
+      .sol-phone-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        width: 100% !important;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+      .sol-phone-wrap img, .sol-phone-wrap .phone {
+        max-width: 80vw !important;
+        height: auto !important;
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
   }
 
   /* Extra small — phones under 390px */
