@@ -630,6 +630,32 @@
     .hero-sub { font-size: 15px; }
     .nav-inner { padding: 10px 14px; }
   }
+
+  /* ── Mobile overflow fix ── */
+  @media (max-width: 768px) {
+    .section-sub {
+      max-width: 100% !important;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .p-card p, .inf-card p, .feature p, .sol-tab-desc {
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    .problem-head {
+      grid-template-columns: 1fr !important;
+    }
+    .container {
+      padding: 0 20px !important;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    html, body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1193,7 +1219,7 @@ const T = {
     nav_team:"Team", nav_try:"Download",
     hero_tag:"BCN · Live Radar · Beach Sports Intelligence",
     hero_headline:'Stop Guessing,<br>Start <span class="amber">Playing.</span>',
-    hero_sub:"Real-time crowding intelligence for Barcelona's beach sports community. Know before you go — report, earn, play.",
+    hero_sub:"Real-time intelligence platform for Barcelona's beach sports community. Know before you go — report, earn, play.",
     hero_cta1:"Try Arenviu — it's free", hero_cta2:"How it works",
     prob_num:"01", prob_eyebrow:"The problem",
     prob_headline:'You arrive.<br>The beach is <span class="amber">full.</span>',
@@ -1266,7 +1292,7 @@ const T = {
     nav_team:"Equipo", nav_try:"Descargar",
     hero_tag:"BCN · Radar en Vivo · Inteligencia de Deportes de Playa",
     hero_headline:'Deja de adivinar,<br>empieza a <span class="amber">jugar.</span>',
-    hero_sub:"Inteligencia de afluencia en tiempo real para la comunidad de deportes de playa de Barcelona. Sabe antes de ir — reporta, gana, juega.",
+    hero_sub:"Plataforma de información en tiempo real para la comunidad de deportes de playa de Barcelona. Sabe antes de ir — reporta, gana, juega.",
     hero_cta1:"Prueba Arenviu — es gratis", hero_cta2:"Cómo funciona",
     prob_num:"01", prob_eyebrow:"El problema",
     prob_headline:'Llegas.<br>La playa está <span class="amber">llena.</span>',
@@ -1339,7 +1365,7 @@ const T = {
     nav_team:"Equip", nav_try:"Baixar",
     hero_tag:"BCN · Radar en Viu · Intel·ligència d'Esports de Platja",
     hero_headline:'Deixa d\'endevinar,<br>comença a <span class="amber">jugar.</span>',
-    hero_sub:"Intel·ligència d'afluència en temps real per a la comunitat d'esports de platja de Barcelona. Saps-ho abans d'anar — reporta, guanya, juga.",
+    hero_sub:"Plataforma d'intel·ligència en temps real per a la comunitat esportiva de platja de Barcelona. Saps-ho abans d'anar — reporta, guanya, juga.",
     hero_cta1:"Prova Arenviu — és gratuït", hero_cta2:"Com funciona",
     prob_num:"01", prob_eyebrow:"El problema",
     prob_headline:'Arribes.<br>La platja és <span class="amber">plena.</span>',
@@ -1412,7 +1438,7 @@ const T = {
     nav_team:"Equipa", nav_try:"Descarregar",
     hero_tag:"BCN · Radar ao Vivo · Inteligência de Desportos de Praia",
     hero_headline:'Para de adivinhar,<br>começa a <span class="amber">jogar.</span>',
-    hero_sub:"Inteligência de afluência em tempo real para a comunidade de desportos de praia de Barcelona. Sabe antes de ir — reporta, ganha, joga.",
+    hero_sub:"Plataforma de informação em tempo real para a comunidade de desportos de praia de Barcelona. Sabe antes de ir — reporta, ganha, joga.",
     hero_cta1:"Experimenta Arenviu — é grátis", hero_cta2:"Como funciona",
     prob_num:"01", prob_eyebrow:"O problema",
     prob_headline:'Chegas.<br>A praia está <span class="amber">cheia.</span>',
@@ -1485,7 +1511,7 @@ const T = {
     nav_team:"Team", nav_try:"Scarica",
     hero_tag:"BCN · Radar in Diretta · Intelligenza per gli Sport da Spiaggia",
     hero_headline:'Smettila di indovinare,<br>inizia a <span class="amber">giocare.</span>',
-    hero_sub:"Intelligenza in tempo reale sull'affollamento per la comunità degli sport da spiaggia di Barcellona. Sai prima di andare — segnala, guadagna, gioca.",
+    hero_sub:"Piattaforma di informazioni in tempo reale per la comunità degli sport da spiaggia di Barcellona. Sai prima di andare — segnala, guadagna, gioca.",
     hero_cta1:"Prova Arenviu — è gratis", hero_cta2:"Come funziona",
     prob_num:"01", prob_eyebrow:"Il problema",
     prob_headline:'Arrivi.<br>La spiaggia è <span class="amber">piena.</span>',
@@ -1558,7 +1584,7 @@ const T = {
     nav_team:"Équipe", nav_try:"Télécharger",
     hero_tag:"BCN · Radar en Direct · Intelligence Sports de Plage",
     hero_headline:'Arrête de deviner,<br>commence à <span class="amber">jouer.</span>',
-    hero_sub:"Renseignements en temps réel sur la fréquentation pour la communauté des sports de plage de Barcelone. Sache avant d'y aller — signale, gagne, joue.",
+    hero_sub:"Plateforme d'informations en temps réel destinée à la communauté des amateurs de sports de plage de Barcelone. Sache avant d'y aller — signale, gagne, joue.",
     hero_cta1:"Essaie Arenviu — c'est gratuit", hero_cta2:"Comment ça marche",
     prob_num:"01", prob_eyebrow:"Le problème",
     prob_headline:'Tu arrives.<br>La plage est <span class="amber">pleine.</span>',
